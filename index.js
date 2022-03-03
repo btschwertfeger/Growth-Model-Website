@@ -14,8 +14,8 @@ def saveIt():
     len_lat, len_lon = len(m.latitude), len(m.longitude)
     len_ts, len_depth = len(m.time), len(m.depth_coord)
 
-    output = np.arange(len_lat*len_lon*len_depth * len_ts).reshape(len_lat, len_lon, len_depth, len_ts).astype('float32')
-    m = input_files['thetao'].transpose('latitude','longitude', 'depth_coord', 'time').fillna(-999).astype('float32')
+    output = np.arange(len_lat*len_lon*len_depth * len_ts).reshape(len_lat, len_lon, len_depth, len_ts).astype('float64')
+    m = input_files['thetao'].transpose('latitude','longitude', 'depth_coord', 'time').fillna(-999).astype('float64')
 
     for lat in range(len_lat):
         for lon in range(len_lon):
@@ -25,7 +25,7 @@ def saveIt():
     output = output.reshape(len_lat * len_lon * len_depth, len_ts)  
     # mask = output < -999; mask
     # output[mask] = -999
-    np.savetxt('data_2000-2004.csv', output, delimiter=',')#, fmt='%.7f')
+    np.savetxt('data_2000-2004.csv', output.astype('float64'), delimiter=',', fmt='%.6f')
 saveIt()
  **/
 
@@ -82,8 +82,7 @@ const
     }
 
 function equation2(input_temp) {
-    const T_Kelvin = input_temp.map((value) => (value < -99) ? -999 : value + constants.T0);
-    // # Calculate a
+    const T_Kelvin = input_temp.map((value) => (value < -99) ? -999 : parseFloat((value + constants.T0).toFixed(5)));
     const
         a_numerator = T_Kelvin.map((value) => (value === -999) ? -999 : constants.A_R * Math.exp(constants.THETA_A / constants.T_R - constants.THETA_A / value)),
         a_dominator = T_Kelvin.map((value) => (value === -999) ? -999 : 1 + Math.exp(constants.THETA_H / constants.T_H - constants.THETA_H / value));
@@ -92,12 +91,10 @@ function equation2(input_temp) {
 
 function equation3(input_temp) {
     // """ Arrhenius equation """
-    // # Calculate b
     return input_temp.map((value) => (value == -999) ? -999 : constants.B_R * Math.exp(constants.THETA_B / constants.T_R - constants.THETA_B / (value + constants.T0)));
 }
 
 function compute(data, parameters) {
-
     const
         n_lat = data.region.lat.length,
         n_lon = data.region.lon.length,
@@ -125,19 +122,22 @@ function compute(data, parameters) {
             growth_rates = JSON.parse(JSON.stringify(c_growth_rates));
 
         range(initial_year, last_year - 1, 1).forEach((year) => {
+            // console.log(initial_year, last_year)
+            // console.log(`----${year}----`)
             const tmp = get_year(dataset, parameters.years.at(0), year); // month depth lat lon
+
+            // console.log(tmp)
+            // tmp.forEach((e) => {
+            //     console.log(e[0][0].slice(13, 19))
+            // })
+            // return
+
+            // tmp3d = tmp.values.reshape(12, n_depths, n_lat*n_lon)             
             let tmp3d = [...new Array(n_months)].map(
                 () => [...new Array(n_depths)].map(
                     () => [...new Array(n_lat * n_lon)]
                 )
             );
-            // console.log(tmp)
-            // tmp.forEach((e) => {
-            //     console.log(e[0][0].slice(13, 19)) //.slice(13, 19))
-            // })
-            // return
-
-            // tmp3d = tmp.values.reshape(12, n_depths, n_lat*n_lon)             
             for (let month = 0; month < n_months; month++) {
                 const depth_lat_lon = tmp[month];
                 // console.log(depth_lat_lon[0][0].slice(13, 19))
@@ -147,56 +147,85 @@ function compute(data, parameters) {
                             tmp3d[month][depth][i++] = depth_lat_lon[depth][lat][lon];
             }
 
+            // console.log(tmp3d)
+            // tmp3d.forEach((e) => {
+            //     console.log(e[0].slice(13, 19)) //.slice(13, 19))
+            // })
+            // return
+            // < ----- BIS HIER GEHT
 
             let a = [...new Array(n_depths)].map(() => [...new Array(n_lat * n_lon)].map(() => 0));
             let b = JSON.parse(JSON.stringify(a));
-            // console.log(tmp3d)
+
             let mm0 = (year === initial_year) ? 2 : 0;
+
             for (let month = 0; month < n_months; month++) {
                 for (let day = 0; day < n_days_per_month; day++) {
                     for (let ilev = 0; ilev < n_depths; ilev++) {
                         a[ilev] = equation2(tmp3d[month][ilev]);
                         b[ilev] = equation3(tmp3d[month][ilev]).map((value) => (value === -999) ? -999 : value * -1);
-                        console.log(a[ilev]) // <--- HIER WEITER MACHEN | ES SCHEINT RUNDUNGSFEHLER ZU GEBEN
-                        return
-                        growth_rates[ilev] = a[ilev].map(
-                            (value, index) => (value === -999 || b[ilev][index] === -999) ? -999 : 0.01 * (value * Math.pow(weight[ilev][index], b[ilev][index]) - constants.C_AVG)
-                        );
-                        // if (ilev == 0 && month == 7 && day == 0) {
-                        //     console.log(a[ilev][18], weight[ilev][18], b[ilev][18], constants.C_AVG)
-                        //     console.log(0.01 * (a[ilev][18] * Math.pow(weight[ilev][18], b[ilev][18]) - constants.C_AVG))
-                        //     console.log(growth_rates[ilev][18])
-                        // }
-                        // growth_rates[ilev].every(e => {
-                        //     if (e < 0 && e != -999) console.log('_____')
-                        // })
 
+                        growth_rates[ilev] = a[ilev].map(
+                            (value, index) => (value === -999 || b[ilev][index] === -999) ? -999 :
+                            0.01 * (value * Math.pow(weight[ilev][index], b[ilev][index]) - constants.C_AVG)
+                        );
 
                         growth_rates[ilev] = growth_rates[ilev].map((value) => (value < 0 && value !== -999) ? 0 : value);
+
                         weight[ilev] = weight[ilev].map(
-                            (value, index) => (value === -999 || growth_rates[ilev][index] === -999) ? -999 : value * (1 + dt * growth_rates[ilev][index])
+                            (value, index) => (value === -999 || growth_rates[ilev][index] === -999) ? -999 :
+                            value * (1 + dt * growth_rates[ilev][index])
                         );
-
-
-
-                        // if (ilev == 20) {
-                        //     console.log(weight[ilev])
-                        //     break
-                        // }
                     }
-
-                    // break
                 }
-
-                // console.log(weight[0].slice(13, 19))
-                // break
             }
-            // console.log(weight)
-            return
-            // console.log(weight)
+
+            const new_year = parseInt(year + 1); // ?
+
+            // Reshape data to original shape
+            let a_3d = [...new Array(n_depths)].map(() => [...new Array(n_lat)].map(() => [...new Array(n_lon)]));
+            let
+                b_3d = JSON.parse(JSON.stringify(a_3d)),
+                growth_rates_3d = JSON.parse(JSON.stringify(a_3d)),
+                weight_3d = JSON.parse(JSON.stringify(a_3d));
+
+            for (let d = 0; d < n_depths; d++) {
+                for (let i = 0, lat = 0, lon = 0; i < n_lat * n_lon; i++) {
+                    a_3d[d][lat][lon] = a[d][i];
+                    b_3d[d][lat][lon] = b[d][i];
+                    growth_rates_3d[d][lat][lon] = growth_rates[d][i];
+                    weight_3d[d][lat][lon] = (weight[d][i] === -999) ? -999 : weight[d][i] * 0.001; // 3D field with asymptotic weight
+                    lon++;
+                    if (lon === n_lon) {
+                        lon = 0;
+                        lat++;
+                    }
+                }
+            }
+            // # Calculate maximum asymptotic weight at a given location 
+            // # ("W*" in Butzin and Pörtner (2016)) 
+            // # weight_max = np.nanmax(weight_3d, axis = 0)
+            let max_weight_lat_lon = [...new Array(n_lat)].map(() => [...new Array(n_lon)].map(() => -999));
+
+            for (let lat = 0; lat < n_lat; lat++)
+                for (let lon = 0; lon < n_lon; lon++)
+                    for (let depth = 0; depth < n_depths; depth++)
+                        if (weight_3d[depth][lat][lon] > max_weight_lat_lon[lat][lon])
+                            max_weight_lat_lon[lat][lon] = weight_3d[depth][lat][lon]
+
+
+            // console.log(max_weight_lat_lon)
+
+            results[`y${year}_age-${age}`] = {
+                a_3d: a_3d,
+                b_3d: b_3d,
+                growth_rates: growth_rates,
+                weight_3d: weight_3d,
+                max_weight_lat_lon: max_weight_lat_lon,
+            }
+
         });
-        return
-        break
+
         initial_year += 1;
         last_year = initial_year + generation;
     }
@@ -242,8 +271,8 @@ function processData(allText, region, n_time) {
         if (lat === n_lat) break;
         for (let time = 0; time < n_time; time++) reshaped_data[time][lat][lon][depth] = lines[row][time]
     }
+
     // Dataset has now shape of 60 x 10 x 12 x 21 for time x lat x lon x depth
-    // console.log(reshaped_data);
     return {
         region: region,
         dataset: reshaped_data
@@ -262,6 +291,7 @@ $(document).ready(() => {
             const processed_data = processData(data, regions.CeltricSea, n_time);
 
             const result = compute(processed_data, default_input);
+            console.log(result)
         }
     });
 
