@@ -1,4 +1,4 @@
-export default function get_year(dataset, start_year, req_year) {
+export function get_year(dataset, start_year, req_year) {
     // returns array containing values for a specific year
 
     // time is always 12 because of 12 months
@@ -47,4 +47,9 @@ export default function get_year(dataset, start_year, req_year) {
     //             for (let depth = 0; depth < n_depths; depth++)
     //                 res[filled_months][lat][lon][depth] = dataset[month][lat][lon][depth];
     // return res;
+}
+
+export function get_weight_by_temperature(weights, temperature_index) {
+    let result = [...new Array(weights.length)];
+    return result.map((e, i) => weights[i][temperature_index]);
 }

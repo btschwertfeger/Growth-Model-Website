@@ -1,0 +1,54 @@
+a {
+    text-decoration: none;
+    color: blue;
+    transition: color 0.2s ease-in-out;
+}
+
+.simple-plot-wrapper{
+    min-height: 20rem;
+    width: 100%;
+    display: inherit;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 0px;
+}
+#simple_plot_canvas{
+    display: inherit;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    /* padding-bottom: 3rem;    */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+#float-chart-div{
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+#footer{
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 5rem;
+    width: 80%;
+    font-size: 16px;
+}
+#footer a {
+    color: black;
+}
+
+#footer a:hover,
+    a:hover {
+    text-decoration: none;
+    color: red;
+}
