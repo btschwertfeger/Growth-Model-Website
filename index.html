@@ -12,19 +12,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-    <title>Growth Model</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg"
+    />
+    <title>Growth Model Atlantic Cod</title>
 
     <!-- JQUERY-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- CHART JS -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script
       id="MathJax-script"
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- BOOTSTRAP-->
     <script
@@ -54,14 +58,15 @@
     />
 
     <!-- HEADLINE -->
-    <div class="pt-5 pb-2 text-center bg-light">
+    <div class="pt-5 pb-2 text-center">
       <h1 class="mb-3">Growth Model Atlantic Cod</h1>
     </div>
 
     <!-- INFORMATION-->
-    <div class="card ml-5 mr-5 mb-5">
+    <div class="card ml-5 mr-5 mb-5 nb">
+      <hr />
       <!-- <div class="card-header">Featured</div> -->
-      <div class="card-header">General</div>
+      <!-- <div class="card-header">General</div> -->
       <div class="card-body">
         <!-- <h5 class="card-title">General</h5> -->
         <p class="card-text">
@@ -74,15 +79,17 @@
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </div>
+      <hr />
     </div>
 
     <!-- AQUARIUM HEADLINE -->
-    <div class="pt-2 pb-2 text-center bg-light">
+    <div class="pt-2 pb-2 text-center">
+      <!---bg-light-->
       <h2 class="mb-3">Aquarium Experiment</h2>
     </div>
 
-    <div class="card ml-5 mr-5">
-      <div class="card-header">About</div>
+    <div class="card ml-5 mr-5 nb">
+      <!-- <div class="card-header">About</div> -->
       <div class="card-body">
         <!-- <h5 class="card-title">General</h5> -->
         <p class="card-text">
@@ -95,46 +102,66 @@
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
 
-        <div class="row">
-          <div class="col-8">
-            <div class="simple-plot-wrapper">
-              <canvas id="simple_plot_canvas"></canvas>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="row">
-              <div class="col">
-                <label for="temp_slider_simple" class="form-label"
-                  >Temperature</label
-                >
-                <input
-                  type="range"
-                  class="form-range"
-                  min="-2.0"
-                  max="30.0"
-                  step="0.5"
-                  id="temp_slider_simple"
-                />
-                <button
-                  type="button"
-                  id="reset_btn_simple"
-                  class="btn btn-dark"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
+        <div class="div-center">
+          <div
+            class="p-3 plot-wrapper"
+            style="min-width: 20rem; max-width: 50rem"
+          >
+            <canvas id="simple_plot_canvas"></canvas>
           </div>
         </div>
+        <div class="div-center">
+          <div class="input-wrapper">
+            <div class="mb-2 ml-5">Initial weight in \(g\)</div>
+            <div class="text_input-wrapper">
+              <input id="weight_input_simple" type="text" value="1" />
+            </div>
+          </div>
+
+          <div class="input-wrapper">
+            <div class="mb-2 ml-5">Temperature in °C</div>
+            <div
+              id="t_slide_amount_simple"
+              name="t_slide_amount_simple"
+              class="slide-value"
+            >
+              3
+            </div>
+            <input
+              id="temp_slider_simple"
+              type="range"
+              class="slide"
+              name="temp_slider_simple"
+              min="-2"
+              max="20"
+              step=".5"
+              value="3"
+            />
+          </div>
+
+          <button type="button" id="reset_btn_simple" class="someBtn">
+            Reset
+          </button>
+        </div>
+        <p class="card-text mt-3">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
       </div>
+      <hr />
     </div>
 
     <!-- REAL WORLD HEADLINE -->
-    <div class="pt-5 pb-2 text-center bg-light">
+    <div class="pt-5 pb-2 text-center nb">
       <h2 class="mb-3">Real world Experiment</h2>
     </div>
-    <div class="card ml-5 mr-5">
-      <div class="card-header">About</div>
+    <div class="card ml-5 mr-5 nb">
+      <!-- <div class="card-header">About</div> -->
       <div class="card-body">
         <!-- <h5 class="card-title">General</h5> -->
         <p class="card-text">
@@ -157,13 +184,63 @@
             style="min-width: 20rem; max-width: 50rem"
           />
         </div>
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div class="row">
+          <div class="col-lg-5 col-md-12 col-xs-8 p-4">
+            <div id="float-chart-div">
+              <img alt="regions map" src="images/map.png" />
+            </div>
+          </div>
+          <div class="col-lg-7 mt-2">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+
+        <div class="div-center">
+          <div
+            class="p-3 plot-wrapper"
+            style="min-width: 20rem; max-width: 50rem"
+          >
+            <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
+            <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
+            <canvas id="complex_plot_canvas2" class="canvas_complex"></canvas>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- FOOTER -->
     <div id="footer" class="pb-5">
-      Model and mathematical basics described in xxx by Butzin and Pörtner
-      (2016). Python implementation by xxx and xxx,
+      <hr />
+      Model and mathematical basics described by
+      <a
+        href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375"
+        target="_blank"
+        >Butzin and Pörtner</a
+      >
+      (2016). Python implementation by Nadezhda Valerievna Sokolova and Anja
+      Rohner,
       <a
         href="https://www.awi.de/en/science/climate-sciences/paleoclimate-dynamics/teachingoutreach.html"
         target="_blank"
@@ -182,5 +259,6 @@
     </div>
 
     <script async type="module" src="index.js"></script>
+    <script async src="layout.js"></script>
   </body>
 </html>

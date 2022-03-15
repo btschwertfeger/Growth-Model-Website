@@ -40,64 +40,73 @@ def saveIt():
 
 import {
     get_year,
-    get_weight_by_temperature
+    get_weight_by_temperature,
+    get_temperature_index
 } from './utils.js';
-import range from './math.js';
+
+import {
+    avg,
+    range
+} from './math.js';
 
 // #######################################################################
 // ##### SETTINGS #############################################
 // #######################################################################
 
-const
-    regions = {
-        CeltricSea: {
-            name: 'CeltricSea',
-            // begin slices
-            // # Define geographic boundaries (latitudes, longitudes)
-            // # Default coordinates: North Atlantic coordinates
-            lat_bounds: [47, 54],
-            lon_bounds: [-12, -1],
-            // # Define depth_levels for your growth model output files
-            depth_levels: [0, 600],
-            // end slices
+window.last_selected_region = 'CeltricSea';
+window.regions = [{
+    name: 'CeltricSea',
+    index: 0, // specifies the index in computed and loaded arrays
+    // begin slices
+    // # Define geographic boundaries (latitudes, longitudes)
+    // # Default coordinates: North Atlantic coordinates
+    lat_bounds: [47, 54],
+    lon_bounds: [-12, -1],
+    // # Define depth_levels for your growth model output files
+    depth_levels: [0, 600],
+    // end slices
 
-            // # Define latitudes that you will use to save your weight-at-age data 
-            lat: [47.25, 47.75, 48.25, 48.75, 49.25, 49.75, 50.25, 50.75, 51.25, 51.75],
-            lon: [
-                -11.75, -11.25, -10.75, -10.25, -9.75, -9.25, -8.75, -8.25, -7.75,
-                -7.25, -6.75, -6.25, -5.75, -5.25, -4.75, -4.25, -3.75, -3.25, -2.75,
-                -2.25, -1.75, -1.25
-            ],
-            // # Define depth that you will use to save your weight-at-age data
-            depths: [
-                -0., 10., 20., 30., 40., 50., 60., 70., 80., 90., 100., 115.,
-                135., 160., 190., 230., 280., 340., 410., 490., 580.
-            ]
-        }
-    },
-    default_input_complex = {
-        // # Specification of biological parameters  
-        // # Number of years in one life cycle of an individual 
-        generation: 2,
-        // # The year when the input temeperature dataset starts 
-        initial_year: 2000,
-        // # Number of years in the input temperature dataset
-        years: [2000, 2001, 2002, 2003, 2004]
-    },
-    default_input_simple = {
-        max_age: 15 * 365, // # maximum age in days
-    },
-    constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
-        A_R: 8.660,
-        B_R: 0.3055,
-        THETA_A: 18145,
-        THETA_B: 4258,
-        THETA_H: 25234,
-        T_R: 283,
-        T_H: 286,
-        C_AVG: 0.291,
-        T0: 273.15
-    }
+    // # Define latitudes that you will use to save your weight-at-age data 
+    lat: [47.25, 47.75, 48.25, 48.75, 49.25, 49.75, 50.25, 50.75, 51.25, 51.75],
+    lon: [
+        -11.75, -11.25, -10.75, -10.25, -9.75, -9.25, -8.75, -8.25, -7.75,
+        -7.25, -6.75, -6.25, -5.75, -5.25, -4.75, -4.25, -3.75, -3.25, -2.75,
+        -2.25, -1.75, -1.25
+    ],
+    // # Define depth that you will use to save your weight-at-age data
+    depths: [
+        -0., 10., 20., 30., 40., 50., 60., 70., 80., 90., 100., 115.,
+        135., 160., 190., 230., 280., 340., 410., 490., 580.
+    ]
+}];
+
+window.processed_data_complex = [{}, {}, {}];
+window.computed_data_complex = [{}, {}, {}];
+
+window.default_input_complex = {
+    // # Specification of biological parameters  
+    // # Number of years in one life cycle of an individual 
+    generation: 2,
+    // # The year when the input temeperature dataset starts 
+    initial_year: 2000,
+    // # Number of years in the input temperature dataset
+    years: [2000, 2001, 2002, 2003, 2004]
+};
+window.default_input_simple = {
+    max_age: 15 * 365, // # maximum age in days
+    initial_weight: 1 // initial weight in g
+};
+window.constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
+    A_R: 8.660,
+    B_R: 0.3055,
+    THETA_A: 18145,
+    THETA_B: 4258,
+    THETA_H: 25234,
+    T_R: 283,
+    T_H: 286,
+    C_AVG: 0.291,
+    T0: 273.15
+};
 
 // #######################################################################
 // ##### COMPUTATION #############################################
@@ -116,7 +125,12 @@ function equation3(input_temp) {
     return input_temp.map((value) => (value == -999) ? -999 : constants.B_R * Math.exp(constants.THETA_B / constants.T_R - constants.THETA_B / (value + constants.T0)));
 }
 
-function computeSimple(data, parameters) {
+window.computeSimple = (data = null, parameters = null, initial_weight = null) => {
+    data = (data === null) ? window.process_data_simple : data;
+    // console.log(window.default_input_simple)
+    parameters = (parameters === null) ? window.default_input_simple : parameters;
+    initial_weight = (initial_weight === null) ? parameters.initial_weight : parseFloat(initial_weight);
+
     let
         a_fit = data.a_fit,
         b_fit = data.b_fit,
@@ -126,7 +140,7 @@ function computeSimple(data, parameters) {
         temperature_range = range(-2, 30.5 - .5, .5); // # Temperature range in °C
 
     let weight_at_age = [...new Array(parameters.max_age)].map(
-        (e, i) => [...new Array(a_fit.length)].map(() => (i === 0) ? 1 : 0)
+        (e, i) => [...new Array(a_fit.length)].map(() => (i === 0) ? initial_weight : 0)
     ); // # weight at age (in g) for a given temperature && initial weight in g
 
     // # loop over temperatures, increasing values by 0.5°C
@@ -137,17 +151,22 @@ function computeSimple(data, parameters) {
         });
         itemp++;
     });
-
-    return {
+    console.log("DONE")
+    window.last_result_simple = {
         a_fit: a_fit,
         b_fit: b_fit,
         c_avg: c_avg,
         weight_at_age: weight_at_age,
         temperature_range: temperature_range
     }
+    return window.last_result_simple;
 }
 
-function computeComplex(data, parameters) {
+function computeComplex(region_index = 0, parameters = null) {
+
+    parameters = (parameters === null) ? window.default_input_complex : parameters;
+    const data = window.processed_data_complex[region_index];
+
     const
         n_lat = data.region.lat.length,
         n_lon = data.region.lon.length,
@@ -164,15 +183,15 @@ function computeComplex(data, parameters) {
         initial_year = parameters.initial_year,
         last_year = parameters.initial_year + parameters.generation,
         generation = parameters.generation,
-        age = 0,
         dataset = data.dataset,
         region = data.region,
         results = {};
 
-    while (last_year <= parameters.years.at(-1)) {
+    while (last_year < parameters.years.at(-1)) {
         let
             weight = JSON.parse(JSON.stringify(c_weights)),
-            growth_rates = JSON.parse(JSON.stringify(c_growth_rates));
+            growth_rates = JSON.parse(JSON.stringify(c_growth_rates)),
+            age = 0;
 
         range(initial_year, last_year - 1, 1).forEach((year) => {
             // console.log(initial_year, last_year)
@@ -273,7 +292,7 @@ function computeComplex(data, parameters) {
                     for (let depth = 0; depth < n_depths; depth++)
                         if (weight_3d[depth][lat][lon] > max_weight_lat_lon[lat][lon])
                             max_weight_lat_lon[lat][lon] = weight_3d[depth][lat][lon]
-
+            console.log(`before-${year}`)
             results[`y${year}_age-${age}`] = {
                 a_3d: a_3d,
                 b_3d: b_3d,
@@ -281,12 +300,171 @@ function computeComplex(data, parameters) {
                 weight_3d: weight_3d,
                 max_weight_lat_lon: max_weight_lat_lon,
             }
+            console.log(`after-${year}`)
+            age++;
         });
 
         initial_year += 1;
         last_year = initial_year + generation;
     }
+
+    window.computed_data_complex[region_index] = results;
     return results;
+}
+
+
+
+// #######################################################################
+// ##### PLOTTING #############################################
+// #######################################################################
+window.defaul_chart_config_simple = {
+    type: 'line',
+    data: {
+        labels: null,
+        datasets: null
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: '',
+                font: {
+                    Family: 'Helvetica',
+                    size: 18
+                },
+            },
+            legend: {
+                position: 'top',
+            },
+        },
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Years',
+                    font: {
+                        family: 'Helvetica',
+                        size: 16,
+                    },
+                },
+                ticks: {
+                    display: true,
+
+                },
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Weight in g',
+                    font: {
+                        family: 'Helvetica',
+                        size: 16
+                    },
+                },
+                min: 0
+            },
+        },
+        animations: {
+            radius: {
+                duration: 400,
+                easing: 'linear',
+                loop: (ctx) => ctx.activate
+            }
+        },
+        hoverRadius: 8,
+        hoverBackgroundColor: 'yellow',
+        interaction: {
+            mode: 'nearest',
+            intersect: false,
+            axis: 'x'
+        },
+    },
+}
+
+window.plot_simple = (temperature = 3.0) => {
+    temperature = parseFloat(temperature);
+    let config = JSON.parse(JSON.stringify(window.defaul_chart_config_simple));
+    const
+        data = window.last_result_simple,
+        ctx = $('#simple_plot_canvas'),
+        t_idx = get_temperature_index(temperature);
+
+    const choosen_temperature = data.temperature_range[t_idx];
+    const color = (choosen_temperature > 20) ? 'red' : (choosen_temperature > 8) ? 'orange' : (choosen_temperature > 0) ? 'black' : 'blue'
+    const weights = get_weight_by_temperature(data.weight_at_age, t_idx);
+    config.data.labels = range(1, weights.length);
+    config.data.datasets = [{
+        label: `Weight at ${choosen_temperature}°C`,
+        data: weights,
+        fill: false,
+        borderColor: color,
+        pointRadius: 0
+    }];
+    config.options.scales.x.ticks = {
+        stepSize: 1,
+        autoskip: true,
+        maxTicksLimit: 15,
+        callback: (value, index, ticks) => {
+            return index % 365 === 0 ? value / 365 : '';
+        }
+    }
+    if (typeof window.simple_chart === 'undefined') window.simple_chart = new Chart(ctx, config)
+    else {
+        window.simple_chart.data.labels = config.data.labels;
+        window.simple_chart.data.datasets = config.data.datasets;
+        window.simple_chart.update();
+    }
+}
+
+
+window.plot_complex = (region_index = null, temperature = null, kind = null) => {
+    console.log("!")
+    region_index = (region_index === null) ? 0 : parseInt(region_index);
+    // temperature = (temperature === null) ? 3 : parseFloat(temperature);
+    kind = (kind === null) ? 'avg' : kind;
+    let config = JSON.parse(JSON.stringify(window.defaul_chart_config_simple));
+    const
+        data = window.computed_data_complex[region_index],
+        ctx = $(`#complex_plot_canvas${region_index}`);
+
+    console.log(data)
+
+    for (var year of Object.keys(data)) {
+        console.log(data[year].weight_3d) // 21 x 10x 22
+        console.log(avg(data[year].weight_3d.flat().flat(), -999));
+    }
+
+    // HIER WEITER MACHEN 
+
+
+}
+
+
+// #######################################################################
+// ##### ON - READY #############################################
+// #######################################################################
+
+window.loadNewRegion = (name = null) => {
+    name = (name === null) ? 'CeltricSea' : name;
+    $.ajax({
+        type: 'GET',
+        url: `data/${name}_2000-2004.csv`,
+        dataType: 'text',
+        success: (data) => {
+            let reigon_param;
+            regions.forEach((region) => {
+                if (region.name === name) reigon_param = region;
+            })
+            const n_time = default_input_complex.years.length * 12;
+            window.processed_data_complex[reigon_param.index] = processData(data, 'Complex', reigon_param, n_time);
+            computeComplex(reigon_param.index);
+            window.plot_complex(reigon_param.index)
+        }
+    });
 }
 
 function processData(allText, kind, region = null, n_time = null) {
@@ -341,155 +519,38 @@ function processData(allText, kind, region = null, n_time = null) {
         };
     }
 }
-
-// #######################################################################
-// ##### PLOTTING #############################################
-// #######################################################################
-window.defaul_chart_config_simple = {
-    type: 'line',
-    data: {
-        labels: null,
-        datasets: null
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: '',
-                font: {
-                    Family: 'Helvetica',
-                    size: 18
-                },
-            },
-            legend: {
-                position: 'top',
-            },
-        },
-        scales: {
-            x: {
-                display: true,
-                title: {
-                    display: true,
-                    text: 'Time in days',
-                    font: {
-                        family: 'Helvetica',
-                        size: 16,
-                    },
-                },
-                // ticks: {
-                //     callback:  (value, index, values)=> {
-                //         return Math.round(LABELS[index]);
-                //     }
-                // }
-            },
-            y: {
-                display: true,
-                title: {
-                    display: true,
-                    text: 'Weight in g',
-                    font: {
-                        family: 'Helvetica',
-                        size: 16
-                    },
-                },
-            },
-        },
-        animations: {
-            radius: {
-                duration: 400,
-                easing: 'linear',
-                loop: (ctx) => ctx.activate
-            }
-        },
-        hoverRadius: 8,
-        hoverBackgroundColor: 'yellow',
-        interaction: {
-            mode: 'nearest',
-            intersect: false,
-            axis: 'x'
-        },
-    },
-}
-
-function get_temperature_index(temperature) {
-    range(-2, 30, 1).forEach((element, index) => {
-        if (element == temperature) return index;
-    });
-
-    console.log(`Temperature ${temperature} not found! Returning 3°C at index 10.`);
-    return 10;
-}
-
-window.plot_simple = (kind = 'default', temperature = 3.0) => {
-    let config = JSON.parse(JSON.stringify(window.defaul_chart_config_simple));
-    const
-        data = window.last_result_simple,
-        ctx = $('#simple_plot_canvas');
-
-    if (kind === 'default') {
-        const t_idx = get_temperature_index(temperature);
-        const choosen_temperature = data.temperature_range[t_idx];
-        console.log(choosen_temperature);
-
-        const weights = get_weight_by_temperature(data.weight_at_age, t_idx);
-        config.data.labels = range(1, weights.length);
-        config.data.datasets = [{
-            label: `Weight at ${choosen_temperature}°C`,
-            data: weights,
-            fill: false,
-            borderColor: 'black',
-            pointRadius: 0
-        }];
-        if (typeof window.simple_chart === 'undefined') window.simple_chart = new Chart(ctx, config)
-        else window.simple_chart.data = config.data;
-    } else {
-
-    }
-
-}
-
-window.plot_complex = () => {}
-// #######################################################################
-// ##### ON - READY #############################################
-// #######################################################################
 $(document).ready(() => {
     // laod csv data
 
     // Simple
-    $.ajax({
-        type: 'GET',
-        url: 'data/growth_function_parameters_simple.csv',
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'Simple');
-            console.log('Simple data loaded!')
-            window.process_data_simple = processed_data;
-            const result = computeSimple(processed_data, default_input_simple);
-            console.log(result)
-            window.last_result_simple = result;
-            console.log('Aquarium Experiment computed!')
-
-            window.plot_simple('default');
-        }
-    });
+    // $.ajax({
+    //     type: 'GET',
+    //     url: 'data/growth_function_parameters_simple.csv',
+    //     dataType: 'text',
+    //     success: (data) => {
+    //         window.process_data_simple = processData(data, 'Simple');
+    //         console.log('Simple data loaded!')
+    //         window.computeSimple();
+    //         console.log('Default Aquarium Experiment computed!')
+    //         window.plot_simple();
+    //     }
+    // });
 
     // Complex
-    $.ajax({
-        type: 'GET',
-        url: 'data_2000-2004.csv',
-        dataType: 'text',
-        success: (data) => {
-            // Celtric Sea
-            const n_time = default_input_complex.years.length * 12;
-            const processed_data = processData(data, 'Complex', regions.CeltricSea, n_time);
-            console.log('Complex data loaded!')
-            window.processed_data_complex = processed_data;
-            const result = computeComplex(processed_data, default_input_complex);
-            // console.log(result)
-            window.last_result_complex = result;
-            console.log('Real World Experiment computed!')
-        }
-    });
+    window.loadNewRegion('CeltricSea');
+    // window.loadNewRegion('CeltricSea');
+    // window.loadNewRegion('CeltricSea');
+    // $.ajax({
+    //     type: 'GET',
+    //     url: 'CeltricSea_2000-2004.csv',
+    //     dataType: 'text',
+    //     success: (data) => {
+    //         // Celtric Sea
+    //         const n_time = default_input_complex.years.length * 12;
+    //         window.processed_data_complex = processData(data, 'Complex', regions.CeltricSea, n_time);
+    //         console.log('Complex data loaded!')
+    //         computeComplex();
+    //         console.log('Real World Experiment computed!')
+    //     }
+    // });
 });

@@ -1,4 +1,15 @@
-export default function range(start, end, step) {
+/**
+ * 
+ * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
+ * @author Benjamin Thomas Schwertfeger (January 2022)
+ * @email development@b-schwertfeger.de
+ * @link https://b-schwertfeger.de
+ * 
+ **/
+
+// returns an array from start to end (including end) 
+// e.g.: range(1,5,1) == [1,2,3,4,5]
+export function range(start, end, step = 1) {
     var
         range = [],
         typeofStart = typeof start,
@@ -26,4 +37,13 @@ export default function range(start, end, step) {
         }
     } else throw TypeError("Only string and number types are supported");
     return range;
+}
+export function avg(grades, nan = null) {
+    if (nan === null) return grades.reduce((acc, c) => acc + c, 0) / grades.length;
+    else {
+        let values = new Array();
+        for (var val = 0; val < grades.length; val++)
+            if (grades[val] !== nan) values.push(grades[val]);
+        return values.reduce((acc, c) => acc + c, 0) / values.length;
+    }
 }
