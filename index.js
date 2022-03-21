@@ -46,7 +46,9 @@ import {
 
 import {
     avg,
-    range
+    std,
+    range,
+    quantile
 } from './math.js';
 
 // #######################################################################
@@ -86,11 +88,14 @@ window.computed_data_complex = [{}, {}, {}];
 window.default_input_complex = {
     // # Specification of biological parameters  
     // # Number of years in one life cycle of an individual 
-    generation: 2,
+    generation: 3,
     // # The year when the input temeperature dataset starts 
     initial_year: 2000,
     // # Number of years in the input temperature dataset
-    years: [2000, 2001, 2002, 2003, 2004]
+    years: [2000, 2001, 2002, 2003, 2004],
+
+    // # Quantiles that we want to caclulate (median - 0.5; IQR - 0.25 and 0.75)
+    quantiles: [0.25, 0.50, 0.75]
 };
 window.default_input_simple = {
     max_age: 15 * 365, // # maximum age in days
@@ -151,7 +156,7 @@ window.computeSimple = (data = null, parameters = null, initial_weight = null) =
         });
         itemp++;
     });
-    console.log("DONE")
+
     window.last_result_simple = {
         a_fit: a_fit,
         b_fit: b_fit,
@@ -292,15 +297,18 @@ function computeComplex(region_index = 0, parameters = null) {
                     for (let depth = 0; depth < n_depths; depth++)
                         if (weight_3d[depth][lat][lon] > max_weight_lat_lon[lat][lon])
                             max_weight_lat_lon[lat][lon] = weight_3d[depth][lat][lon]
-            console.log(`before-${year}`)
-            results[`y${year}_age-${age}`] = {
+
+            const content = {
+                age: `${age}`,
                 a_3d: a_3d,
                 b_3d: b_3d,
                 growth_rates: growth_rates,
                 weight_3d: weight_3d,
                 max_weight_lat_lon: max_weight_lat_lon,
             }
-            console.log(`after-${year}`)
+            if (typeof results[`${year}`] == 'undefined') results[`${year}`] = [content];
+            else results[`${year}`].push(content);
+            // console.log(`after-${year}`)
             age++;
         });
 
@@ -420,27 +428,84 @@ window.plot_simple = (temperature = 3.0) => {
     }
 }
 
-
 window.plot_complex = (region_index = null, temperature = null, kind = null) => {
-    console.log("!")
+
     region_index = (region_index === null) ? 0 : parseInt(region_index);
-    // temperature = (temperature === null) ? 3 : parseFloat(temperature);
+
     kind = (kind === null) ? 'avg' : kind;
     let config = JSON.parse(JSON.stringify(window.defaul_chart_config_simple));
     const
         data = window.computed_data_complex[region_index],
-        ctx = $(`#complex_plot_canvas${region_index}`);
+        ctx = $(`#complex_plot_canvas0`);
+    // ctx = $(`#complex_plot_canvas${region_index}`);
 
     console.log(data)
 
+    // age x weight(@quantile)
+    let weight_by_age_quantile = {};
     for (var year of Object.keys(data)) {
-        console.log(data[year].weight_3d) // 21 x 10x 22
-        console.log(avg(data[year].weight_3d.flat().flat(), -999));
+        for (var i of Object.keys(data[year])) {
+            const age = data[year][i].age;
+
+            var valid_values = data[year].find(obj => {
+                return obj.age === age
+            })['weight_3d'].flat().flat().filter(value => value !== -999);
+
+            const quantiles = {
+                q_25: quantile(valid_values, .25),
+                q_50: quantile(valid_values, .5),
+                q_75: quantile(valid_values, .75)
+            };
+
+            if (typeof weight_by_age_quantile[`${age}`] === 'undefined') weight_by_age_quantile[`${age}`] = {
+                q_25: [quantiles.q_25],
+                q_50: [quantiles.q_50],
+                q_75: [quantiles.q_75]
+            }
+            else {
+                weight_by_age_quantile[`${age}`].q_25.push(quantiles.q_25);
+                weight_by_age_quantile[`${age}`].q_50.push(quantiles.q_50);
+                weight_by_age_quantile[`${age}`].q_75.push(quantiles.q_75);
+            }
+        }
     }
 
-    // HIER WEITER MACHEN 
+    // console.log(weight_by_age_quantile)
+    const years = Object.keys(weight_by_age_quantile).length;
+    let plottable_datasets = [{
+        label: 'Quantile .25',
+        data: [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_25)),
+        fill: false,
+        borderColor: 'orange',
+        pointRadius: 0,
+        borderDash: [10, 5]
+    }, {
+        label: 'Quantile .50',
+        data: [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_50)),
+        fill: false,
+        borderColor: 'black',
+        pointRadius: 0
+    }, {
+        label: 'Quantile .75',
+        data: [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_75)),
+        fill: false,
+        borderColor: 'red',
+        pointRadius: 0,
+        borderDash: [10, 5]
+    }];
+    3
+    config.data.labels = range(1, years);
+    config.data.datasets = plottable_datasets;
+    config.options.plugins.title.text = window.processed_data_complex[region_index].region.name
 
-
+    if (typeof window.complex_chart === 'undefined') {
+        config.options.scales.x.title.text = 'Age, Years'
+        window.complex_chart = new Chart(ctx, config)
+    } else {
+        window.complex_chart.data.labels = config.data.labels;
+        window.complex_chart.data.datasets = config.data.datasets;
+        window.complex_chart.update();
+    }
 }
 
 
@@ -523,18 +588,18 @@ $(document).ready(() => {
     // laod csv data
 
     // Simple
-    // $.ajax({
-    //     type: 'GET',
-    //     url: 'data/growth_function_parameters_simple.csv',
-    //     dataType: 'text',
-    //     success: (data) => {
-    //         window.process_data_simple = processData(data, 'Simple');
-    //         console.log('Simple data loaded!')
-    //         window.computeSimple();
-    //         console.log('Default Aquarium Experiment computed!')
-    //         window.plot_simple();
-    //     }
-    // });
+    $.ajax({
+        type: 'GET',
+        url: 'data/growth_function_parameters_simple.csv',
+        dataType: 'text',
+        success: (data) => {
+            window.process_data_simple = processData(data, 'Simple');
+            console.log('Simple data loaded!')
+            window.computeSimple();
+            console.log('Default Aquarium Experiment computed!')
+            window.plot_simple();
+        }
+    });
 
     // Complex
     window.loadNewRegion('CeltricSea');
