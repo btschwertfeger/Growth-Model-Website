@@ -308,7 +308,6 @@ function computeComplex(region_index = 0, parameters = null) {
             }
             if (typeof results[`${year}`] == 'undefined') results[`${year}`] = [content];
             else results[`${year}`].push(content);
-            // console.log(`after-${year}`)
             age++;
         });
 
@@ -439,7 +438,7 @@ window.plot_complex = (region_index = null, temperature = null, kind = null) => 
         ctx = $(`#complex_plot_canvas0`);
     // ctx = $(`#complex_plot_canvas${region_index}`);
 
-    console.log(data)
+    // console.log(data)
 
     // age x weight(@quantile)
     let weight_by_age_quantile = {};
@@ -493,7 +492,6 @@ window.plot_complex = (region_index = null, temperature = null, kind = null) => 
         pointRadius: 0,
         borderDash: [10, 5]
     }];
-    3
     config.data.labels = range(1, years);
     config.data.datasets = plottable_datasets;
     config.options.plugins.title.text = window.processed_data_complex[region_index].region.name
@@ -602,7 +600,7 @@ $(document).ready(() => {
     });
 
     // Complex
-    window.loadNewRegion('CeltricSea');
+    // window.loadNewRegion('CeltricSea');
     // window.loadNewRegion('CeltricSea');
     // window.loadNewRegion('CeltricSea');
     // $.ajax({
