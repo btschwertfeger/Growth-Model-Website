@@ -21,9 +21,14 @@
 
     <!-- JQUERY-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- CHART JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- BOXPLOTS -->
+    <script type="text/javascript" src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+
+    <!-- Equations look like in LaTeX-->
     <script
       id="MathJax-script"
       async
@@ -112,7 +117,7 @@
         </div>
         <div class="div-center">
           <div class="input-wrapper">
-            <div class="mb-2 ml-5">Initial weight in \(g\)</div>
+            <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
             <div class="text_input-wrapper">
               <input id="weight_input_simple" type="text" value="1" />
             </div>
@@ -125,7 +130,7 @@
               name="t_slide_amount_simple"
               class="slide-value"
             >
-              3
+              3°C
             </div>
             <input
               id="temp_slider_simple"
@@ -223,10 +228,26 @@
             style="min-width: 20rem; max-width: 50rem; min-height:30rem;"
           >
             <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
-            <!-- <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
-            <canvas id="complex_plot_canvas2" class="canvas_complex"></canvas> -->
+          </div>
+          <div
+            class="p-3 plot-wrapper"
+            style="min-width: 20rem; max-width: 50rem; min-height:30rem;"
+          >
+            <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
           </div>
         </div>
+        <div class="div-center">
+          <div class="input-wrapper">
+            <button type="button" id="complex_cletric_sea_btn" class="someBtn m-2">
+                Celtric Sea
+            </button>
+            <button type="button" id="complex_region2_btn" class="someBtn m-2">
+                Region 2
+            </button>
+            <button type="button" id="complex_region3_btn" class="someBtn m-2">
+                Region3
+            </button>
+          </div>
       </div>
     </div>
 

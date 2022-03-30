@@ -68,3 +68,10 @@ export function quantile(arr, q) {
     if (sorted[base + 1] !== undefined) return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
     else return sorted[base];
 };
+
+export function randomValues(count, min, max) {
+    const delta = max - min;
+    return Array.from({
+        length: count
+    }).map(() => Math.random() * delta + min);
+}
