@@ -29,7 +29,6 @@ temp_slider_simple.oninput = () => {
 };
 
 initial_weight_input.onchange = () => {
-    // window.plot_simple(parseFloat(temp_slider_simple.value), parseFloat(initial_weight_input.value));
     window.computeSimple(null, null, parseFloat(initial_weight_input.value));
     console.log('conmputed')
     window.plot_simple(parseFloat(temp_slider_simple.value));
@@ -45,5 +44,5 @@ initial_weight_input.onchange = () => {
 const complex_cletric_sea_btn = document.getElementById('complex_cletric_sea_btn');
 
 complex_cletric_sea_btn.onclick = () => {
-    window.loadNewRegion('CeltricSea');
+    window.loadNewRegion('Celtic Sea');
 }

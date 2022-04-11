@@ -55,17 +55,19 @@ import {
 // ##### SETTINGS #############################################
 // #######################################################################
 
-window.last_selected_region = 'CeltricSea';
+window.precomputed = true;
 window.regions = [{
-    name: 'CeltricSea',
+    name: 'Celtic Sea',
     boxplot_data_filename: 'CelticSea_PREPARED-FOR-BOX-PLOTTING_7e-k_stock_weight-at-age_1971-2018_WGCSE2019.csv',
-    complex_data_filename: 'CeltricSea_2000-2004.csv',
+    complex_data_filename: 'SODA_temp_Celtic-Sea_30-580m_1958-2007.csv', //CelticSea_2000-2004.csv',
+    complex_precomputed_data_filename: 'Celtic-Sea_1958-2007_gen-10_quantiles_precomputed.csv',
+
     index: 0, // specifies the index in computed and loaded arrays
 
     // ---- begin slices
     // # Define geographic boundaries (latitudes, longitudes)
     // # Default coordinates: North Atlantic coordinates
-    lat_bounds: [47, 54],
+    lat_bounds: [47, 52],
     lon_bounds: [-12, -1],
     // # Define depth_levels for your growth model output files
     depth_levels: [0, 600],
@@ -78,32 +80,59 @@ window.regions = [{
         -7.25, -6.75, -6.25, -5.75, -5.25, -4.75, -4.25, -3.75, -3.25, -2.75,
         -2.25, -1.75, -1.25
     ],
-
     // # Define depth that you will use to save your weight-at-age data
     depths: [
-        -0., 10., 20., 30., 40., 50., 60., 70., 80., 90., 100., 115.,
+        //-0., 10., 20., 
+        30., 40., 50., 60., 70., 80., 90., 100., 115.,
         135., 160., 190., 230., 280., 340., 410., 490., 580.
+    ],
+}, {
+    name: 'North Sea',
+    boxplot_data_filename: 'NorthSea...',
+    complex_data_filename: 'SODA_temp_North-Atlantic_30-580m_1958-2007.csv',
+    complex_precomputed_data_filename: 'North-Sea_1958-2007_gen-10_quantiles_precomputed.csv',
+
+    index: 1,
+
+    lat_bounds: [51, 65],
+    lon_bounds: [-3, 8],
+    depth_levels: [30, 600],
+
+    lat: [
+        51.25, 51.75, 52.25, 52.75, 53.25, 53.75, 54.25, 54.75, 55.25, 55.75,
+        56.25, 56.75, 57.25, 57.75, 58.25, 58.75, 59.25, 59.75, 60.25, 60.75,
+        61.25, 61.75, 62.25, 62.75, 63.25, 63.75, 64.25, 64.75
+    ],
+    lon: [
+        -2.75, -2.25, -1.75, -1.25, -0.75, -0.25, 0.25, 0.75, 1.25,
+        1.75, 2.25, 2.75, 3.25, 3.75, 4.25, 4.75, 5.25, 5.75, 6.25,
+        6.75, 7.25, 7.75
+    ],
+    depths: [
+        30., 40., 50., 60., 70., 80., 90., 100., 115., 135., 160.,
+        190., 230., 280., 340., 410., 490., 580.
     ]
 }];
 
 window.processed_data_complex = [{}, {}, {}];
+window.processed_precomputed_data_complex = [{}, {}, {}];
 window.computed_data_complex = [{}, {}, {}];
 
 window.default_input_complex = {
     // # Specification of biological parameters  
     // # Number of years in one life cycle of an individual 
-    generation: 3,
+    generation: 3, //10,
     // # The year when the input temeperature dataset starts 
-    initial_year: 2000,
+    initial_year: 1997,
     // # Number of years in the input temperature dataset
-    years: [2000, 2001, 2002, 2003, 2004],
+    years: range(1997, 2007, 1),
 
     // # Quantiles that we want to caclulate (median - 0.5; IQR - 0.25 and 0.75)
-    quantiles: [0.25, 0.50, 0.75]
+    quantiles: [0.25, 0.50, 0.75],
 };
 window.default_input_simple = {
     max_age: 15 * 365, // # maximum age in days
-    initial_weight: 1 // initial weight in kg
+    initial_weight: 1, // initial weight in kg
 };
 window.constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
     A_R: 8.660,
@@ -114,7 +143,7 @@ window.constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
     T_R: 283,
     T_H: 286,
     C_AVG: 0.291,
-    T0: 273.15
+    T0: 273.15,
 };
 
 // #######################################################################
@@ -166,7 +195,7 @@ window.computeSimple = (data = null, parameters = null, initial_weight = null) =
         b_fit: b_fit,
         c_avg: c_avg,
         weight_at_age: weight_at_age,
-        temperature_range: temperature_range
+        temperature_range: temperature_range,
     }
     return window.last_result_simple;
 }
@@ -203,8 +232,6 @@ function computeComplex(region_index = 0, parameters = null) {
             age = 0;
 
         range(initial_year, last_year - 1, 1).forEach((year) => {
-            // console.log(initial_year, last_year)
-            // console.log(`----${year}----`)
             const tmp = get_year(dataset, parameters.years.at(0), year); // month depth lat lon
 
             // console.log(tmp)
@@ -228,12 +255,6 @@ function computeComplex(region_index = 0, parameters = null) {
                             tmp3d[month][depth][i++] = depth_lat_lon[depth][lat][lon];
             }
 
-            // console.log(tmp3d)
-            // tmp3d.forEach((e) => {
-            //     console.log(e[0].slice(13, 19)) //.slice(13, 19))
-            // })
-            // return
-
             // a = np.zeros(shape=(N_depths, N_lat*N_lon), dtype='f')
             let a = [...new Array(n_depths)].map(() => [...new Array(n_lat * n_lon)].map(() => 0));
             // b = np.zeros(shape=(N_depths, N_lat*N_lon), dtype='f')
@@ -247,11 +268,11 @@ function computeComplex(region_index = 0, parameters = null) {
                         // a[ilev, :] = equation2(temp_input_3d[mon, ilev, :])
                         a[ilev] = equation2(tmp3d[month][ilev]);
                         // b[ilev, :] = equation3(temp_input_3d[mon, ilev, :]) * (-1.)
-                        b[ilev] = equation3(tmp3d[month][ilev]).map((value) => (value === -999) ? -999 : value * -1);
+                        b[ilev] = equation3(tmp3d[month][ilev]).map((value) => (value == -999) ? -999 : value * -1);
 
                         // growth_rates[ilev, :] = 0.01 * ( a[ilev, :] * weight[ilev, :]** b[ilev, :] - C_AVG )  
                         growth_rates[ilev] = a[ilev].map(
-                            (value, index) => (value === -999 || b[ilev][index] === -999) ? -999 :
+                            (value, index) => (value == -999 || b[ilev][index] == -999) ? -999 :
                             0.01 * (value * Math.pow(weight[ilev][index], b[ilev][index]) - constants.C_AVG)
                         );
                         // growth_rates[ilev, :] = np.where(growth_rates[ilev, :] < 0,0, growth_rates[ilev, :])
@@ -259,7 +280,7 @@ function computeComplex(region_index = 0, parameters = null) {
 
                         // weight[ilev, :] = weight[ilev, :] * (1. + dt * growth_rates[ilev, :])
                         weight[ilev] = weight[ilev].map(
-                            (value, index) => (value === -999 || growth_rates[ilev][index] === -999) ? -999 :
+                            (value, index) => (value == -999 || growth_rates[ilev][index] == -999) ? -999 :
                             value * (1 + dt * growth_rates[ilev][index])
                         );
                     }
@@ -281,10 +302,10 @@ function computeComplex(region_index = 0, parameters = null) {
             // weight_3d = 0.001 * weight.reshape((N_depths, N_lat, N_lon))
             for (let d = 0; d < n_depths; d++) {
                 for (let i = 0, lat = 0, lon = 0; i < n_lat * n_lon; i++) {
-                    a_3d[d][lat][lon] = a[d][i];
-                    b_3d[d][lat][lon] = b[d][i];
+                    a_3d[d][lat][lon] = parseFloat(a[d][i]);
+                    b_3d[d][lat][lon] = parseFloat(b[d][i]);
                     growth_rates_3d[d][lat][lon] = growth_rates[d][i];
-                    weight_3d[d][lat][lon] = (weight[d][i] === -999) ? -999 : weight[d][i] * 0.001; // 3D field with asymptotic weight
+                    weight_3d[d][lat][lon] = (weight[d][i] == -999) ? -999 : weight[d][i] * 0.001; // 3D field with asymptotic weight
                     lon++;
                     if (lon === n_lon) {
                         lon = 0;
@@ -310,7 +331,7 @@ function computeComplex(region_index = 0, parameters = null) {
                 weight_3d: weight_3d,
                 max_weight_lat_lon: max_weight_lat_lon,
             }
-            if (typeof results[`${year}`] == 'undefined') results[`${year}`] = [content];
+            if (typeof results[`${year}`] === 'undefined') results[`${year}`] = [content];
             else results[`${year}`].push(content);
             age++;
         });
@@ -320,17 +341,20 @@ function computeComplex(region_index = 0, parameters = null) {
     }
 
     window.computed_data_complex[region_index] = results;
+
+    // console.log(window.computed_data_complex)
     return results;
 }
 
 // #######################################################################
 // ##### PLOTTING #############################################
 // #######################################################################
-window.defaul_chart_config_simple = {
+
+window.default_chart_config_simple = {
     type: 'line',
     data: {
         labels: null,
-        datasets: null
+        datasets: null,
     },
     options: {
         responsive: true,
@@ -341,7 +365,7 @@ window.defaul_chart_config_simple = {
                 text: 'Cod growth rates in the aquarium',
                 font: {
                     Family: 'Helvetica',
-                    size: 18
+                    size: 18,
                 },
             },
             legend: {
@@ -373,7 +397,7 @@ window.defaul_chart_config_simple = {
                         size: 16
                     },
                 },
-                min: 0
+                min: 0,
             },
         },
         animations: {
@@ -381,7 +405,7 @@ window.defaul_chart_config_simple = {
                 duration: 400,
                 easing: 'linear',
                 loop: (ctx) => ctx.activate
-            }
+            },
         },
         hoverRadius: 8,
         hoverBackgroundColor: 'yellow',
@@ -391,11 +415,11 @@ window.defaul_chart_config_simple = {
             axis: 'x'
         },
     },
-}
+};
 
 window.plot_simple = (temperature = 3.0) => {
     temperature = parseFloat(temperature);
-    let config = JSON.parse(JSON.stringify(window.defaul_chart_config_simple));
+    let config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
     const
         data = window.last_result_simple,
         ctx = $('#simple_plot_canvas'),
@@ -440,74 +464,82 @@ window.plot_simple = (temperature = 3.0) => {
     }
 }
 
-window.plot_complex = (region_index = null, temperature = null, kind = null) => {
-
+/**
+ * Plots the complex chart
+ * if window.precomputed = true, the precomputed dataset must be loaded; the calc is done before then
+ * @param {int} region_index 
+ */
+window.plot_complex = (region_index = null) => {
     region_index = (region_index === null) ? 0 : parseInt(region_index);
-    kind = (kind === null) ? 'avg' : kind;
-    let config = JSON.parse(JSON.stringify(window.defaul_chart_config_simple));
+    let config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
 
     const
-        data = window.computed_data_complex[region_index],
+        data = (precomputed) ? window.processed_precomputed_data_complex[region_index] : window.computed_data_complex[region_index],
         ctx = $(`#complex_plot_canvas0`);
-    // ctx = $(`#complex_plot_canvas${region_index}`);
-
-    // console.log(data)
 
     // age x weight(@quantile)
     let weight_by_age_quantile = {};
-    for (var year of Object.keys(data)) {
-        for (var i of Object.keys(data[year])) {
-            const age = data[year][i].age;
 
-            var valid_values = data[year].find(obj => {
-                return obj.age === age
-            })['weight_3d'].flat().flat().filter(value => value !== -999);
+    if (!window.precomputed) {
+        for (var year of Object.keys(data)) {
+            for (var i of Object.keys(data[year])) {
+                const age = data[year][i].age;
 
-            const quantiles = {
-                q_25: quantile(valid_values, .25),
-                q_50: quantile(valid_values, .5),
-                q_75: quantile(valid_values, .75)
-            };
+                var valid_values = data[year].find(obj => {
+                    return obj.age === age
+                })['weight_3d'].flat().flat().filter(value => value != -999);
 
-            if (typeof weight_by_age_quantile[`${age}`] === 'undefined') weight_by_age_quantile[`${age}`] = {
-                q_25: [quantiles.q_25],
-                q_50: [quantiles.q_50],
-                q_75: [quantiles.q_75]
-            }
-            else {
-                weight_by_age_quantile[`${age}`].q_25.push(quantiles.q_25);
-                weight_by_age_quantile[`${age}`].q_50.push(quantiles.q_50);
-                weight_by_age_quantile[`${age}`].q_75.push(quantiles.q_75);
+                const quantiles = {
+                    q_25: quantile(valid_values, .25),
+                    q_50: quantile(valid_values, .5),
+                    q_75: quantile(valid_values, .75)
+                };
+
+                console.log(age, quantiles.q_25)
+
+                if (typeof weight_by_age_quantile[`${age}`] === 'undefined') weight_by_age_quantile[`${age}`] = {
+                    q_25: [quantiles.q_25],
+                    q_50: [quantiles.q_50],
+                    q_75: [quantiles.q_75]
+                }
+                else {
+                    weight_by_age_quantile[`${age}`].q_25.push(quantiles.q_25);
+                    weight_by_age_quantile[`${age}`].q_50.push(quantiles.q_50);
+                    weight_by_age_quantile[`${age}`].q_75.push(quantiles.q_75);
+                }
             }
         }
     }
 
-    // console.log(weight_by_age_quantile)
-    const years = Object.keys(weight_by_age_quantile).length;
+    const years = (window.precomputed) ? data[0].length : Object.keys(weight_by_age_quantile).length;
     let plottable_datasets = [{
+        type: 'line',
         label: '25% Quantile',
-        data: [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_25)),
+        data: (window.precomputed) ? data[0] : [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_25)),
         fill: false,
         borderColor: 'orange',
         pointRadius: 0,
         borderDash: [10, 5]
     }, {
+        type: 'line',
         label: '50% Quantile',
-        data: [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_50)),
+        data: (window.precomputed) ? data[1] : [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_50)),
         fill: false,
         borderColor: 'black',
         pointRadius: 0
     }, {
+        type: 'line',
         label: '75% Quantile',
-        data: [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_75)),
+        data: (window.precomputed) ? data[2] : [...new Array(years)].map((e, i) => avg(weight_by_age_quantile[i].q_75)),
         fill: false,
         borderColor: 'red',
         pointRadius: 0,
         borderDash: [10, 5]
     }];
+
     config.data.labels = range(1, years);
     config.data.datasets = plottable_datasets;
-    config.options.plugins.title.text = window.processed_data_complex[region_index].region.name;
+    config.options.plugins.title.text = window.regions[region_index].name;
 
     config.options.plugins.tooltip = {
         displayColors: true,
@@ -516,14 +548,14 @@ window.plot_complex = (region_index = null, temperature = null, kind = null) => 
                 return (context.dataset.label !== null && context.parsed.y !== null) ? `${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
             },
             title: (context) => {
-                return `Age, year: ${Number(context[0].parsed.x).toFixed(1)}`;
+                return `Age, year: ${Number(context[0].parsed.x+1).toFixed(1)}`;
             }
         }
     };
 
     if (typeof window.complex_chart === 'undefined') {
-        config.options.scales.x.title.text = 'Age, years'
-        window.complex_chart = new Chart(ctx, config)
+        config.options.scales.x.title.text = 'Age, years';
+        window.complex_chart = new Chart(ctx, config);
     } else {
         window.complex_chart.data.labels = config.data.labels;
         window.complex_chart.data.datasets = config.data.datasets;
@@ -531,18 +563,18 @@ window.plot_complex = (region_index = null, temperature = null, kind = null) => 
     }
 }
 
-window.complex_box_plot = (region_params, boxdata) => {
 
+window.complex_box_plot = (region_params, boxdata) => {
     /**  BOXPLOT
      * <script type="text/javascript" src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
      * */
 
-    const labels = range(1, boxdata.length);
+    const labels = range(1, 10); //boxdata.length);
     const boxplotDatasets = {
         labels: labels,
         datasets: [{
+            type: 'boxplot',
             label: 'Weight at age',
-            // backgroundColor: 'rgba(0,0,255,.5)',
             borderColor: 'blue',
             borderWidth: 1,
             outlierColor: '#999999',
@@ -551,6 +583,12 @@ window.complex_box_plot = (region_params, boxdata) => {
             data: boxdata
         }]
     };
+    console.log(boxdata)
+
+    // ! DAS HIER AUSKOMMENTIEREN, DAMIT KEIN BOXPLOT IN LINE IST
+    window.complex_chart.data.datasets.push(boxplotDatasets.datasets[0]);
+    window.complex_chart.update();
+
     const boxconfig = {
         type: 'boxplot',
         data: boxplotDatasets,
@@ -586,7 +624,7 @@ window.complex_box_plot = (region_params, boxdata) => {
                             return label;
                         },
                         title: (context) => {
-                            return `Age, year: ${Number(context[0].parsed.x).toFixed(1)}`;
+                            return `Age, year: ${Number(context[0].parsed.x+1).toFixed(1)}`;
                         },
                     },
                 },
@@ -613,14 +651,15 @@ window.complex_box_plot = (region_params, boxdata) => {
                             size: 16,
                         },
                     },
+                    max: window.complex_chart.scales.y.max,
+                    min: window.complex_chart.scales.y.min,
                 },
-            }
-        }
+            },
+        },
     };
 
-    if (typeof window.complex_boxplot === 'undefined') {
-        window.complex_boxplot = new Chart($(`#complex_plot_canvas1`), boxconfig);
-    } else {
+    if (typeof window.complex_boxplot === 'undefined') window.complex_boxplot = new Chart($(`#complex_plot_canvas1`), boxconfig);
+    else {
         window.complex_boxplot.data.labels = boxconfig.data.labels;
         window.complex_boxplot.data.datasets = boxconfig.data.datasets;
         window.complex_boxplot.options.plugins.title.text = region_params.name;
@@ -633,22 +672,33 @@ window.complex_box_plot = (region_params, boxdata) => {
 // #######################################################################
 
 window.loadNewRegion = (name = null) => {
-    name = (name === null) ? 'CeltricSea' : name;
+    name = (name === null) ? 'Celtic Sea' : name;
     let reigon_param;
     regions.forEach((region) => {
         if (region.name === name) reigon_param = region;
     })
 
     // Complex Lineplot
-    $.ajax({
+
+    if (window.precomputed) $.ajax({
+        type: 'GET',
+        url: `data/${reigon_param.complex_precomputed_data_filename}`,
+        dataType: 'text',
+        success: (data) => {
+            const n_time = default_input_complex.years.length * 12;
+            window.processed_precomputed_data_complex[reigon_param.index] = processData(data, 'complex-precomputed', reigon_param, n_time);
+            window.plot_complex(reigon_param.index);
+        }
+    });
+    else $.ajax({
         type: 'GET',
         url: `data/${reigon_param.complex_data_filename}`,
         dataType: 'text',
         success: (data) => {
             const n_time = default_input_complex.years.length * 12;
-            window.processed_data_complex[reigon_param.index] = processData(data, 'Complex', reigon_param, n_time);
+            window.processed_data_complex[reigon_param.index] = processData(data, 'complex', reigon_param, n_time);
             computeComplex(reigon_param.index);
-            window.plot_complex(reigon_param.index)
+            window.plot_complex(reigon_param.index);
         }
     });
 
@@ -675,7 +725,7 @@ function processData(allText, kind, region = null, n_time = null) {
             b_fit: allTextLines[1].split(',').map((element) => parseFloat(element)),
             c_avg: 0.29100703
         }
-    } else if (kind == 'Complex') {
+    } else if (kind === 'complex') {
         const
             n_lat = region.lat.length,
             n_lon = region.lon.length,
@@ -700,7 +750,7 @@ function processData(allText, kind, region = null, n_time = null) {
         // insert parsed values from csv to empty final array
         for (let row = 0, lat = 0, lon = 0; row < lines.length; row++) {
             const depth = row % n_depths;
-            if (row % n_depths === 0 && row != 0) lon += 1;
+            if (row % n_depths === 0 && row !== 0) lon += 1;
             if (lon === n_lon) {
                 lon = 0;
                 lat += 1;
@@ -714,11 +764,20 @@ function processData(allText, kind, region = null, n_time = null) {
             region: region,
             dataset: reshaped_data
         };
-    } else if (kind == 'complex-boxplot') {
+    } else if (kind === 'complex-precomputed') {
+        let data = new Array(0);
+        for (let line = 0; line < allTextLines.length - 1; line++) {
+            data.push(new Array(0));
+            allTextLines[line].split(',').forEach((e, i) => {
+                data[line].push(parseFloat(e));
+            });
+        }
+        return data;
+    } else if (kind === 'complex-boxplot') {
         let data = [...new Array(allTextLines[0].split(',').length - 1)].map(() => [...new Array(0)]);
         for (let line = 1; line < allTextLines.length - 1; line++) {
             allTextLines[line].split(',').forEach((e, i) => {
-                if (i != 0) data[i - 1].push(parseFloat(e));
+                if (i !== 0) data[i - 1].push(parseFloat(e));
             });
         }
         return data;
@@ -726,8 +785,6 @@ function processData(allText, kind, region = null, n_time = null) {
 }
 
 $(document).ready(() => {
-    // laod csv data
-
     // Simple
     $.ajax({
         type: 'GET',
@@ -743,5 +800,5 @@ $(document).ready(() => {
     });
 
     // Complex
-    window.loadNewRegion('CeltricSea');
+    window.loadNewRegion('Celtic Sea');
 });
