@@ -38,6 +38,13 @@ def saveIt():
 > saveIt()
  **/
 
+
+/**
+ * 
+ * 
+ * THIS IS OLD AND NOT IN USE
+ * THIS SCRIPT ALSO INCLUDES THE COMPUTATION OF THE GROWTH MODELS
+ */
 import {
     get_year,
     get_weight_by_temperature,
@@ -61,6 +68,7 @@ window.regions = [{
     boxplot_data_filename: 'CelticSea_PREPARED-FOR-BOX-PLOTTING_7e-k_stock_weight-at-age_1971-2018_WGCSE2019.csv',
     complex_data_filename: 'SODA_temp_Celtic-Sea_30-580m_1958-2007.csv', //CelticSea_2000-2004.csv',
     complex_precomputed_data_filename: 'Celtic-Sea_1958-2007_gen-10_quantiles_precomputed.csv',
+
 
     index: 0, // specifies the index in computed and loaded arrays
 
@@ -426,7 +434,7 @@ window.plot_simple = (temperature = 3.0) => {
         t_idx = get_temperature_index(temperature);
 
     const choosen_temperature = data.temperature_range[t_idx];
-    const color = (choosen_temperature > 20) ? 'red' : (choosen_temperature > 8) ? 'orange' : (choosen_temperature > 0) ? 'black' : 'blue'
+    const color = (choosen_temperature > 16) ? 'red' : (choosen_temperature > 8) ? 'orange' : (choosen_temperature > 0) ? 'black' : 'blue'
     const weights = get_weight_by_temperature(data.weight_at_age, t_idx);
 
     config.data.labels = range(1, weights.length);
@@ -667,6 +675,7 @@ window.complex_box_plot = (region_params, boxdata) => {
     }
 }
 
+
 // #######################################################################
 // ##### ON - READY #############################################
 // #######################################################################
@@ -713,6 +722,7 @@ window.loadNewRegion = (name = null) => {
         }
     });
 }
+
 
 function processData(allText, kind, region = null, n_time = null) {
     let
@@ -766,10 +776,10 @@ function processData(allText, kind, region = null, n_time = null) {
         };
     } else if (kind === 'complex-precomputed') {
         let data = new Array(0);
-        for (let line = 0; line < allTextLines.length - 1; line++) {
+        for (let line = 1; line < allTextLines.length - 1; line++) {
             data.push(new Array(0));
             allTextLines[line].split(',').forEach((e, i) => {
-                data[line].push(parseFloat(e));
+                if (i !== 0) data[line - 1].push(parseFloat(e));
             });
         }
         return data;

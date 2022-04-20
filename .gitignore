@@ -10,3 +10,4 @@ __pycache__
 *.npz
 
 deploy.sh
+dist/

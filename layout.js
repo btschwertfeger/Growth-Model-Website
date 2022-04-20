@@ -41,8 +41,21 @@ initial_weight_input.onchange = () => {
  */
 
 
-const complex_cletric_sea_btn = document.getElementById('complex_cletric_sea_btn');
+const
+    complex_historical_btn = document.getElementById('complex_historical'),
+    complex_rcp45 = document.getElementById('complex_rcp45'),
+    complex_rcp85 = document.getElementById('complex_rcp85'),
+    complex_soda = document.getElementById('complex_soda');
 
-complex_cletric_sea_btn.onclick = () => {
-    window.loadNewRegion('Celtic Sea');
+complex_historical_btn.onclick = () => {
+    window.loadNewScenario('FESOM_historical');
+}
+complex_rcp45.onclick = () => {
+    window.loadNewScenario('FESOM_RCP45');
+}
+complex_rcp85.onclick = () => {
+    window.loadNewScenario('FESOM_RCP85');
+}
+complex_soda.onclick = () => {
+    window.loadNewScenario('SODA');
 }
