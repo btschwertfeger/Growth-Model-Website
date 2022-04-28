@@ -45,17 +45,14 @@ const
     complex_historical_btn = document.getElementById('complex_historical'),
     complex_rcp45 = document.getElementById('complex_rcp45'),
     complex_rcp85 = document.getElementById('complex_rcp85'),
-    complex_soda = document.getElementById('complex_soda');
+    period_switch = document.getElementById('period_switch');
 
 complex_historical_btn.onclick = () => {
-    window.loadNewScenario('FESOM_historical');
+    window.plot_complex('FESOM_HISTORICAL', (period_switch.checked) ? '1860-1900' : '1960-2000');
 }
 complex_rcp45.onclick = () => {
-    window.loadNewScenario('FESOM_RCP45');
+    window.plot_complex('FESOM_RCP45', (period_switch.checked) ? '2060-2100' : '2160-2200');
 }
 complex_rcp85.onclick = () => {
-    window.loadNewScenario('FESOM_RCP85');
-}
-complex_soda.onclick = () => {
-    window.loadNewScenario('SODA');
+    window.plot_complex('FESOM_RCP85', (period_switch.checked) ? '2060-2100' : '2160-2200');
 }

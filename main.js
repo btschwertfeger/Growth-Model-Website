@@ -28,39 +28,87 @@ import {
 // #######################################################################
 
 window.precomputed = true;
+
+
 window.regions = [{
     name: 'Celtic Sea',
-    boxplot_data_filename: 'CelticSea_PREPARED-FOR-BOX-PLOTTING_7e-k_stock_weight-at-age_1971-2018_WGCSE2019.csv',
+    // boxplot_data_filename: 'observation4boxplot/CelticSea_PREPARED-FOR-BOX-PLOTTING_7e-k_stock_weight-at-age_1971-2018_WGCSE2019.csv',
+
     precomputed: {
-        FESOM_historical: {
-            timespan: '1860-2000',
-            all: 'FESOM_historical/CelticSea_FESOM_historical_all.csv',
-            quant25: 'FESOM_historical/CelticSea_depth30-580_coord4752121_FESOMhist/CelticSea_depth30-580_coord4752121_FESOM_HIST_weight_0.25persent_1860-2000_nomasktemp_ages1-10.csv',
-            quant50: 'FESOM_historical/CelticSea_depth30-580_coord4752121_FESOMhist/CelticSea_depth30-580_coord4752121_FESOM_HIST_weight_0.5persent_1860-2000_nomasktemp_ages1-10.csv',
-            quant75: 'FESOM_historical/CelticSea_depth30-580_coord4752121_FESOMhist/CelticSea_depth30-580_coord4752121_FESOM_HIST_weight_0.75persent_1860-2000_nomasktemp_ages1-10.csv'
+        FESOM_HISTORICAL: {
+            '1860-1900': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            },
+            '1960-2000': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         },
         FESOM_RCP45: {
-            timespan: '2060-2200',
-            all: 'FESOM_RCP4.5/CelticSea_FESOM_RCP4.5_all.csv',
-            quant25: 'FESOM_RCP4.5/CelticSea_depth30-580_coord4752121_RCP45/CelticSea_depth30-580_coord4752121_FESOM_RCP4.5_weight_0.25persent_2060-2200_nomasktemp_ages1-10.csv',
-            quant50: 'FESOM_RCP4.5/CelticSea_depth30-580_coord4752121_RCP45/CelticSea_depth30-580_coord4752121_FESOM_RCP4.5_weight_0.5persent_2060-2200_nomasktemp_ages1-10.csv',
-            quant75: 'FESOM_RCP4.5/CelticSea_depth30-580_coord4752121_RCP45/CelticSea_depth30-580_coord4752121_FESOM_RCP4.5_weight_0.75persent_2060-2200_nomasktemp_ages1-10.csv'
+            '2060-2100': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            },
+            '2160-2200': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         },
         FESOM_RCP85: {
-            timespan: '2060-2200',
-            all: 'FESOM_RCP8.5/CelticSea_FESOM_RCP8.5_all.csv',
-            quant25: 'FESOM_RCP8.5/CelticSea_depth30-580_coord4752121_RCP85/CelticSea_depth30-580_coord4752121_FESOM_RCP8.5_weight_0.25persent_2060-2200_nomasktemp_ages1-10.csv',
-            quant50: 'FESOM_RCP8.5/CelticSea_depth30-580_coord4752121_RCP85/CelticSea_depth30-580_coord4752121_FESOM_RCP8.5_weight_0.5persent_2060-2200_nomasktemp_ages1-10.csv',
-            quant75: 'FESOM_RCP8.5/CelticSea_depth30-580_coord4752121_RCP85/CelticSea_depth30-580_coord4752121_FESOM_RCP8.5_weight_0.75persent_2060-2200_nomasktemp_ages1-10.csv'
+            '2060-2100': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            },
+            '2160-2200': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         },
         SODA: {
-            timespan: '1960-2000',
-            all: 'SODA/CelticSea_SODA_all.csv',
-            quant25: 'SODA/CelticSea/CelticSea_depth30-580_coord4752121_SODA_weight_0.25persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
-            quant50: 'SODA/CelticSea/CelticSea_depth30-580_coord4752121_SODA_weight_0.5persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
-            quant75: 'SODA/CelticSea/CelticSea_depth30-580_coord4752121_SODA_weight_0.75persent_1959-2000_nomasktemp_nospawn_ages1-10.csv'
+            '1960-2000': {
+                quant25: null,
+                quant50: null,
+                quant75: null,
+            }
         }
     },
+    // precomputed: {
+    //     FESOM_historical: {
+    //         timespan: '1860-2000',
+    //         all: 'FESOM_historical/CelticSea_FESOM_historical_all.csv',
+    //         quant25: 'FESOM_historical/CelticSea_depth30-580_coord4752121_FESOMhist/CelticSea_depth30-580_coord4752121_FESOM_HIST_weight_0.25persent_1860-2000_nomasktemp_ages1-10.csv',
+    //         quant50: 'FESOM_historical/CelticSea_depth30-580_coord4752121_FESOMhist/CelticSea_depth30-580_coord4752121_FESOM_HIST_weight_0.5persent_1860-2000_nomasktemp_ages1-10.csv',
+    //         quant75: 'FESOM_historical/CelticSea_depth30-580_coord4752121_FESOMhist/CelticSea_depth30-580_coord4752121_FESOM_HIST_weight_0.75persent_1860-2000_nomasktemp_ages1-10.csv'
+    //     },
+    //     FESOM_RCP45: {
+    //         timespan: '2060-2200',
+    //         all: 'FESOM_RCP4.5/CelticSea_FESOM_RCP4.5_all.csv',
+    //         quant25: 'FESOM_RCP4.5/CelticSea_depth30-580_coord4752121_RCP45/CelticSea_depth30-580_coord4752121_FESOM_RCP4.5_weight_0.25persent_2060-2200_nomasktemp_ages1-10.csv',
+    //         quant50: 'FESOM_RCP4.5/CelticSea_depth30-580_coord4752121_RCP45/CelticSea_depth30-580_coord4752121_FESOM_RCP4.5_weight_0.5persent_2060-2200_nomasktemp_ages1-10.csv',
+    //         quant75: 'FESOM_RCP4.5/CelticSea_depth30-580_coord4752121_RCP45/CelticSea_depth30-580_coord4752121_FESOM_RCP4.5_weight_0.75persent_2060-2200_nomasktemp_ages1-10.csv'
+    //     },
+    //     FESOM_RCP85: {
+    //         timespan: '2060-2200',
+    //         all: 'FESOM_RCP8.5/CelticSea_FESOM_RCP8.5_all.csv',
+    //         quant25: 'FESOM_RCP8.5/CelticSea_depth30-580_coord4752121_RCP85/CelticSea_depth30-580_coord4752121_FESOM_RCP8.5_weight_0.25persent_2060-2200_nomasktemp_ages1-10.csv',
+    //         quant50: 'FESOM_RCP8.5/CelticSea_depth30-580_coord4752121_RCP85/CelticSea_depth30-580_coord4752121_FESOM_RCP8.5_weight_0.5persent_2060-2200_nomasktemp_ages1-10.csv',
+    //         quant75: 'FESOM_RCP8.5/CelticSea_depth30-580_coord4752121_RCP85/CelticSea_depth30-580_coord4752121_FESOM_RCP8.5_weight_0.75persent_2060-2200_nomasktemp_ages1-10.csv'
+    //     },
+    //     SODA: {
+    //         timespan: '1960-2000',
+    //         all: 'SODA/CelticSea_SODA_all.csv',
+    //         quant25: 'SODA/CelticSea/CelticSea_depth30-580_coord4752121_SODA_weight_0.25persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
+    //         quant50: 'SODA/CelticSea/CelticSea_depth30-580_coord4752121_SODA_weight_0.5persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
+    //         quant75: 'SODA/CelticSea/CelticSea_depth30-580_coord4752121_SODA_weight_0.75persent_1959-2000_nomasktemp_nospawn_ages1-10.csv'
+    //     }
+    // },
     index: 0, // specifies the index in computed and loaded arrays
 
     // ---- begin slices
@@ -87,37 +135,82 @@ window.regions = [{
     ],
 }, {
     name: 'North Sea',
-    boxplot_data_filename: 'NorthSea...',
     precomputed: {
-        FESOM_historical: {
-            timespan: '1860-2000',
-            all: 'FESOM_historical/NorthSea_FESOM_historical_all.csv',
-            quant25: 'FESOM_historical/NorthSea_depth30-580_coord516238_FESOMhist/NorthSea_depth30-580_coord516238_FESOM_HIST_weight_0.25persent_1860-2000_nomasktemp_ages1-10.csv',
-            quant50: 'FESOM_historical/NorthSea_depth30-580_coord516238_FESOMhist/NorthSea_depth30-580_coord516238_FESOM_HIST_weight_0.5persent_1860-2000_nomasktemp_ages1-10.csv',
-            quant75: 'FESOM_historical/NorthSea_depth30-580_coord516238_FESOMhist/NorthSea_depth30-580_coord516238_FESOM_HIST_weight_0.75persent_1860-2000_nomasktemp_ages1-10.csv',
+        FESOM_HISTORICAL: {
+            '1860-1900': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            },
+            '1960-2000': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         },
         FESOM_RCP45: {
-            timespan: '2060-2200',
-            all: 'FESOM_RCP4.5/NorthSea_FESOM_RCP4.5_all.csv',
-            quant25: 'FESOM_RCP4.5/NorthSea_depth30-580_coord516238_RCP45/NorthSea_depth30-580_coord516238_FESOM_RCP4.5_weight_0.25persent_2007-2203_nomasktemp_ages1-10.csv',
-            quant50: 'FESOM_RCP4.5/NorthSea_depth30-580_coord516238_RCP45/NorthSea_depth30-580_coord516238_FESOM_RCP4.5_weight_0.5persent_2007-2203_nomasktemp_ages1-10.csv',
-            quant75: 'FESOM_RCP4.5/NorthSea_depth30-580_coord516238_RCP45/NorthSea_depth30-580_coord516238_FESOM_RCP4.5_weight_0.75persent_2007-2203_nomasktemp_ages1-10.csv',
+            '2060-2100': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            },
+            '2160-2200': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         },
         FESOM_RCP85: {
-            timespan: '2060-2200',
-            all: 'FESOM_RCP8.5/NorthSea_FESOM_RCP8.5_all.csv',
-            quant25: 'FESOM_RCP8.5/NorthSea_depth30-580_coord516238_RCP85/NorthSea_depth30-580_coord516238_FESOM_RCP8.5_weight_0.25persent_2060-2200_nomasktemp_ages1-10.csv',
-            quant50: 'FESOM_RCP8.5/NorthSea_depth30-580_coord516238_RCP85/NorthSea_depth30-580_coord516238_FESOM_RCP8.5_weight_0.5persent_2060-2200_nomasktemp_ages1-10.csv',
-            quant75: 'FESOM_RCP8.5/NorthSea_depth30-580_coord516238_RCP85/NorthSea_depth30-580_coord516238_FESOM_RCP8.5_weight_0.75persent_2060-2200_nomasktemp_ages1-10.csv',
+            '2060-2100': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            },
+            '2160-2200': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         },
         SODA: {
-            timespan: '1960-2000',
-            all: 'SODA/NorthSea_SODA_all.csv',
-            quant25: 'SODA/NorthSea/NorthSea_depth30-580_coord516238_SODA_weight_0.25persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
-            quant50: 'SODA/NorthSea/NorthSea_depth30-580_coord516238_SODA_weight_0.5persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
-            quant75: 'SODA/NorthSea/NorthSea_depth30-580_coord516238_SODA_weight_0.75persent_1959-2007_nomasktemp_nospawn_ages1-10.csv'
+            '1960-2000': {
+                quant25: null,
+                quant50: null,
+                quant75: null
+            }
         }
     },
+    // boxplot_data_filename: 'observation4boxplot/NorthSea_PREPARED-FOR-BOX-PLOTTING_averaged_south_and_north_fromDATRAS_weight-at-age_1971-2020.csv',
+    // precomputed: {
+    //     FESOM_historical: {
+    //         timespan: '1860-2000',
+    //         all: 'FESOM_historical/NorthSea_FESOM_historical_all.csv',
+    //         quant25: 'FESOM_historical/NorthSea_depth30-580_coord516238_FESOMhist/NorthSea_depth30-580_coord516238_FESOM_HIST_weight_0.25persent_1860-2000_nomasktemp_ages1-10.csv',
+    //         quant50: 'FESOM_historical/NorthSea_depth30-580_coord516238_FESOMhist/NorthSea_depth30-580_coord516238_FESOM_HIST_weight_0.5persent_1860-2000_nomasktemp_ages1-10.csv',
+    //         quant75: 'FESOM_historical/NorthSea_depth30-580_coord516238_FESOMhist/NorthSea_depth30-580_coord516238_FESOM_HIST_weight_0.75persent_1860-2000_nomasktemp_ages1-10.csv',
+    //     },
+    //     FESOM_RCP45: {
+    //         timespan: '2060-2200',
+    //         all: 'FESOM_RCP4.5/NorthSea_FESOM_RCP4.5_all.csv',
+    //         quant25: 'FESOM_RCP4.5/NorthSea_depth30-580_coord516238_RCP45/NorthSea_depth30-580_coord516238_FESOM_RCP4.5_weight_0.25persent_2007-2203_nomasktemp_ages1-10.csv',
+    //         quant50: 'FESOM_RCP4.5/NorthSea_depth30-580_coord516238_RCP45/NorthSea_depth30-580_coord516238_FESOM_RCP4.5_weight_0.5persent_2007-2203_nomasktemp_ages1-10.csv',
+    //         quant75: 'FESOM_RCP4.5/NorthSea_depth30-580_coord516238_RCP45/NorthSea_depth30-580_coord516238_FESOM_RCP4.5_weight_0.75persent_2007-2203_nomasktemp_ages1-10.csv',
+    //     },
+    //     FESOM_RCP85: {
+    //         timespan: '2060-2200',
+    //         all: 'FESOM_RCP8.5/NorthSea_FESOM_RCP8.5_all.csv',
+    //         quant25: 'FESOM_RCP8.5/NorthSea_depth30-580_coord516238_RCP85/NorthSea_depth30-580_coord516238_FESOM_RCP8.5_weight_0.25persent_2060-2200_nomasktemp_ages1-10.csv',
+    //         quant50: 'FESOM_RCP8.5/NorthSea_depth30-580_coord516238_RCP85/NorthSea_depth30-580_coord516238_FESOM_RCP8.5_weight_0.5persent_2060-2200_nomasktemp_ages1-10.csv',
+    //         quant75: 'FESOM_RCP8.5/NorthSea_depth30-580_coord516238_RCP85/NorthSea_depth30-580_coord516238_FESOM_RCP8.5_weight_0.75persent_2060-2200_nomasktemp_ages1-10.csv',
+    //     },
+    //     SODA: {
+    //         timespan: '1960-2000',
+    //         all: 'SODA/NorthSea_SODA_all.csv',
+    //         quant25: 'SODA/NorthSea/NorthSea_depth30-580_coord516238_SODA_weight_0.25persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
+    //         quant50: 'SODA/NorthSea/NorthSea_depth30-580_coord516238_SODA_weight_0.5persent_1959-2000_nomasktemp_nospawn_ages1-10.csv',
+    //         quant75: 'SODA/NorthSea/NorthSea_depth30-580_coord516238_SODA_weight_0.75persent_1959-2007_nomasktemp_nospawn_ages1-10.csv'
+    //     }
+    // },
     index: 1,
 
     lat_bounds: [51, 65],
@@ -329,91 +422,129 @@ window.plot_simple = (temperature = 3.0) => {
     }
 }
 
-window.complex_charts = [null, null]
-window.plot_complex = (region_params, data, kind, scenario_name) => {
-
-    let
-        config = JSON.parse(JSON.stringify(window.default_chart_config_simple)),
-        ctx = $(`#complex_plot_canvas${region_params.index}`);
+window.complex_charts = [
+    null, null, // upper left, upper right,
+    null, null // lower left, lower right
+]
+window.plot_complex = (scenario, period) => {
     const n_generations = 10;
 
-    let weight_by_age_vector = [...new Array(n_generations)].map(() => new Array());
-    for (var year = 0; year < data.length; year++) {
-        for (var gen = 0; gen < n_generations; gen++) {
-            if (!isNaN(data[year][gen])) weight_by_age_vector[gen].push((data[year][gen]));
-        }
-    }
+    let general_config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
+    general_config.data.labels = range(1, n_generations);
+    general_config.data.datasets = [];
+    general_config.options.scales.x.title.text = 'Age, years';
 
-    let label, xdata, borderColor, borderDash, type;
-    kind = kind.toString();
-    if (kind == 'quant25') {
-        type = 'line';
-        label = '25% Quantile';
-        xdata = [...new Array(n_generations)].map((e, i) => avg(weight_by_age_vector[i]));
-        borderColor = 'orange';
-        borderDash = [10, 5];
-    } else if (kind == 'quant50') {
-        type = 'line';
-        label = '50% Quantile';
-        xdata = [...new Array(n_generations)].map((e, i) => avg(weight_by_age_vector[i]));
-        borderColor = 'black';
-        borderDash = [0];
-    } else if (kind == 'quant75') {
-        type = 'line';
-        label = '75% Quantile';
-        xdata = [...new Array(n_generations)].map((e, i) => avg(weight_by_age_vector[i]));
-        borderColor = 'red';
-        borderDash = [10, 5];
-    }
-
-    let plottable_dataset = {
-        type: type,
-        label: label,
-        data: xdata,
-        borderColor: borderColor,
-        pointRadius: 0,
-        borderDash: borderDash,
-    };
-
-    if (kind == 'boxplot') {
-        plottable_dataset = {
-            type: 'boxplot',
-            label: 'weight at age',
-            borderColor: 'blue',
-            borderWidth: 1,
-            outlierColor: '#999999',
-            padding: 10,
-            itemRadius: 0,
-            data: weight_by_age_vector
-        }
-    }
-
-    config.data.labels = range(1, n_generations);
-    config.data.datasets = [plottable_dataset];
-    config.options.plugins.title.text = `${region_params.name} ${scenario_name} (${region_params.precomputed[scenario_name].timespan})`;
-    config.options.scales.x.title.text = 'Age, years';
-    config.options.plugins.tooltip = {
-        displayColors: true,
-        callbacks: {
-            label: (context) => {
-                return (context.dataset.label !== null && context.parsed.y !== null) ? `${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
-            },
-            title: (context) => {
-                return `Age, year: ${Number(context[0].parsed.x+1).toFixed(1)}`;
-            },
+    const
+        get_weight_by_age = (data, n_generations) => {
+            let weight_by_age_vector = [...new Array(n_generations)].map(() => new Array());
+            for (var entry = 0, age = 0; entry < data.length; entry++) {
+                if (!isNaN(data[entry])) weight_by_age_vector[age].push(data[entry]);
+                age = (age + 1 !== n_generations) ? age + 1 : 0;
+            }
+            return weight_by_age_vector
         },
-    };
+        get_soda_boxplot = (region) => {
+            // ! SODA BOXPLOT 
+            return {
+                type: 'boxplot',
+                label: 'Observation',
+                borderColor: 'blue',
+                borderWidth: 1,
+                outlierColor: '#999999',
+                padding: 10,
+                itemRadius: 0,
+                data: get_weight_by_age(region.precomputed['SODA']['1960-2000']['quant25'].concat(
+                    region.precomputed['SODA']['1960-2000']['quant50']
+                ).concat(
+                    region.precomputed['SODA']['1960-2000']['quant75']
+                ), n_generations)
+            }
+        };
+    const
+        get_line_datasets = (region, scenario, period, n_generations) => {
+            let datasets = [];
+            Object.keys(region.precomputed[scenario][period]).forEach((quant, qindex) => {
+                const weight_by_age_vector = get_weight_by_age(region.precomputed[scenario][period][quant], n_generations);
+                datasets.push({
+                    type: 'line',
+                    label: `${quant.slice(-2)}`,
+                    data: [...new Array(n_generations)].map((e, i) => avg(weight_by_age_vector[i])),
+                    borderColor: (quant.includes('50')) ? 'black' : (quant.includes('25')) ? 'orange' : 'red',
+                    borderDash: (quant.includes('50')) ? [0] : [10, 5],
+                });
+            });
+            return datasets;
+        };
+    if (scenario == 'SODA') {
+        // * Upper 2 plots for historical SODA && BOXPLOT for lower 2 plots
+        for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
+            let config = JSON.parse(JSON.stringify(general_config));
 
+            let region = window.regions[regionidx]
+            const
+                ctx1 = $(`#complex_plot_canvas${regionidx}`),
+                ctx2 = $(`#complex_plot_canvas${regionidx+2}`);
 
-    if (window.complex_charts[region_params.index] === null)
-        window.complex_charts[region_params.index] = new Chart(ctx, config);
-    else if (window.complex_charts[region_params.index].options.plugins.title.text != config.options.plugins.title.text) {
-        window.complex_charts[region_params.index].destroy();
-        window.complex_charts[region_params.index] = new Chart(ctx, config);
+            // * BOXPLOT for upper two plots
+            const boxplot_dataset = get_soda_boxplot(region);
+            config.data.datasets.push(boxplot_dataset);
+            config.options.plugins.tooltip = {
+                displayColors: true,
+                callbacks: {
+                    label: (context) => {
+                        let label = ' ';
+                        if (context.dataset.label !== null && context.dataset.label === 'Observation') {
+                            if (context.parsed.min !== null) label += `min: ${Number(context.parsed.min).toFixed(2)}kg; `;
+                            if (context.parsed.q1 !== null) label += `25% Quantile: ${Number(context.parsed.q1).toFixed(2)}kg; `;
+                            if (context.parsed.median !== null) label += `median: ${Number(context.parsed.median).toFixed(2)}kg; `;
+                            if (context.parsed.mean !== null) label += `mean: ${Number(context.parsed.mean).toFixed(2)}kg; `;
+                            if (context.parsed.q3 !== null) label += `75% Quantile: ${Number(context.parsed.q3).toFixed(2)}kg; `;
+                            if (context.parsed.max !== null) label += `max: ${Number(context.parsed.max).toFixed(2)}kg`;
+                        } else {
+                            return (context.dataset.label !== null && context.parsed.y !== null) ? ` ${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
+                        }
+                        return label;
+                    },
+                    title: (context) => {
+                        return `Age, year: ${parseInt(Number(context[0].parsed.x+1).toFixed(1))}`;
+                    },
+                },
+            }
+            // * LINEPLOT for upper plots
+            get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
+
+            // ** BOXPLOT for lower plots
+            let config2 = JSON.parse(JSON.stringify(config));
+
+            // ? ----- PLOTTING ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+            config.options.plugins.title.text = `${region.name} ${scenario} (${Object.keys(region.precomputed[scenario])[0]})`;
+            window.complex_charts[regionidx] = new Chart(ctx1, config);
+
+            config2.data.datasets = [boxplot_dataset];
+            config2.options.plugins.title.text = '';
+            window.complex_charts[regionidx + 2] = new Chart(ctx2, config2);
+
+        }
     } else {
-        if (window.complex_charts[region_params.index].data.datasets.length < 4)
-            window.complex_charts[region_params.index].data.datasets.push(plottable_dataset);
-        window.complex_charts[region_params.index].update();
+        window.active_scenario = scenario;
+        console.log(period)
+        window.opposite_period = (period === '1860-1900') ? '1960-2000' :
+            (period === '1960-2000') ? '1860-1900' :
+            (period === '2060-2100') ? '2160-2200' :
+            (period === '2160-2200') ? '2060-2100' : null;
+        // * Lower two plots
+        for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
+            let
+                config = window.complex_charts[regionidx + 2],
+                region = window.regions[regionidx];
+
+            config.data.datasets = config.data.datasets.slice(0, 1);
+
+            // * LINEPLOT 
+            get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
+            config.options.plugins.title.text = `${region.name} ${scenario.replace('_', ' ').toLowerCase().replace('fesom', 'FESOM')} (${Object.keys(region.precomputed[scenario])[0]})`;
+            config.update();
+        }
     }
 };
 
@@ -421,122 +552,6 @@ window.plot_complex = (region_params, data, kind, scenario_name) => {
 // ##### ON - READY #############################################
 // #######################################################################
 
-window.loadNewScenario = (scenario = 'FESOM_historical') => {
-    // the solution below does not work because ajax is called after loop so the parameters are wrong
-    // window.regions.forEach((params) => {
-    //     for (var scenario in params.precomputed) {
-    //         if (name == scenario.toString()) {
-    //             for (var quant_name in params.precomputed[scenario]) {
-    //                 console.log(scenario, quant_name, params.name)
-    //                 $.ajax({
-    //                     type: 'GET',
-    //                     url: `data/modelled_weights_csv/${params.precomputed[scenario][quant_name]}`,
-    //                     dataType: 'text',
-    //                     success: (data) => {
-    //                         const processed_data = processData(data, 'complex-precomputed');
-    //                         plot_complex(params, processed_data, quant_name, scenario);
-    //                     }
-    //                 });
-    //             }
-    //             return;
-    //         }
-    //     }
-    // })
-
-
-    /**
-     * 
-     * Yes, the following is not optimal, because loading everything separate costs time
-     * it would be better to load all at once and compute the quantiles in JS (without preprocessing)
-     * 
-     */
-    // ! Load separate
-    // ? LEFT Chart
-
-    // BOXPLOT
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[0].precomputed[scenario].all}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[0], processed_data, 'boxplot', scenario);
-        }
-    });
-
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[0].precomputed[scenario].quant25}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[0], processed_data, 'quant25', scenario);
-        }
-    });
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[0].precomputed[scenario].quant50}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[0], processed_data, 'quant50', scenario);
-        }
-    });
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[0].precomputed[scenario].quant75}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[0], processed_data, 'quant75', scenario);
-        }
-    });
-
-
-    // ? Right Chart
-
-    // BOXPLOT
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[1].precomputed[scenario].all}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[1], processed_data, 'boxplot', scenario);
-        }
-    });
-
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[1].precomputed[scenario].quant25}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[1], processed_data, 'quant25', scenario);
-        }
-    });
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[1].precomputed[scenario].quant50}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[1], processed_data, 'quant50', scenario);
-        }
-    });
-    $.ajax({
-        type: 'GET',
-        url: `data/modelled_weights_csv/${regions[1].precomputed[scenario].quant75}`,
-        dataType: 'text',
-        success: (data) => {
-            const processed_data = processData(data, 'complex-precomputed');
-            plot_complex(regions[1], processed_data, 'quant75', scenario);
-        }
-    });
-
-
-
-}
 
 function processData(allText, kind, region = null, n_time = null) {
     let
@@ -550,34 +565,84 @@ function processData(allText, kind, region = null, n_time = null) {
             c_avg: 0.29100703
         }
     } else if (kind === 'complex-precomputed') {
-        let data = new Array(0);
-        for (let line = 1; line < allTextLines.length - 1; line++) {
-            data.push(new Array(0));
-            allTextLines[line].split(',').forEach((e, i) => {
-                if (i !== 0) data[line - 1].push(parseFloat(e));
+        let gather_lines = (region_name, scenario, period, quant, lines) => {
+            let data = new Array(0);
+            for (let i = 0; i < lines.length; i++) lines[i].split(',').forEach((e, i) => {
+                if (i !== 0) data.push(parseFloat(e));
             });
+
+            region_name = region_name.replace('_', ' ');
+            period = period.replace('_', '-');
+            scenario = scenario.toUpperCase();
+
+            for (let i = 0; i < window.regions.length; i++)
+                if (window.regions[i].name == region_name) {
+                    if (scenario == 'SODA') window.regions[i].precomputed[`${scenario}`][period][quant] = data;
+                    else window.regions[i].precomputed[`FESOM_${scenario}`][period][quant] = data;
+                }
+        };
+
+        let gather_quant = (full_descr, region_name, scenario, period, lines) => {
+            if (full_descr.includes('quant25')) gather_lines(region_name, scenario, period, 'quant25', lines)
+            else if (full_descr.includes('quant50')) gather_lines(region_name, scenario, period, 'quant50', lines)
+            else if (full_descr.includes('quant75')) gather_lines(region_name, scenario, period, 'quant75', lines)
         }
-        return data;
+
+        let gather_period = (full_descr, region_name, scenario, lines) => {
+            if (full_descr.includes('1860_1900')) gather_quant(full_descr, region_name, scenario, '1860_1900', lines)
+            else if (full_descr.includes('1960_2000')) gather_quant(full_descr, region_name, scenario, '1960_2000', lines)
+            else if (full_descr.includes('2060_2100')) gather_quant(full_descr, region_name, scenario, '2060_2100', lines)
+            else if (full_descr.includes('2160_2200')) gather_quant(full_descr, region_name, scenario, '2160_2200', lines)
+        }
+
+        let gather_scenario = (full_descr, region_name, lines) => {
+            if (full_descr.includes('historical')) gather_period(full_descr, region_name, 'historical', lines);
+            else if (full_descr.includes('rcp45')) gather_period(full_descr, region_name, 'rcp45', lines);
+            else if (full_descr.includes('rcp85')) gather_period(full_descr, region_name, 'rcp85', lines);
+            else if (full_descr.includes('SODA')) gather_period(full_descr, region_name, 'SODA', lines);
+        }
+
+        for (let line = 0; line < allTextLines.length - 1; line++) {
+            const description = allTextLines[line];
+            if (description.includes('Celtic_Sea')) {
+                gather_scenario(description, 'Celtic_Sea', allTextLines.slice(line + 1, line + 42));
+                line += 41;
+            } else if (description.includes('North_Sea')) {
+                gather_scenario(description, 'North_Sea', allTextLines.slice(line + 1, line + 42));
+                line += 41;
+            }
+        }
     }
 }
 
-
-
 $(document).ready(() => {
     // Simple
-    $.ajax({
-        type: 'GET',
-        url: 'data/growth_function_parameters_simple.csv',
-        dataType: 'text',
-        success: (data) => {
-            window.process_data_simple = processData(data, 'Simple');
-            console.log('Simple data loaded!')
-            window.computeSimple();
-            console.log('Default Aquarium Experiment computed!')
-            window.plot_simple();
-        }
-    });
+    // $.ajax({
+    //     type: 'GET',
+    //     url: 'data/growth_function_parameters_simple.csv',
+    //     dataType: 'text',
+    //     success: (data) => {
+    //         window.process_data_simple = processData(data, 'Simple');
+    //         console.log('Simple data loaded!')
+    //         window.computeSimple();
+    //         console.log('Default Aquarium Experiment computed!')
+    //         window.plot_simple();
+    //     }
+    // });
 
     // Complex
-    window.loadNewScenario('FESOM_historical');
+    // window.loadNewScenario('FESOM_historical');
+    $.ajax({
+        type: 'GET',
+        url: `data/modelled_weights_csv/ALL_DATA.csv`,
+        dataType: 'text',
+        success: (data) => {
+            processData(data, 'complex-precomputed');
+            // console.log(regions[0].precomputed)
+            // console.log(regions[1].precomputed)
+            plot_complex('SODA', '1960-2000');
+            plot_complex('FESOM_HISTORICAL', '1960-2000');
+            // plot_complex(regions[0], processed_data, 'boxplot', scenario);
+        }
+    });
 });

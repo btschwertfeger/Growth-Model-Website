@@ -169,6 +169,69 @@ button:focus {outline:0;} /*to remove blue outline on click*/
   box-shadow: inset 4px 4px 8px #969696, inset -4px -4px 8px #ffffff;
 }
 
+
+/** switch slider*/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  opacity: 0.7;
+  transition: opacity 0.3 ease-in-out;
+  -webkit-transition: opacity 0.3 ease-in-out;
+  -moz-transition: opacity 0.3 ease-in-out;
+  -ms-transition: opacity 0.3 ease-in-out;
+  -o-transition: opacity 0.3 ease-in-out;
+}
+.switch-slider:hover {opacity: 1;}
+.switch-slider:before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: opacity 0.4s;
+  -ms-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+}
+
+input:checked + .switch-slider {background-color: rgb(55, 184, 76);}
+input:focus + .switch-slider {box-shadow: 0 0 1px rgb(55, 184, 76);}
+input:checked + .switch-slider:before {
+  transform: translateX(19px);
+  -webkit-transform: translateX(19px);
+  -ms-transform: translateX(19px);
+}
+.switch-slider {border-radius: 34px;}
+.switch-slider:before {border-radius: 50%;}
+/** end switch slider */
+
+
+
+
+
 .text_input-wrapper{
   display: inline-block;
   /* margin: 10px 0px 10px 10px; */
