@@ -36,23 +36,27 @@ initial_weight_input.onchange = () => {
 }
 
 
-/**
- * Complex section
- */
-
+/**Complex section*/
 
 const
     complex_historical_btn = document.getElementById('complex_historical'),
     complex_rcp45 = document.getElementById('complex_rcp45'),
     complex_rcp85 = document.getElementById('complex_rcp85'),
-    period_switch = document.getElementById('period_switch');
+    period_switch = document.getElementById('switch_period');
 
 complex_historical_btn.onclick = () => {
     window.plot_complex('FESOM_HISTORICAL', (period_switch.checked) ? '1860-1900' : '1960-2000');
+    period_switch.innerText = window.opposite_period;
 }
 complex_rcp45.onclick = () => {
     window.plot_complex('FESOM_RCP45', (period_switch.checked) ? '2060-2100' : '2160-2200');
+    period_switch.innerText = window.opposite_period;
 }
 complex_rcp85.onclick = () => {
     window.plot_complex('FESOM_RCP85', (period_switch.checked) ? '2060-2100' : '2160-2200');
+    period_switch.innerText = window.opposite_period;
+}
+period_switch.onclick = () => {
+    window.plot_complex(window.active_scenario, window.opposite_period);
+    period_switch.innerText = window.opposite_period;
 }
