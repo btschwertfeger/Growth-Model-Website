@@ -1,8 +1,10 @@
 <!--
     ########################################
-    ## @author Benjamin Thomas Schwertfeger (March 2022)
-    ## benjamin.schwertfeger@awi.de
-    ## https://b-schwertfeger.de
+    ## © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
+    ## @author:  Benjamin Thomas Schwertfeger (Mai 2022)
+    ## @email: benjamin.schwertfeger@awi.de
+    ## @email: development@b-schwertfeger.de
+    ## @link: https://b-schwertfeger.de
     ############
 -->
 
@@ -167,9 +169,7 @@
       <h2 class="mb-3">Real world Experiment</h2>
     </div>
     <div class="card ml-5 mr-5 nb">
-      <!-- <div class="card-header">About</div> -->
       <div class="card-body">
-        <!-- <h5 class="card-title">General</h5> -->
         <p class="card-text">
           By including multi-dimensional time-series data we extended the growth
           model functionality. The extended version of the growth model can
@@ -183,6 +183,47 @@
           natural environment and compare our simulation results to the observed
           data
         </p>
+
+        <div class="row mt-4 mb-4">
+          <div class="col-xl-6 col-lg-12">
+            <div id="float-chart-div">
+              <img alt="regions map" src="images/absolute_temperatures_6figures.png" 
+               style="width: 100%;" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-12">
+            <div id="float-chart-div">
+              <img
+                alt="flow diagram"
+                src="images/complex_flow.png"
+                style="min-width: 20rem; max-width: 50rem"
+              />
+            </div>
+            <p>
+              Atlantic cod is a widely distributed commercially important species found throughout the shelf 
+            ecosystems of the North Atlantic (Hutchings, 2004; Rose, 2004). Among the main population and 
+            individual characteristics of Atlantic cod are wide environmental tolerance, behavioral 
+            flexibility and local adaptation (Righton et al., 2010). Species are adapted to live under
+            a wide range of environmental conditions (temperatures, salinity, oxygen, depth etc) which 
+            vary between and within populations (Brander, 2019 in Atlantic cod: a bio-ecology). <br>
+            Below are some examples of historical and projected growth curves of the Celtic Sea and North Sea cod populations 
+            in comparison to the data reported by the International Council of the Exploration of the Sea (ICES). 
+            The history of the source code is available through a publicly available version history on GitLab: 
+            <a href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/" target="_blank">https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a>.
+          
+            </p>
+          </div>
+        </div>
+
+
+
+
+
+
+
+<!-- 
+
+
         <div id="float-chart-div">
           <img
             alt="flow diagram"
@@ -191,14 +232,7 @@
           />
         </div>
         <p class="card-text">
-          <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum. -->
-        </p>
+        </p> 
         <div class="row">
           <div class="col-lg-5 col-md-12 col-xs-8 p-4">
             <div id="float-chart-div">
@@ -217,7 +251,7 @@
             The history of the source code is available through a publicly available version history on GitLab: 
             <a href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/" target="_blank">https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a>.
           </div>
-        </div>
+        </div> -->
 
         <div class="div-center">
           <div
@@ -248,8 +282,53 @@
             <canvas id="complex_plot_canvas3" class="canvas_complex"></canvas>
           </div>
         </div>
-        <div class="div-center">
-          <div class="input-wrapper">
+
+        <div class="container" style="max-width: 27em;">
+          <div class="row">
+            <div class="col">
+              <button type="button" id="complex_historical-1" class="someBtn m-2">
+                    FESOM historical 
+                    (1860 - 1900)
+                </button>
+            </div>
+            <div class="col">
+              <button type="button" id="complex_historical-2" class="someBtn m-2">
+                    FESOM historical 
+                    (1960 - 2000)
+                </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button type="button" id="complex_rcp4.5-1" class="someBtn m-2">
+                    FESOM RCP 4.5 
+                    (2060 - 2100)
+                </button>
+            </div>
+            <div class="col">
+              <button type="button" id="complex_rcp4.5-2" class="someBtn m-2">
+                    FESOM RCP 4.5 
+                    (2160 - 2200)
+                </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button type="button" id="complex_rcp8.5-1" class="someBtn m-2">
+                    FESOM RCP8.5
+                    (2060 - 2100)
+                </button>
+            </div>
+            <div class="col">
+              <button type="button" id="complex_rcp8.5-2" class="someBtn m-2">
+                    FESOM  RCP8.5
+                    (2160 - 2200)
+                </button>
+            </div>
+          </div>
+        </div>
+         
+          <!-- <div class="input-wrapper">
             <button type="button" id="complex_historical" class="someBtn m-2">
                 FESOM historical
             </button>
@@ -262,15 +341,7 @@
             <button type="button" id="switch_period" class="someBtn m-2">
                 1860-1900
             </button>
-            <!-- <label class="switch">
-              <input 
-                  id="period_switch"
-                  type="checkbox"
-                  checked
-                  onchange="window.plot_complex(window.active_scenario, window.opposite_period)">
-              <span class="switch-slider"></span>
-          </label> -->
-          </div>
+          </div> -->
       </div>
     </div>
 

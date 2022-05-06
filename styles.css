@@ -5,7 +5,6 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: var(--primary-font-size);
   color: var(--primary-font-color);
-
   text-align: justify;
 }
 
@@ -86,7 +85,9 @@ a:hover {
   -moz-box-sizing: border-box;
 }
 
-/* fancy input stuff*/
+/**
+  * fancy input stuff
+  */
 
 .slide {
   float: right;

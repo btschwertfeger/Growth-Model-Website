@@ -1,13 +1,13 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (January 2022)
+ * @author Benjamin Thomas Schwertfeger (Mai 2022)
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
  **/
 
-let
+const
     initial_weight_input = document.getElementById('weight_input_simple'),
     temp_slider_simple = document.getElementById('temp_slider_simple'),
     t_slide_amount_simple = document.getElementById('t_slide_amount_simple'),
@@ -38,25 +38,50 @@ initial_weight_input.onchange = () => {
 
 /**Complex section*/
 
-const
-    complex_historical_btn = document.getElementById('complex_historical'),
-    complex_rcp45 = document.getElementById('complex_rcp45'),
-    complex_rcp85 = document.getElementById('complex_rcp85'),
-    period_switch = document.getElementById('switch_period');
+document.getElementById('complex_historical-1').onclick = () => {
+    window.plot_complex('FESOM_HISTORICAL', '1860-1900');
+    period_switch.innerText = window.opposite_period;
+}
+document.getElementById('complex_historical-2').onclick = () => {
+    window.plot_complex('FESOM_HISTORICAL', '1960-2000');
+    period_switch.innerText = window.opposite_period;
+}
+document.getElementById('complex_rcp4.5-1').onclick = () => {
+    window.plot_complex('FESOM_RCP45', '2060-2100');
+    period_switch.innerText = window.opposite_period;
+}
+document.getElementById('complex_rcp4.5-2').onclick = () => {
+    window.plot_complex('FESOM_RCP45', '2160-2200');
+    period_switch.innerText = window.opposite_period;
+}
+document.getElementById('complex_rcp8.5-1').onclick = () => {
+    window.plot_complex('FESOM_RCP85', '2060-2100');
+    period_switch.innerText = window.opposite_period;
+}
+document.getElementById('complex_rcp8.5-2').onclick = () => {
+    window.plot_complex('FESOM_RCP85', '2160-2200');
+    period_switch.innerText = window.opposite_period;
+}
 
-complex_historical_btn.onclick = () => {
-    window.plot_complex('FESOM_HISTORICAL', (period_switch.checked) ? '1860-1900' : '1960-2000');
-    period_switch.innerText = window.opposite_period;
-}
-complex_rcp45.onclick = () => {
-    window.plot_complex('FESOM_RCP45', (period_switch.checked) ? '2060-2100' : '2160-2200');
-    period_switch.innerText = window.opposite_period;
-}
-complex_rcp85.onclick = () => {
-    window.plot_complex('FESOM_RCP85', (period_switch.checked) ? '2060-2100' : '2160-2200');
-    period_switch.innerText = window.opposite_period;
-}
-period_switch.onclick = () => {
-    window.plot_complex(window.active_scenario, window.opposite_period);
-    period_switch.innerText = window.opposite_period;
-}
+// const
+//     complex_historical_btn = document.getElementById('complex_historical'),
+//     complex_rcp45 = document.getElementById('complex_rcp45'),
+//     complex_rcp85 = document.getElementById('complex_rcp85'),
+//     period_switch = document.getElementById('switch_period');
+
+// complex_historical_btn.onclick = () => {
+//     window.plot_complex('FESOM_HISTORICAL', (period_switch.checked) ? '1860-1900' : '1960-2000');
+//     period_switch.innerText = window.opposite_period;
+// }
+// complex_rcp45.onclick = () => {
+//     window.plot_complex('FESOM_RCP45', (period_switch.checked) ? '2060-2100' : '2160-2200');
+//     period_switch.innerText = window.opposite_period;
+// }
+// complex_rcp85.onclick = () => {
+//     window.plot_complex('FESOM_RCP85', (period_switch.checked) ? '2060-2100' : '2160-2200');
+//     period_switch.innerText = window.opposite_period;
+// }
+// period_switch.onclick = () => {
+//     window.plot_complex(window.active_scenario, window.opposite_period);
+//     period_switch.innerText = window.opposite_period;
+// }

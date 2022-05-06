@@ -4,8 +4,10 @@
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
  * @author Benjamin Thomas Schwertfeger (April 2022)
- * @email development@b-schwertfeger.de
  * @email benjamin.schwertfeger@awi.de
+ * @link https://awi.de
+ * 
+ * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
  **/
@@ -142,15 +144,15 @@ window.computeSimple = (data = null, parameters = null, initial_weight = null) =
         a_fit = data.a_fit,
         b_fit = data.b_fit,
         c_avg = data.c_avg,
-        itemp = 0, // # temperature index
-        dt = 1, // # time step in days 
-        temperature_range = range(-2, 30.5 - .5, .5); // # Temperature range in °C
+        itemp = 0, //  temperature index
+        dt = 1, //  time step in days 
+        temperature_range = range(-2, 30.5 - .5, .5); //  Temperature range in °C
 
-    let weight_at_age = [...new Array(parameters.max_age)].map(
+    let weight_at_age = [...new Array(parameters.max_age)].map( // weight at age (in g) for a given temperature && initial weight in kg
         (e, i) => [...new Array(a_fit.length)].map(() => (i === 0) ? initial_weight : 0)
-    ); // # weight at age (in g) for a given temperature && initial weight in kg
+    );
 
-    // # loop over temperatures, increasing values by 0.5°C
+    // loop over temperatures, increasing values by 0.5°C
     temperature_range.forEach(() => {
         range(1, parameters.max_age - 1, 1).forEach((age) => {
             let growth_rate = .01 * (a_fit[itemp] * Math.pow(weight_at_age[age - 1][itemp], b_fit[itemp]) - c_avg);
@@ -354,7 +356,8 @@ window.plot_complex = (scenario, period) => {
             // * BOXPLOT for upper two plots
             const boxplot_dataset = get_soda_boxplot(region);
             config.data.datasets.push(boxplot_dataset);
-            config.options.plugins.tooltip = {
+
+            const bp_tooltip = {
                 displayColors: true,
                 callbacks: {
                     label: (context) => {
@@ -366,9 +369,7 @@ window.plot_complex = (scenario, period) => {
                             if (context.parsed.mean !== null) label += `mean: ${Number(context.parsed.mean).toFixed(2)}kg; `;
                             if (context.parsed.q3 !== null) label += `75% Quantile: ${Number(context.parsed.q3).toFixed(2)}kg; `;
                             if (context.parsed.max !== null) label += `max: ${Number(context.parsed.max).toFixed(2)}kg`;
-                        } else {
-                            return (context.dataset.label !== null && context.parsed.y !== null) ? ` ${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
-                        }
+                        } else return (context.dataset.label !== null && context.parsed.y !== null) ? ` ${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
                         return label;
                     },
                     title: (context) => {
@@ -381,11 +382,13 @@ window.plot_complex = (scenario, period) => {
             config.options.scales.y.min = 0;
             config.options.scales.y.max = 20;
 
+            config.options.plugins.tooltip = bp_tooltip;
             // * LINEPLOT for upper plots
             get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
 
             // ** BOXPLOT for lower plots
             let config2 = JSON.parse(JSON.stringify(config));
+            config2.options.plugins.tooltip = bp_tooltip;
 
             // ? ----- PLOTTING ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
             config.options.plugins.title.text = `${region.name} ${scenario} (${Object.keys(region.precomputed[scenario])[0]})`;
@@ -394,7 +397,6 @@ window.plot_complex = (scenario, period) => {
             config2.data.datasets = [boxplot_dataset];
             config2.options.plugins.title.text = '';
             window.complex_charts[regionidx + 2] = new Chart(ctx2, config2);
-
         }
     } else {
         window.active_scenario = scenario;
@@ -402,15 +404,16 @@ window.plot_complex = (scenario, period) => {
             (period === '1960-2000') ? '1860-1900' :
             (period === '2060-2100') ? '2160-2200' :
             (period === '2160-2200') ? '2060-2100' : null;
+
         // * Lower two plots
         for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
             let
                 config = window.complex_charts[regionidx + 2],
                 region = window.regions[regionidx];
 
-            if (period === '1960-2000') config.data.datasets = [get_soda_boxplot(region)];
-            else config.data.datasets = [];
-
+            // if (period === '1960-2000') config.data.datasets = [get_soda_boxplot(region)];
+            // else config.data.datasets = [];
+            config.data.datasets.splice(1);
             // * LINEPLOT 
             get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
             let scenario_name = scenario.replace('_', ' ').toLowerCase().replace('fesom', 'FESOM');
@@ -426,7 +429,7 @@ window.plot_complex = (scenario, period) => {
 // #######################################################################
 
 
-function processData(allText, kind) {
+window.processData = (allText, kind) => {
     let allTextLines = allText.split('\n');
 
     if (kind == 'Simple') return {
@@ -503,7 +506,7 @@ $(document).ready(() => {
     // * Complex
     $.ajax({
         type: 'GET',
-        url: `data/modelled_weights_csv/ALL_DATA.csv`,
+        url: `data/modelled_weights.csv`,
         dataType: 'text',
         success: (data) => {
             processData(data, 'complex-precomputed');
