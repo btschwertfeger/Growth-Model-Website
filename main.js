@@ -13,6 +13,7 @@
  **/
 
 import {
+    get_year,
     get_weight_by_temperature,
     get_temperature_index
 } from './utils.js';
@@ -20,12 +21,176 @@ import {
 import {
     avg,
     range,
+    quantile
 } from './math.js';
 
+window.default_chart_config_simple = {
+    type: 'line',
+    data: {
+        labels: null,
+        datasets: null,
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Cod growth rates in the aquarium',
+                font: {
+                    Family: 'Helvetica',
+                    size: 18,
+                },
+            },
+            legend: {
+                position: 'top',
+            },
+        },
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Age, years',
+                    font: {
+                        family: 'Helvetica',
+                        size: 16,
+                    },
+                },
+                ticks: {
+                    display: true,
+                },
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Weight in kg',
+                    font: {
+                        family: 'Helvetica',
+                        size: 16
+                    },
+                },
+                min: 0,
+                max: 26,
+            },
+        },
+        animations: {
+            radius: {
+                duration: 400,
+                easing: 'linear',
+                loop: (ctx) => ctx.activate
+            },
+        },
+        hoverRadius: 8,
+        hoverBackgroundColor: 'yellow',
+        interaction: {
+            mode: 'nearest',
+            intersect: false,
+            axis: 'x'
+        },
+    },
+};
+
 // #######################################################################
-// ##### SETTINGS #############################################
+// * ##### Aquarium Experiment ###########################################
 // #######################################################################
 
+window.default_input_simple = {
+    max_age: 15 * 365, // maximum age in days
+    initial_weight: 1, // initial weight in kg
+};
+
+window.computeSimple = (data = null, parameters = null, initial_weight = null) => {
+    data = (data === null) ? window.process_data_simple : data;
+    parameters = (parameters === null) ? window.default_input_simple : parameters;
+    initial_weight = (initial_weight === null) ? parameters.initial_weight * 1000 : parseFloat(initial_weight) * 1000; // * 1000 -> kg -> gramm
+
+    let
+        a_fit = data.a_fit,
+        b_fit = data.b_fit,
+        c_avg = data.c_avg,
+        itemp = 0, //  temperature index
+        dt = 1, //  time step in days 
+        temperature_range = range(-2, 30.5 - .5, .5); //  Temperature range in °C
+
+    let weight_at_age = [...new Array(parameters.max_age)].map( // weight at age (in g) for a given temperature && initial weight in kg
+        (e, i) => [...new Array(a_fit.length)].map(() => (i === 0) ? initial_weight : 0)
+    );
+
+    // loop over temperatures, increasing values by 0.5°C
+    temperature_range.forEach(() => {
+        range(1, parameters.max_age - 1, 1).forEach((age) => {
+            let growth_rate = .01 * (a_fit[itemp] * Math.pow(weight_at_age[age - 1][itemp], b_fit[itemp]) - c_avg);
+            weight_at_age[age][itemp] = weight_at_age[age - 1][itemp] * (1 + dt * growth_rate);
+        });
+        itemp++;
+    });
+
+    window.last_result_simple = {
+        a_fit: a_fit,
+        b_fit: b_fit,
+        c_avg: c_avg,
+        weight_at_age: weight_at_age,
+        temperature_range: temperature_range,
+    }
+    return window.last_result_simple;
+};
+
+window.plot_simple = (temperature = 3.0) => {
+    temperature = parseFloat(temperature);
+    let config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
+    const
+        data = window.last_result_simple,
+        ctx = $('#simple_plot_canvas'),
+        t_idx = get_temperature_index(temperature);
+
+    const choosen_temperature = data.temperature_range[t_idx];
+    const color = (choosen_temperature > 16) ? 'red' : (choosen_temperature > 8) ? 'orange' : (choosen_temperature > 0) ? 'black' : 'blue'
+    const weights = get_weight_by_temperature(data.weight_at_age, t_idx);
+
+    config.data.labels = range(1, weights.length);
+    config.data.datasets = [{
+        label: `Weight at ${choosen_temperature}°C`,
+        data: weights.map((e) => e / 1000),
+        fill: false,
+        borderColor: color,
+        pointRadius: 0
+    }];
+    config.options.scales.x.ticks = {
+        stepSize: 1,
+        autoskip: true,
+        maxTicksLimit: 15,
+        callback: (value, index, ticks) => {
+            return index % 365 === 0 ? value / 365 : '';
+        }
+    }
+    config.options.plugins.tooltip = {
+        displayColors: true,
+        callbacks: {
+            label: (context) => {
+                return (context.dataset.label !== null && context.parsed.y !== null) ? `${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
+            },
+            title: (context) => {
+                return `Age, year: ${Number((context[0].parsed.x / 365)).toFixed(1)}`;
+            }
+        }
+    };
+    if (typeof window.simple_chart === 'undefined') window.simple_chart = new Chart(ctx, config)
+    else {
+        window.simple_chart.data.labels = config.data.labels;
+        window.simple_chart.data.datasets = config.data.datasets;
+        window.simple_chart.update();
+    }
+}
+
+// #######################################################################
+// * ##### Real World Experiment #############################################
+// #######################################################################
+
+/**
+ * * Following is the plotting of precomputed stuff
+ */
 window.regions = [{
     name: 'Celtic Sea',
     index: 0, // specifies the index in computed and loaded arrays
@@ -125,176 +290,11 @@ window.regions = [{
     },
 }];
 
-window.default_input_simple = {
-    max_age: 15 * 365, // # maximum age in days
-    initial_weight: 1, // initial weight in kg
-};
-
-// #######################################################################
-// ##### COMPUTATION #############################################
-// #######################################################################
-
-
-window.computeSimple = (data = null, parameters = null, initial_weight = null) => {
-    data = (data === null) ? window.process_data_simple : data;
-    parameters = (parameters === null) ? window.default_input_simple : parameters;
-    initial_weight = (initial_weight === null) ? parameters.initial_weight * 1000 : parseFloat(initial_weight) * 1000; // * 1000 -> kg -> gramm
-
-    let
-        a_fit = data.a_fit,
-        b_fit = data.b_fit,
-        c_avg = data.c_avg,
-        itemp = 0, //  temperature index
-        dt = 1, //  time step in days 
-        temperature_range = range(-2, 30.5 - .5, .5); //  Temperature range in °C
-
-    let weight_at_age = [...new Array(parameters.max_age)].map( // weight at age (in g) for a given temperature && initial weight in kg
-        (e, i) => [...new Array(a_fit.length)].map(() => (i === 0) ? initial_weight : 0)
-    );
-
-    // loop over temperatures, increasing values by 0.5°C
-    temperature_range.forEach(() => {
-        range(1, parameters.max_age - 1, 1).forEach((age) => {
-            let growth_rate = .01 * (a_fit[itemp] * Math.pow(weight_at_age[age - 1][itemp], b_fit[itemp]) - c_avg);
-            weight_at_age[age][itemp] = weight_at_age[age - 1][itemp] * (1 + dt * growth_rate);
-        });
-        itemp++;
-    });
-
-    window.last_result_simple = {
-        a_fit: a_fit,
-        b_fit: b_fit,
-        c_avg: c_avg,
-        weight_at_age: weight_at_age,
-        temperature_range: temperature_range,
-    }
-    return window.last_result_simple;
-}
-
-
-// #######################################################################
-// ##### PLOTTING #############################################
-// #######################################################################
-
-window.default_chart_config_simple = {
-    type: 'line',
-    data: {
-        labels: null,
-        datasets: null,
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Cod growth rates in the aquarium',
-                font: {
-                    Family: 'Helvetica',
-                    size: 18,
-                },
-            },
-            legend: {
-                position: 'top',
-            },
-        },
-        scales: {
-            x: {
-                display: true,
-                title: {
-                    display: true,
-                    text: 'Age, years',
-                    font: {
-                        family: 'Helvetica',
-                        size: 16,
-                    },
-                },
-                ticks: {
-                    display: true,
-                },
-            },
-            y: {
-                display: true,
-                title: {
-                    display: true,
-                    text: 'Weight in kg',
-                    font: {
-                        family: 'Helvetica',
-                        size: 16
-                    },
-                },
-                min: 0,
-            },
-        },
-        animations: {
-            radius: {
-                duration: 400,
-                easing: 'linear',
-                loop: (ctx) => ctx.activate
-            },
-        },
-        hoverRadius: 8,
-        hoverBackgroundColor: 'yellow',
-        interaction: {
-            mode: 'nearest',
-            intersect: false,
-            axis: 'x'
-        },
-    },
-};
-
-window.plot_simple = (temperature = 3.0) => {
-    temperature = parseFloat(temperature);
-    let config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
-    const
-        data = window.last_result_simple,
-        ctx = $('#simple_plot_canvas'),
-        t_idx = get_temperature_index(temperature);
-
-    const choosen_temperature = data.temperature_range[t_idx];
-    const color = (choosen_temperature > 16) ? 'red' : (choosen_temperature > 8) ? 'orange' : (choosen_temperature > 0) ? 'black' : 'blue'
-    const weights = get_weight_by_temperature(data.weight_at_age, t_idx);
-
-    config.data.labels = range(1, weights.length);
-    config.data.datasets = [{
-        label: `Weight at ${choosen_temperature}°C`,
-        data: weights.map((e) => e / 1000),
-        fill: false,
-        borderColor: color,
-        pointRadius: 0
-    }];
-    config.options.scales.x.ticks = {
-        stepSize: 1,
-        autoskip: true,
-        maxTicksLimit: 15,
-        callback: (value, index, ticks) => {
-            return index % 365 === 0 ? value / 365 : '';
-        }
-    }
-    config.options.plugins.tooltip = {
-        displayColors: true,
-        callbacks: {
-            label: (context) => {
-                return (context.dataset.label !== null && context.parsed.y !== null) ? `${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
-            },
-            title: (context) => {
-                return `Age, year: ${Number((context[0].parsed.x / 365)).toFixed(1)}`;
-            }
-        }
-    };
-    if (typeof window.simple_chart === 'undefined') window.simple_chart = new Chart(ctx, config)
-    else {
-        window.simple_chart.data.labels = config.data.labels;
-        window.simple_chart.data.datasets = config.data.datasets;
-        window.simple_chart.update();
-    }
-}
-
 window.complex_charts = [
     null, null, // upper left, upper right,
     null, null // lower left, lower right
 ]
-window.plot_complex = (scenario, period) => {
+window.plot_complex_precomputed = (scenario, period) => {
     const n_generations = 10;
 
     let general_config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
@@ -343,6 +343,7 @@ window.plot_complex = (scenario, period) => {
             });
             return datasets;
         };
+
     if (scenario == 'SODA') {
         // * Upper 2 plots for historical SODA && BOXPLOT for lower 2 plots
         for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
@@ -424,6 +425,29 @@ window.plot_complex = (scenario, period) => {
     }
 };
 
+/**
+ * * Following for adjustable complex computation/plot
+ */
+
+function equation2(input_temp) {
+    const T_Kelvin = input_temp.map((value) => (value < -99) ? -999 : parseFloat((value + constants.T0).toFixed(5)));
+    const
+        a_numerator = T_Kelvin.map((value) => (value === -999) ? -999 : constants.A_R * Math.exp(constants.THETA_A / constants.T_R - constants.THETA_A / value)),
+        a_dominator = T_Kelvin.map((value) => (value === -999) ? -999 : 1 + Math.exp(constants.THETA_H / constants.T_H - constants.THETA_H / value));
+    return a_numerator.map((value, index) => (value === -999) ? -999 : value / a_dominator[index]);
+}
+
+function equation3(input_temp) {
+    // """ Arrhenius equation """
+    return input_temp.map((value) => (value == -999) ? -999 : constants.B_R * Math.exp(constants.THETA_B / constants.T_R - constants.THETA_B / (value + constants.T0)));
+}
+
+window.computeComplex = () => {};
+
+window.plot_computed_complex = () => {};
+
+
+
 // #######################################################################
 // ##### ON - READY #############################################
 // #######################################################################
@@ -485,6 +509,17 @@ window.processData = (allText, kind) => {
                 line += 41;
             }
         }
+    } else if (kind === 'complex-one-region') {
+        console.log(allTextLines);
+        let x_data = new Array(0);
+        for (let line = 0; line < allTextLines.length - 1; line++) {
+            let linedata = new Array(0);
+            allTextLines[line].split(',').forEach((e) => {
+                linedata.push(parseFloat(e))
+            });
+            x_data.push(linedata);
+        }
+        return x_data;
     }
 }
 
@@ -503,15 +538,29 @@ $(document).ready(() => {
         }
     });
 
-    // * Complex
+    // * Complex precomputed
     $.ajax({
         type: 'GET',
         url: `data/modelled_weights.csv`,
         dataType: 'text',
         success: (data) => {
             processData(data, 'complex-precomputed');
-            plot_complex('SODA', '1960-2000');
-            plot_complex('FESOM_HISTORICAL', '1960-2000');
+            plot_complex_precomputed('SODA', '1960-2000');
+            plot_complex_precomputed('FESOM_HISTORICAL', '1960-2000');
+        }
+    });
+
+    // * Complex one location for computation with parameters
+    $.ajax({
+        type: 'GET',
+        url: 'data/northsea_lat55_lon0_1960-2000.csv',
+        dataType: 'text',
+        success: (data) => {
+            window.processed_data_complex_adjustable = processData(data, 'complex-one-region');
+            console.log('Complex data for adjustable computation loaded')
+            // window.complexAdjustable();
+            // console.log('Default complex adjustable computed!')
+            // window.plot_complex_adjustable();
         }
     });
 });

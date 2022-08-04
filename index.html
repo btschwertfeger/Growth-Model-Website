@@ -10,35 +10,30 @@
 
 <!DOCTYPE html lang="en">
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg"
-    />
-    <title>Growth Model Atlantic Cod</title>
 
-    <!-- JQUERY-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="icon" type="image/x-icon"
+    href="https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg" />
+  <title>Growth Model Atlantic Cod</title>
 
-    <!-- CHART JS -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- JQUERY-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- BOXPLOTS -->
-    <script type="text/javascript" src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+  <!-- CHART JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Equations look like in LaTeX-->
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
+  <!-- BOXPLOTS -->
+  <script type="text/javascript"
+    src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
 
-    <!-- BOOTSTRAP-->
-    <!-- <script
+  <!-- Equations look like in LaTeX-->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- BOOTSTRAP-->
+  <!-- <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
       crossorigin="anonymous"
@@ -48,172 +43,156 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script> -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-  <body>
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/f/f7/AWI_Logo_2017.svg"
-      style="position: absolute; right: 2rem; top: 1rem; width: 10rem"
-    />
+<body>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/AWI_Logo_2017.svg"
+    style="position: absolute; right: 2rem; top: 1rem; width: 10rem" />
 
-    <!-- HEADLINE -->
-    <div class="pt-5 pb-2 text-center">
-      <h1 class="mb-3">Growth Model Atlantic Cod</h1>
+  <!-- HEADLINE -->
+  <div class="pt-5 pb-2 text-center">
+    <h1 class="mb-3">Growth Model Atlantic Cod</h1>
+  </div>
+
+  <!-- INFORMATION-->
+  <div class="card ml-5 mr-5 mb-5 nb">
+    <hr />
+    <!-- <div class="card-header">Featured</div> -->
+    <!-- <div class="card-header">General</div> -->
+    <div class="card-body">
+      <!-- <h5 class="card-title">General</h5> -->
+      <p class="card-text">
+        By definition, “growth model” is any quantitative description of growth, from theoretically
+        informed mathematical models to purely empirical transformations such as age-length keys (Lorenzen, 2016).
+        The most commonly used growth models are the von Bertalanffy growth model, Gompertz model, Logistic model,
+        and Power model (Baranov, 1918; von Bertalanffy, 1938; Hulme et al., 1947; Yoshihara, 1951), as well as energy
+        allocation and oxygen budget models (Neumauer and Anderssen, 2019).
+      </p>
     </div>
+    <hr />
+  </div>
 
-    <!-- INFORMATION-->
-    <div class="card ml-5 mr-5 mb-5 nb">
-      <hr />
-      <!-- <div class="card-header">Featured</div> -->
-      <!-- <div class="card-header">General</div> -->
-      <div class="card-body">
-        <!-- <h5 class="card-title">General</h5> -->
-        <p class="card-text">
-          By definition, “growth model” is any quantitative description of growth, from theoretically 
-          informed mathematical models to purely empirical transformations such as age-length keys (Lorenzen, 2016). 
-          The most commonly used growth models are the von Bertalanffy growth model, Gompertz model, Logistic model, 
-          and Power model (Baranov, 1918; von Bertalanffy, 1938; Hulme et al., 1947; Yoshihara, 1951), as well as energy 
-          allocation and oxygen budget models (Neumauer and Anderssen, 2019).
-        </p>
+  <!-- AQUARIUM HEADLINE -->
+  <div class="pt-2 pb-2 text-center">
+    <!---bg-light-->
+    <h2 class="mb-3">Aquarium Experiment</h2>
+  </div>
+
+  <div class="card ml-5 mr-5 nb">
+    <!-- <div class="card-header">About</div> -->
+    <div class="card-body">
+      <!-- <h5 class="card-title">General</h5> -->
+      <p class="card-text">
+        The Atlantic cod growth model described here is a single-species bio-physical growth model that simulates
+        temperature- and size-dependent growth of Atlantic cod (Gadus morhua).
+        The model is derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson et al., 2007)
+        by <a href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375" target="_blank">Butzin and Pörtner
+          (2016)</a>.
+        The model assumes that Atlantic cod growth rates are mainly temperature- and size-dependent*.
+        The model simulates daily growth of cod which mimics controlled laboratory experiments.
+      </p>
+
+      <div class="div-center">
+        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem">
+          <canvas id="simple_plot_canvas"></canvas>
+        </div>
       </div>
-      <hr />
-    </div>
-
-    <!-- AQUARIUM HEADLINE -->
-    <div class="pt-2 pb-2 text-center">
-      <!---bg-light-->
-      <h2 class="mb-3">Aquarium Experiment</h2>
-    </div>
-
-    <div class="card ml-5 mr-5 nb">
-      <!-- <div class="card-header">About</div> -->
-      <div class="card-body">
-        <!-- <h5 class="card-title">General</h5> -->
-        <p class="card-text">
-          The Atlantic cod growth model described here is a single-species bio-physical growth model that simulates 
-          temperature- and size-dependent growth of Atlantic cod (Gadus morhua). 
-          The model is derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson et al., 2007) 
-          by <a href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375" target="_blank" >Butzin and Pörtner (2016)</a>. 
-          The model assumes that Atlantic cod growth rates are mainly temperature- and size-dependent*. 
-          The model simulates daily growth of cod which mimics controlled laboratory experiments.
-        </p>
-
-        <div class="div-center">
-          <div
-            class="p-3 plot-wrapper"
-            style="min-width: 20rem; max-width: 50rem"
-          >
-            <canvas id="simple_plot_canvas"></canvas>
+      <div class="div-center">
+        <div class="input-wrapper">
+          <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
+          <div class="text_input-wrapper">
+            <input id="weight_input_simple" type="text" value="1" />
           </div>
         </div>
-        <div class="div-center">
-          <div class="input-wrapper">
-            <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
-            <div class="text_input-wrapper">
-              <input id="weight_input_simple" type="text" value="1" />
-            </div>
-          </div>
 
-          <div class="input-wrapper">
-            <div class="mb-2 ml-5">Temperature</div>
-            <div
-              id="t_slide_amount_simple"
-              name="t_slide_amount_simple"
-              class="slide-value"
-            >
-              3°C
-            </div>
-            <input
-              id="temp_slider_simple"
-              type="range"
-              class="slide"
-              name="temp_slider_simple"
-              min="-2"
-              max="20"
-              step=".5"
-              value="3"
-            />
+        <div class="input-wrapper">
+          <div class="mb-2 ml-5">Temperature</div>
+          <div id="t_slide_amount_simple" name="t_slide_amount_simple" class="slide-value">
+            3°C
           </div>
-
-          <button type="button" id="reset_btn_simple" class="someBtn">
-            Reset
-          </button>
+          <input id="temp_slider_simple" type="range" class="slide" name="temp_slider_simple" min="-2" max="20"
+            step=".5" value="3" />
         </div>
-        <p class="card-text mt-3">
-          The model results cover the temperature range from 2 to 16 °C (T  2, 4, 7, 8, 10, 12, 13, and 16 °C),
-          and the body weight range 0.001–8 kg (Björnsson and Steinarsson, 2002; Björnsson et al., 2007). <br>
-          Core model assumptions:
-          <ul>
-            <li>the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth (White and Kearney, 2014);</li>
-            <li>an organism responds to temperature changes immediately;</li>
-            <li>larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not considered;</li>
-            <li>individuals grow under unlimited food supply and in a homogeneous thermal environment (based on data from Björnsson and Steinarsson, 2002; Björnsson et al., 2007).</li>
-          </ul>
-        </p>
+
+        <button type="button" id="reset_btn_simple" class="someBtn">
+          Reset
+        </button>
       </div>
-      <hr />
+      <p class="card-text mt-3">
+        The model results cover the temperature range from 2 to 16 °C (T 2, 4, 7, 8, 10, 12, 13, and 16 °C),
+        and the body weight range 0.001–8 kg (Björnsson and Steinarsson, 2002; Björnsson et al., 2007). <br>
+        Core model assumptions:
+      <ul>
+        <li>the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth (White
+          and Kearney, 2014);</li>
+        <li>an organism responds to temperature changes immediately;</li>
+        <li>larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not
+          considered;</li>
+        <li>individuals grow under unlimited food supply and in a homogeneous thermal environment (based on data from
+          Björnsson and Steinarsson, 2002; Björnsson et al., 2007).</li>
+      </ul>
+      </p>
     </div>
+    <hr />
+  </div>
 
-    <!-- REAL WORLD HEADLINE -->
-    <div class="pt-5 pb-2 text-center nb">
-      <h2 class="mb-3">Real world Experiment</h2>
-    </div>
-    <div class="card ml-5 mr-5 nb">
-      <div class="card-body">
-        <p class="card-text">
-          By including multi-dimensional time-series data we extended the growth
-          model functionality. The extended version of the growth model can
-          calculate growth of Atlantic cod over its life-cycle (Sokolova et al.,
-          2021). The life-cycle of the southern cod populations spans in average
-          10 years, in the northern - 14 years.
-        </p>
-        <p>
-          Using transient growth model setup in combination with observational
-          or simulated temperature time series allows us to mimic growth in
-          natural environment and compare our simulation results to the observed
-          data
-        </p>
+  <!-- REAL WORLD HEADLINE -->
+  <div class="pt-5 pb-2 text-center nb">
+    <h2 class="mb-3">Real world Experiment</h2>
+  </div>
+  <div class="card ml-5 mr-5 nb">
+    <div class="card-body">
+      <p class="card-text">
+        By including multi-dimensional time-series data we extended the growth
+        model functionality. The extended version of the growth model can
+        calculate growth of Atlantic cod over its life-cycle (Sokolova et al.,
+        2021). The life-cycle of the southern cod populations spans in average
+        10 years, in the northern - 14 years.
+      </p>
+      <p>
+        Using transient growth model setup in combination with observational
+        or simulated temperature time series allows us to mimic growth in
+        natural environment and compare our simulation results to the observed
+        data
+      </p>
 
-        <div class="row mt-4 mb-4">
-          <div class="col-xl-6 col-lg-12">
-            <div id="float-chart-div">
-              <img alt="regions map" src="images/absolute_temperatures_6figures.png" 
-               style="width: 100%;" />
-            </div>
+      <div class="row mt-4 mb-4">
+        <div class="col-xl-6 col-lg-12">
+          <div id="float-chart-div">
+            <img alt="regions map" src="images/absolute_temperatures_6figures.png" style="width: 100%;" />
           </div>
-          <div class="col-xl-6 col-lg-12">
-            <div id="float-chart-div">
-              <img
-                alt="flow diagram"
-                src="images/complex_flow.png"
-                style="min-width: 20rem; max-width: 50rem"
-              />
-            </div>
-            <p>
-              Atlantic cod is a widely distributed commercially important species found throughout the shelf 
-            ecosystems of the North Atlantic (Hutchings, 2004; Rose, 2004). Among the main population and 
-            individual characteristics of Atlantic cod are wide environmental tolerance, behavioral 
+        </div>
+        <div class="col-xl-6 col-lg-12">
+          <div id="float-chart-div">
+            <img alt="flow diagram" src="images/complex_flow.png" style="min-width: 20rem; max-width: 50rem" />
+          </div>
+          <p>
+            Atlantic cod is a widely distributed commercially important species found throughout the shelf
+            ecosystems of the North Atlantic (Hutchings, 2004; Rose, 2004). Among the main population and
+            individual characteristics of Atlantic cod are wide environmental tolerance, behavioral
             flexibility and local adaptation (Righton et al., 2010). Species are adapted to live under
-            a wide range of environmental conditions (temperatures, salinity, oxygen, depth etc) which 
+            a wide range of environmental conditions (temperatures, salinity, oxygen, depth etc) which
             vary between and within populations (Brander, 2019 in Atlantic cod: a bio-ecology). <br>
-            Below are some examples of historical and projected growth curves of the Celtic Sea and North Sea cod populations 
-            in comparison to the data reported by the International Council of the Exploration of the Sea (ICES). 
-            The history of the source code is available through a publicly available version history on GitLab: 
-            <a href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/" target="_blank">https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a>.
-          
-            </p>
-          </div>
+            Below are some examples of historical and projected growth curves of the Celtic Sea and North Sea cod
+            populations
+            in comparison to the data reported by the International Council of the Exploration of the Sea (ICES).
+            The history of the source code is available through a publicly available version history on GitLab:
+            <a href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/"
+              target="_blank">https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a>.
+
+          </p>
         </div>
+      </div>
 
 
 
@@ -221,7 +200,7 @@
 
 
 
-<!-- 
+      <!-- 
 
 
         <div id="float-chart-div">
@@ -253,127 +232,122 @@
           </div>
         </div> -->
 
-        <div class="div-center">
-          <div
-            class="p-3 plot-wrapper"
-            style="min-width: 20rem; max-width: 50rem; min-height:30rem;"
-          >
-            <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
-          </div>
-          <div
-            class="p-3 plot-wrapper"
-            style="min-width: 20rem; max-width: 50rem; min-height:30rem;"
-          >
-            <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
-          </div>
+      <div class="div-center">
+        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
+          <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
         </div>
-
-        <div class="div-center">
-          <div
-            class="p-3 plot-wrapper"
-            style="min-width: 20rem; max-width: 50rem; min-height:30rem;"
-          >
-            <canvas id="complex_plot_canvas2" class="canvas_complex"></canvas>
-          </div>
-          <div
-            class="p-3 plot-wrapper"
-            style="min-width: 20rem; max-width: 50rem; min-height:30rem;"
-          >
-            <canvas id="complex_plot_canvas3" class="canvas_complex"></canvas>
-          </div>
+        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
+          <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
         </div>
-
-        <div class="container" style="max-width: 27em;">
-          <div class="row">
-            <div class="col">
-              <button type="button" id="complex_historical-1" class="someBtn m-2">
-                    FESOM historical 
-                    (1860 - 1900)
-                </button>
-            </div>
-            <div class="col">
-              <button type="button" id="complex_historical-2" class="someBtn m-2">
-                    FESOM historical 
-                    (1960 - 2000)
-                </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <button type="button" id="complex_rcp4.5-1" class="someBtn m-2">
-                    FESOM RCP 4.5 
-                    (2060 - 2100)
-                </button>
-            </div>
-            <div class="col">
-              <button type="button" id="complex_rcp4.5-2" class="someBtn m-2">
-                    FESOM RCP 4.5 
-                    (2160 - 2200)
-                </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <button type="button" id="complex_rcp8.5-1" class="someBtn m-2">
-                    FESOM RCP8.5
-                    (2060 - 2100)
-                </button>
-            </div>
-            <div class="col">
-              <button type="button" id="complex_rcp8.5-2" class="someBtn m-2">
-                    FESOM  RCP8.5
-                    (2160 - 2200)
-                </button>
-            </div>
-          </div>
-        </div>
-         
-          <!-- <div class="input-wrapper">
-            <button type="button" id="complex_historical" class="someBtn m-2">
-                FESOM historical
-            </button>
-            <button type="button" id="complex_rcp45" class="someBtn m-2">
-                FESOM RCP4.5
-            </button>
-            <button type="button" id="complex_rcp85" class="someBtn m-2">
-                FESOM RCP8.5
-            </button>
-            <button type="button" id="switch_period" class="someBtn m-2">
-                1860-1900
-            </button>
-          </div> -->
       </div>
-    </div>
 
-    <!-- FOOTER -->
-    <div id="footer" class="pb-5">
-      <hr />
-      Model and mathematical basics described by
-      <a
-        href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375"
-        target="_blank"
-        >Butzin and Pörtner</a
-      >
-      (2016). Python implementation by Nadezhda Valerievna Sokolova and Anja
-      Rohner,
-      <a
-        href="https://www.awi.de/en/science/climate-sciences/paleoclimate-dynamics/teachingoutreach.html"
-        target="_blank"
-        >Alfred-Wegener-Institute</a
-      >
-      (2022). Site developed by
-      <a href="https://www.b-schwertfeger.de" target="_blank"
-        >Benjamin T. Schwertfeger</a
-      >,
-      <a
-        href="https://www.awi.de/en/science/climate-sciences/paleoclimate-dynamics/teachingoutreach.html"
-        target="_blank"
-        >Alfred-Wegener-Institute</a
-      >
-      (2022)
-    </div>
+      <div class="div-center">
+        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
+          <canvas id="complex_plot_canvas2" class="canvas_complex"></canvas>
+        </div>
+        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
+          <canvas id="complex_plot_canvas3" class="canvas_complex"></canvas>
+        </div>
+      </div>
 
-    <script async type="module" src="main.js"></script>
-    <script async src="layout.js"></script>
-  </body>
+      <div class="container" style="max-width: 27em;">
+        <div class="row">
+          <div class="col">
+            <button type="button" id="complex_historical-1" class="someBtn m-2">
+              FESOM historical
+              (1860 - 1900)
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" id="complex_historical-2" class="someBtn m-2">
+              FESOM historical
+              (1960 - 2000)
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="button" id="complex_rcp4.5-1" class="someBtn m-2">
+              FESOM RCP 4.5
+              (2060 - 2100)
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" id="complex_rcp4.5-2" class="someBtn m-2">
+              FESOM RCP 4.5
+              (2160 - 2200)
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="button" id="complex_rcp8.5-1" class="someBtn m-2">
+              FESOM RCP8.5
+              (2060 - 2100)
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" id="complex_rcp8.5-2" class="someBtn m-2">
+              FESOM RCP8.5
+              (2160 - 2200)
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- * TESTING -->
+      <div class="div-center">
+        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem">
+          <canvas id="complex_plot_canvas_adjustable"></canvas>
+        </div>
+      </div>
+      <div class="div-center">
+        <div class="input-wrapper">
+          <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
+          <div class="text_input-wrapper">
+            <input id="X_input_complex_adjustable" type="text" value="1" />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <div class="mb-2 ml-5">Temperature</div>
+          <div id="X_slide_amount_complex_adjustable" name="t_slide_amount_simple" class="slide-value">
+            3°C
+          </div>
+          <input id="X_slide_complex_adjustable" type="range" class="slide" name="X_slider_complex_adjustable" min="-2"
+            max="20" step=".5" value="3" />
+        </div>
+
+        <button type="button" id="reset_btn_complex_adjustable" class="someBtn">
+          Reset
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="footer" class="pb-5">
+    <hr />
+    Model and mathematical basics described by
+    <a href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375" target="_blank">Butzin and Pörtner</a>
+    (2016). Python implementation by Nadezhda Valerievna Sokolova and Anja
+    Rohner,
+    <a href="https://www.awi.de/en/science/climate-sciences/paleoclimate-dynamics/teachingoutreach.html"
+      target="_blank">Alfred-Wegener-Institute</a>
+    (2022). Site developed by
+    <a href="https://www.b-schwertfeger.de" target="_blank">Benjamin T. Schwertfeger</a>,
+    <a href="https://www.awi.de/en/science/climate-sciences/paleoclimate-dynamics/teachingoutreach.html"
+      target="_blank">Alfred-Wegener-Institute</a>
+    (2022)
+  </div>
+
+  <script async type="module" src="main.js"></script>
+  <script async src="layout.js"></script>
+</body>
+
 </html>
