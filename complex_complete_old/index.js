@@ -49,14 +49,14 @@ import {
     get_year,
     get_weight_by_temperature,
     get_temperature_index
-} from './utils.js';
+} from './utils.js.js';
 
 import {
     avg,
     std,
     range,
     quantile
-} from './math.js';
+} from './math.js.js';
 
 // #######################################################################
 // ##### SETTINGS #############################################
