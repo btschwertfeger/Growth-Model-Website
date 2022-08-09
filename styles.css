@@ -143,6 +143,13 @@ a:hover {
   box-shadow: 6px 6px 12px #969696, -6px -6px 12px #ffffff;
 }
 
+/** workaround*/
+.slide-adj-complex{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  float: left;
+}
+
 
 button:focus {outline:0;} /*to remove blue outline on click*/ 
 .someBtn {

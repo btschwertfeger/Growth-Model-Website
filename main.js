@@ -430,7 +430,7 @@ window.plot_complex_precomputed = (scenario, period) => {
  */
 
 window.default_constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
-    A_R: 8.660,
+    A_R: 8.66,
     B_R: 0.3055,
     THETA_A: 18145,
     THETA_B: 4258,
@@ -474,7 +474,7 @@ let
     };
 
 window.computeComplexAdjustable = (constants = null) => {
-    const default_ = constants == null;
+    const default_ = constants === null;
     constants = (constants === null) ? window.default_constants : constants;
 
     const
@@ -546,7 +546,7 @@ window.computeComplexAdjustable = (constants = null) => {
 
 window.plot_complex_adjustable = (data = null) => {
     if (data === null) data = window.default_complex_adj_computed;
-    console.log(data)
+    // console.log(data)
     const
         settings = window.default_input_complex_adjustable,
         ctx = $(`#complex_plot_canvas_adjustable`);
@@ -626,6 +626,8 @@ window.plot_complex_adjustable = (data = null) => {
     config.data.labels = range(1, years);
     config.data.datasets = plottable_datasets;
     config.options.plugins.title.text = 'North Sea 1960 - 2000';
+    config.options.scales.y.min = null;
+    config.options.scales.y.max = null;
 
     config.options.plugins.tooltip = {
         displayColors: true,

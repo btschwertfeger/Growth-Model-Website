@@ -200,37 +200,6 @@
 
 
 
-      <!-- 
-
-
-        <div id="float-chart-div">
-          <img
-            alt="flow diagram"
-            src="images/complex_flow.png"
-            style="min-width: 20rem; max-width: 50rem"
-          />
-        </div>
-        <p class="card-text">
-        </p> 
-        <div class="row">
-          <div class="col-lg-5 col-md-12 col-xs-8 p-4">
-            <div id="float-chart-div">
-              <img alt="regions map" src="images/map.png" />
-            </div>
-          </div>
-          <div class="col-lg-7 mt-2">
-            Atlantic cod is a widely distributed commercially important species found throughout the shelf 
-            ecosystems of the North Atlantic (Hutchings, 2004; Rose, 2004). Among the main population and 
-            individual characteristics of Atlantic cod are wide environmental tolerance, behavioral 
-            flexibility and local adaptation (Righton et al., 2010). Species are adapted to live under
-            a wide range of environmental conditions (temperatures, salinity, oxygen, depth etc) which 
-            vary between and within populations (Brander, 2019 in Atlantic cod: a bio-ecology). <br>
-            Below are some examples of historical and projected growth curves of the Celtic Sea and North Sea cod populations 
-            in comparison to the data reported by the International Council of the Exploration of the Sea (ICES). 
-            The history of the source code is available through a publicly available version history on GitLab: 
-            <a href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/" target="_blank">https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a>.
-          </div>
-        </div> -->
 
       <div class="div-center">
         <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
@@ -294,40 +263,117 @@
           </div>
         </div>
       </div>
+      <hr style="margin-top: 3rem" />
 
 
 
-
-
-      <!-- * TESTING -->
-      <div class="div-center">
-        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height: 30rem">
-          <canvas id="complex_plot_canvas_adjustable"></canvas>
-        </div>
+      <div class="pt-5 pb-2 text-center nb">
+        <h2 class="mb-3">Adjustable real world Experiment</h2>
       </div>
-      <div class="div-center">
-        <div class="input-wrapper">
-          <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
-          <div class="text_input-wrapper">
-            <input id="X_input_complex_adjustable" type="text" value="1" />
+      <div class="div-center" style="padding-top: 3rem">
+        <div class="row" style="width: 100%">
+          <div class="col-md-8">
+            <div class="p-3 plot-wrapper" style="height: 30rem; width: 100%;">
+              <canvas id="complex_plot_canvas_adjustable"></canvas>
+            </div>
+          </div>
+
+          <div class="col-md-4 mt-auto">
+            <div>
+              <table>
+                <tr>
+                  <td>A_R</td>
+                  <td>
+                    <input id="A_R_adj_slide" type="range" class="slide slide-adj-complex" name="A_R_adj_slide" min="0"
+                      max="15" step="0.01" value="8.66" />
+                    <div id="A_R_adj_slide_amount" name="A_R_adj_slide_amount" class="slide-value">
+                      8.66
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>B_R</td>
+                  <td>
+                    <input id="B_R_adj_slide" type="range" class="slide slide-adj-complex" name="B_R_adj_slide" min="0"
+                      max="1" step="0.0001" value="0.3055" />
+                    <div id="B_R_adj_slide_amount" name="B_R_adj_slide_amount" class="slide-value">
+                      0.3055
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>THETA_A</td>
+                  <td>
+                    <input id="THETA_A_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_A_adj_slide"
+                      min="0" max="30000" step="1" value="18145" />
+                    <div id="THETA_A_adj_slide_amount" name="THETA_A_adj_slide_amount" class="slide-value">
+                      18145
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>THETA_B</td>
+                  <td>
+                    <input id="THETA_B_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_B_adj_slide"
+                      min="0" max="10000" step="1" value="4258" />
+                    <div id="THETA_B_adj_slide_amount" name="THETA_B_adj_slide_amount" class="slide-value">
+                      4258
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>THETA_H</td>
+                  <td>
+                    <input id="THETA_H_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_H_adj_slide"
+                      min="0" max="30000" step="1" value="25234" />
+                    <div id="THETA_H_adj_slide_amount" name="THETA_H_adj_slide_amount" class="slide-value">
+                      25234
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>T_R</td>
+                  <td>
+                    <input id="T_R_adj_slide" type="range" class="slide slide-adj-complex" name="T_R_adj_slide" min="0"
+                      max="350" step="1" value="283" />
+                    <div id="T_R_adj_slide_amount" name="T_R_adj_slide_amount" class="slide-value">
+                      283
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>T_H</td>
+                  <td>
+                    <input id="T_H_adj_slide" type="range" class="slide slide-adj-complex" name="T_H_adj_slide" min="0"
+                      max="350" step="1" value="286" />
+                    <div id="T_H_adj_slide_amount" name="T_H_adj_slide_amount" class="slide-value">
+                      286
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td>
+                    <button type="button" id="reset_btn_complex_adjustable" class="someBtn">
+                      Reset
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
-
-        <div class="input-wrapper">
-          <div class="mb-2 ml-5">Temperature</div>
-          <div id="X_slide_amount_complex_adjustable" name="t_slide_amount_simple" class="slide-value">
-            3°C
-          </div>
-          <input id="X_slide_complex_adjustable" type="range" class="slide" name="X_slider_complex_adjustable" min="-2"
-            max="20" step=".5" value="3" />
-        </div>
-
-        <button type="button" id="reset_btn_complex_adjustable" class="someBtn">
-          Reset
-        </button>
       </div>
-
     </div>
+
+  </div>
   </div>
 
   <!-- FOOTER -->
@@ -348,6 +394,8 @@
 
   <script async type="module" src="main.js"></script>
   <script async src="layout.js"></script>
+
+
 </body>
 
 </html>
