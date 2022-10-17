@@ -32,17 +32,6 @@
   <!-- Equations look like in LaTeX-->
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- BOOTSTRAP-->
-  <!-- <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
@@ -194,13 +183,6 @@
         </div>
       </div>
 
-
-
-
-
-
-
-
       <div class="div-center">
         <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
           <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
@@ -266,9 +248,8 @@
       <hr style="margin-top: 3rem" />
 
 
-
       <div class="pt-5 pb-2 text-center nb">
-        <h2 class="mb-3">Adjustable real world Experiment</h2>
+        <h2 class="mb-3">Adjustable real world experiment</h2>
       </div>
       <div class="div-center" style="padding-top: 3rem">
         <div class="row" style="width: 100%">
@@ -282,7 +263,7 @@
             <div>
               <table>
                 <tr>
-                  <td>A_R</td>
+                  <td>\(a r\)</td>
                   <td>
                     <input id="A_R_adj_slide" type="range" class="slide slide-adj-complex" name="A_R_adj_slide" min="0"
                       max="15" step="0.01" value="8.66" />
@@ -293,7 +274,7 @@
                 </tr>
 
                 <tr>
-                  <td>B_R</td>
+                  <td>\(b r\)</td>
                   <td>
                     <input id="B_R_adj_slide" type="range" class="slide slide-adj-complex" name="B_R_adj_slide" min="0"
                       max="1" step="0.0001" value="0.3055" />
@@ -304,7 +285,7 @@
                 </tr>
 
                 <tr>
-                  <td>THETA_A</td>
+                  <td>\(\Theta a\)</td>
                   <td>
                     <input id="THETA_A_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_A_adj_slide"
                       min="0" max="30000" step="1" value="18145" />
@@ -315,7 +296,7 @@
                 </tr>
 
                 <tr>
-                  <td>THETA_B</td>
+                  <td>\(\Theta b\)</td>
                   <td>
                     <input id="THETA_B_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_B_adj_slide"
                       min="0" max="10000" step="1" value="4258" />
@@ -326,7 +307,7 @@
                 </tr>
 
                 <tr>
-                  <td>THETA_H</td>
+                  <td>\(\Theta h\)</td>
                   <td>
                     <input id="THETA_H_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_H_adj_slide"
                       min="0" max="30000" step="1" value="25234" />
@@ -337,7 +318,7 @@
                 </tr>
 
                 <tr>
-                  <td>T_R</td>
+                  <td>\(T r\)</td>
                   <td>
                     <input id="T_R_adj_slide" type="range" class="slide slide-adj-complex" name="T_R_adj_slide" min="0"
                       max="350" step="1" value="283" />
@@ -348,7 +329,7 @@
                 </tr>
 
                 <tr>
-                  <td>T_H</td>
+                  <td>\(T h\)</td>
                   <td>
                     <input id="T_H_adj_slide" type="range" class="slide slide-adj-complex" name="T_H_adj_slide" min="0"
                       max="350" step="1" value="286" />
@@ -394,8 +375,6 @@
 
   <script async type="module" src="main.js"></script>
   <script async src="layout.js"></script>
-
-
 </body>
 
 </html>

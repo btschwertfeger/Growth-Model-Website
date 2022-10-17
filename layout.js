@@ -1,7 +1,7 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (Mai 2022)
+ * @author Benjamin Thomas Schwertfeger (August 2022)
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
@@ -14,7 +14,7 @@ const
     reset_btn_simple = document.getElementById('reset_btn_simple');
 
 reset_btn_simple.onclick = () => {
-    window.computeSimple()
+    window.computeSimple();
     window.plot_simple();
     temp_slider_simple.value = 3;
     initial_weight_input.value = 1;
@@ -75,6 +75,7 @@ const
     THETA_H_input = document.getElementById('THETA_H_adj_slide'),
     T_R_input = document.getElementById('T_R_adj_slide'),
     T_H_input = document.getElementById('T_H_adj_slide');
+
 const
     A_R_amount = document.getElementById('A_R_adj_slide_amount'),
     B_R_amount = document.getElementById('B_R_adj_slide_amount'),
@@ -101,7 +102,7 @@ input_fields.forEach((e, i) => {
             T_H: T_H_input.value,
             C_AVG: window.default_constants.C_AVG,
             T0: window.default_constants.T0
-        }))
+        }));
     };
     e.oninput = () => {
         slide_amounts[i].innerText = e.value;

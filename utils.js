@@ -1,7 +1,7 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (January 2022)
+ * @author Benjamin Thomas Schwertfeger (August 2022)
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
@@ -33,7 +33,6 @@ export function get_year(dataset, start_year, req_year) {
             for (let lon = 0; lon < n_lon; lon++)
                 for (let depth = 0; depth < n_depths; depth++)
                     res[filled_months][depth][lat][lon] = dataset[month][lat][lon][depth];
-
     return res;
 }
 

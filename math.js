@@ -1,7 +1,7 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (January 2022)
+ * @author Benjamin Thomas Schwertfeger (August 2022)
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
@@ -15,27 +15,27 @@ export function range(start, end, step = 1) {
         typeofStart = typeof start,
         typeofEnd = typeof end;
 
-    if (step === 0) throw TypeError("Step cannot be zero.");
-    if (typeofStart == "undefined" || typeofEnd == "undefined") throw TypeError("Must pass start and end arguments.");
-    else if (typeofStart != typeofEnd) throw TypeError("Start and end arguments must be of same type.");
+    if (step === 0) throw TypeError('Step cannot be zero.');
+    if (typeofStart == 'undefined' || typeofEnd == 'undefined') throw TypeError('Must pass start and end arguments.');
+    else if (typeofStart != typeofEnd) throw TypeError('Start and end arguments must be of same type.');
 
-    typeof step == "undefined" && (step = 1);
+    typeof step == 'undefined' && (step = 1);
 
     if (end < start) step = -step;
-    if (typeofStart == "number")
+    if (typeofStart == 'number')
         while (step > 0 ? end >= start : end <= start) {
             range.push(start);
             start += step;
         }
-    else if (typeofStart == "string") {
-        if (start.length != 1 || end.length != 1) throw TypeError("Only strings with one character are supported.");
+    else if (typeofStart == 'string') {
+        if (start.length != 1 || end.length != 1) throw TypeError('Only strings with one character are supported.');
         start = start.charCodeAt(0);
         end = end.charCodeAt(0);
         while (step > 0 ? end >= start : end <= start) {
             range.push(String.fromCharCode(start));
             start += step;
         }
-    } else throw TypeError("Only string and number types are supported");
+    } else throw TypeError('Only string and number types are supported');
     return range;
 }
 export function avg(grades, nan = null) {
@@ -48,10 +48,10 @@ export function avg(grades, nan = null) {
     }
 }
 
-// sort array ascending
-const asc = arr => arr.sort((a, b) => a - b);
-const sum = arr => arr.reduce((a, b) => a + b, 0);
-const mean = arr => sum(arr) / arr.length;
+const
+    asc = arr => arr.sort((a, b) => a - b),
+    sum = arr => arr.reduce((a, b) => a + b, 0),
+    mean = arr => sum(arr) / arr.length;
 
 // sample standard deviation
 export function std(arr) {

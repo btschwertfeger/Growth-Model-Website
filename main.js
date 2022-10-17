@@ -3,7 +3,7 @@
  * provided by Nadezhda Valerievna Sokolova and AnjaRohner
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (April 2022)
+ * @author Benjamin Thomas Schwertfeger (August 2022)
  * @email benjamin.schwertfeger@awi.de
  * @link https://awi.de
  * 
@@ -13,7 +13,6 @@
  **/
 
 import {
-    get_year,
     get_weight_by_temperature,
     get_temperature_index
 } from './utils.js';
@@ -140,6 +139,7 @@ window.computeSimple = (data = null, parameters = null, initial_weight = null) =
 window.plot_simple = (temperature = 3.0) => {
     temperature = parseFloat(temperature);
     let config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
+
     const
         data = window.last_result_simple,
         ctx = $('#simple_plot_canvas'),
@@ -182,7 +182,7 @@ window.plot_simple = (temperature = 3.0) => {
         window.simple_chart.data.datasets = config.data.datasets;
         window.simple_chart.update();
     }
-}
+};
 
 // #######################################################################
 // * ##### Real World Experiment #############################################
@@ -293,7 +293,8 @@ window.regions = [{
 window.complex_charts = [
     null, null, // upper left, upper right,
     null, null // lower left, lower right
-]
+];
+
 window.plot_complex_precomputed = (scenario, period) => {
     const n_generations = 10;
 
@@ -382,8 +383,8 @@ window.plot_complex_precomputed = (scenario, period) => {
             config.options.scales.x.max = 10;
             config.options.scales.y.min = 0;
             config.options.scales.y.max = 20;
-
             config.options.plugins.tooltip = bp_tooltip;
+
             // * LINEPLOT for upper plots
             get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
 
@@ -412,9 +413,8 @@ window.plot_complex_precomputed = (scenario, period) => {
                 config = window.complex_charts[regionidx + 2],
                 region = window.regions[regionidx];
 
-            // if (period === '1960-2000') config.data.datasets = [get_soda_boxplot(region)];
-            // else config.data.datasets = [];
             config.data.datasets.splice(1);
+
             // * LINEPLOT 
             get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
             let scenario_name = scenario.replace('_', ' ').toLowerCase().replace('fesom', 'FESOM');
@@ -546,7 +546,7 @@ window.computeComplexAdjustable = (constants = null) => {
 
 window.plot_complex_adjustable = (data = null) => {
     if (data === null) data = window.default_complex_adj_computed;
-    // console.log(data)
+
     const
         settings = window.default_input_complex_adjustable,
         ctx = $(`#complex_plot_canvas_adjustable`);
@@ -555,18 +555,14 @@ window.plot_complex_adjustable = (data = null) => {
     let weight_by_age_vector = [...new Array(settings.generation)].map(() => new Array());
     for (let year = settings.initial_year; year < settings.last_year + 1; year++) {
         for (let entry = 0; entry < data[year].length; entry++) {
-            const age = parseInt(data[year][entry].age)
+            const age = parseInt(data[year][entry].age);
             for (let depth = 0; depth < settings.n_depths; depth++) {
                 const weight = data[year][entry].weight[depth];
                 if (weight === -999) continue;
-                else {
-                    // console.log(year, age, data[year][entry].weight[depth])
-                    weight_by_age_vector[age].push(data[year][entry].weight[depth]);
-                }
+                else weight_by_age_vector[age].push(data[year][entry].weight[depth]);
             }
         }
     }
-    // console.log(weight_by_age_vector)
 
     /**
      * ? compute quantiles 
@@ -590,7 +586,6 @@ window.plot_complex_adjustable = (data = null) => {
             weight_by_age_quantile[`${age}`].q_75.push(quantiles.q_75);
         }
     }
-    // console.log(weight_by_age_quantile)
 
     /** 
      * ? Start plotting 
@@ -625,10 +620,9 @@ window.plot_complex_adjustable = (data = null) => {
 
     config.data.labels = range(1, years);
     config.data.datasets = plottable_datasets;
-    config.options.plugins.title.text = 'North Sea 1960 - 2000';
+    config.options.plugins.title.text = 'SODA North Sea 1960 - 2000';
     config.options.scales.y.min = null;
     config.options.scales.y.max = null;
-
     config.options.plugins.tooltip = {
         displayColors: true,
         callbacks: {
@@ -657,7 +651,12 @@ window.plot_complex_adjustable = (data = null) => {
 // * ##### ON - READY #############################################
 // #######################################################################
 
-
+/**
+ * Load data from csv files
+ * @param {*} allText 
+ * @param {*} kind 
+ * @returns 
+ */
 window.processData = (allText, kind) => {
     let allTextLines = allText.split('\n');
 
@@ -735,9 +734,7 @@ $(document).ready(() => {
         dataType: 'text',
         success: (data) => {
             window.process_data_simple = processData(data, 'Simple');
-            console.log('Simple data loaded!')
             window.computeSimple();
-            console.log('Default Aquarium Experiment computed!')
             window.plot_simple();
         }
     });
@@ -754,16 +751,14 @@ $(document).ready(() => {
         }
     });
 
-    // * Complex one location for computation with parameters
+    // * Complex - one location for computation with adjustable parameters
     $.ajax({
         type: 'GET',
         url: 'data/northsea_lat55_lon0_1960-2000.csv',
         dataType: 'text',
         success: (data) => {
             window.processed_data_complex_adjustable = processData(data, 'complex-one-region');
-            console.log('Complex data for adjustable computation loaded')
             window.computeComplexAdjustable();
-            console.log('Default complex adjustable computed!')
             window.plot_complex_adjustable();
         }
     });
