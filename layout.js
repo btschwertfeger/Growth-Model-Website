@@ -33,7 +33,6 @@ initial_weight_input.onchange = () => {
     window.plot_simple(parseFloat(temp_slider_simple.value));
 }
 
-
 /**
  * * Complex section
  */
@@ -62,6 +61,25 @@ document.getElementById('complex_rcp8.5-2').onclick = () => {
     window.plot_complex_precomputed('FESOM_RCP85', '2160-2200');
     period_switch.innerText = window.opposite_period;
 }
+
+const
+    image1 = 'images/test1.png',
+    image2 = 'images/test2.png',
+    image3 = 'images/test3.png';
+
+document.getElementById('complex_back_image').onclick = () => {
+    const image_src = document.getElementById('complex_image').src;
+    if (image_src.includes(image1)) return;
+    else if (image_src.includes(image2)) document.getElementById('complex_image').src = image1;
+    else if (image_src.includes(image3)) document.getElementById('complex_image').src = image2;
+};
+document.getElementById('complex_next_image').onclick = () => {
+    const image_src = document.getElementById('complex_image').src;
+    if (image_src.includes(image3)) return;
+    else if (image_src.includes(image1)) document.getElementById('complex_image').src = image2;
+    else if (image_src.includes(image2)) document.getElementById('complex_image').src = image3;
+
+};
 
 /**
  * * Adjustabel real world experiment

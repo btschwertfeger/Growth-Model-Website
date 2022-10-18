@@ -17,7 +17,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="icon" type="image/x-icon"
     href="https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg" />
-  <title>Growth Model Atlantic Cod</title>
+  <title>Atlantic Cod Growth Model</title>
 
   <!-- JQUERY-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -50,7 +50,8 @@
 
   <!-- HEADLINE -->
   <div class="pt-5 pb-2 text-center">
-    <h1 class="mb-3">Growth Model Atlantic Cod</h1>
+    <h1 class="mb-3">Atlantic Cod Growth Model</h1>
+    <h4 class="mb-3">Modelling temperature effects on growth function of Atlantic cod (Gadus morhua)</h4>
   </div>
 
   <!-- INFORMATION-->
@@ -61,11 +62,21 @@
     <div class="card-body">
       <!-- <h5 class="card-title">General</h5> -->
       <p class="card-text">
-        By definition, “growth model” is any quantitative description of growth, from theoretically
+        <!-- By definition, “growth model” is any quantitative description of growth, from theoretically
         informed mathematical models to purely empirical transformations such as age-length keys (Lorenzen, 2016).
         The most commonly used growth models are the von Bertalanffy growth model, Gompertz model, Logistic model,
         and Power model (Baranov, 1918; von Bertalanffy, 1938; Hulme et al., 1947; Yoshihara, 1951), as well as energy
-        allocation and oxygen budget models (Neumauer and Anderssen, 2019).
+        allocation and oxygen budget models (Neumauer and Anderssen, 2019). -->
+        Growth is one of the fundamental life properties that is powered by metabolism and influenced by a diversity of
+        internal, environmental and ecological factors (Campbell et al., 2008). At an organism level “growth” is defined
+        as a measurable increase in size over a period of time, where size is represented as length, volume or weight
+        (von Bertalanffy, 1938; Weatherley and Gill, 1987; Lorenzen, 2016; Clarke, 2017). The term “growth model” can be
+        defined as a quantitative description of growth, from theoretically informed mathematical models to purely
+        empirical transformations (Lorenzen, 2016). Here we imply a single-species bio-physical growth model for
+        Atlantic cod (Gadus morhua) which was derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson
+        et al., 2007) by Butzin and Pörtner (2016) and extended by Sokolova et al. (2021). The growth model simulates
+        temperature- and size-dependent daily growth of cod observed in laboratory experiments (see Aquarium
+        Experiment), as well as monthly growth under idealized open sea conditions (see Real World Experiment).
       </p>
     </div>
     <hr />
@@ -82,13 +93,19 @@
     <div class="card-body">
       <!-- <h5 class="card-title">General</h5> -->
       <p class="card-text">
-        The Atlantic cod growth model described here is a single-species bio-physical growth model that simulates
+        <!-- The Atlantic cod growth model described here is a single-species bio-physical growth model that simulates
         temperature- and size-dependent growth of Atlantic cod (Gadus morhua).
         The model is derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson et al., 2007)
         by <a href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375" target="_blank">Butzin and Pörtner
           (2016)</a>.
         The model assumes that Atlantic cod growth rates are mainly temperature- and size-dependent*.
-        The model simulates daily growth of cod which mimics controlled laboratory experiments.
+        The model simulates daily growth of cod which mimics controlled laboratory experiments. -->
+
+        Environmental temperature is suggested as a key factor driving metabolic rates and thus influencing the rates at
+        which an individual grows: organisms grow faster in a warmer environment while colder temperatures cause slower
+        growth (Clarke, 2017). Despite the wide range of temperature environments that fish experience across latitudes,
+        experimental studies reveal species-specific temperatures that are optimal for growth. Atlantic cod growth rates
+        increase with temperature, reaching a maximum between 8 and 10°C (Righton et al., 2010; Pörtner et al., 2001).
       </p>
 
       <div class="div-center">
@@ -122,13 +139,21 @@
         and the body weight range 0.001–8 kg (Björnsson and Steinarsson, 2002; Björnsson et al., 2007). <br>
         Core model assumptions:
       <ul>
-        <li>the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth (White
-          and Kearney, 2014);</li>
-        <li>an organism responds to temperature changes immediately;</li>
-        <li>larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not
-          considered;</li>
-        <li>individuals grow under unlimited food supply and in a homogeneous thermal environment (based on data from
-          Björnsson and Steinarsson, 2002; Björnsson et al., 2007).</li>
+        <li>
+          the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth (White
+          and Kearney, 2014);
+        </li>
+        <li>
+          an organism responds to temperature changes immediately;
+        </li>
+        <li>
+          larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not
+          considered;
+        </li>
+        <li>
+          individuals grow under unlimited food supply and in a homogeneous thermal environment (based on data from
+          Björnsson and Steinarsson, 2002; Björnsson et al., 2007).
+        </li>
       </ul>
       </p>
     </div>
@@ -156,11 +181,33 @@
       </p>
 
       <div class="row mt-4 mb-4">
+
         <div class="col-xl-6 col-lg-12">
           <div id="float-chart-div">
-            <img alt="regions map" src="images/absolute_temperatures_6figures.png" style="width: 100%;" />
+            <img id="complex_image" alt="regions map" src="images/test1.png" style="width: 100%;" />
           </div>
+
+          <div class="container" style="max-width: 15em;">
+            <div class="row">
+              <div class="col">
+                <button type="button" id="complex_back_image" class="someBtn m-2">
+                  Back
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" id="complex_next_image" class="someBtn m-2">
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- <div id="float-chart-div">
+            <img alt="regions map" src="images/absolute_temperatures_6figures.png" style="width: 100%;" />
+          </div> -->
         </div>
+
+
+
         <div class="col-xl-6 col-lg-12">
           <div id="float-chart-div">
             <img alt="flow diagram" src="images/complex_flow.png" style="min-width: 20rem; max-width: 50rem" />
@@ -212,7 +259,7 @@
           <div class="col">
             <button type="button" id="complex_historical-2" class="someBtn m-2">
               FESOM historical
-              (1960 - 2000)
+              (1980 - 2000)
             </button>
           </div>
         </div>
@@ -220,13 +267,13 @@
           <div class="col">
             <button type="button" id="complex_rcp4.5-1" class="someBtn m-2">
               FESOM RCP 4.5
-              (2060 - 2100)
+              (2080 - 2100)
             </button>
           </div>
           <div class="col">
             <button type="button" id="complex_rcp4.5-2" class="someBtn m-2">
               FESOM RCP 4.5
-              (2160 - 2200)
+              (2180 - 2200)
             </button>
           </div>
         </div>
@@ -234,13 +281,13 @@
           <div class="col">
             <button type="button" id="complex_rcp8.5-1" class="someBtn m-2">
               FESOM RCP8.5
-              (2060 - 2100)
+              (2080 - 2100)
             </button>
           </div>
           <div class="col">
             <button type="button" id="complex_rcp8.5-2" class="someBtn m-2">
               FESOM RCP8.5
-              (2160 - 2200)
+              (2180 - 2200)
             </button>
           </div>
         </div>
