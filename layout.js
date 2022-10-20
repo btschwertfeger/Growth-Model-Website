@@ -37,29 +37,20 @@ initial_weight_input.onchange = () => {
  * * Complex section
  */
 
-document.getElementById('complex_historical-1').onclick = () => {
-    window.plot_complex_precomputed('FESOM_HISTORICAL', '1860-1900');
-    period_switch.innerText = window.opposite_period;
+document.getElementById('complex_soda_btn').onclick = () => {
+    window.plot_complex_precomputed('SODA', '1981-2000');
 }
-document.getElementById('complex_historical-2').onclick = () => {
-    window.plot_complex_precomputed('FESOM_HISTORICAL', '1960-2000');
-    period_switch.innerText = window.opposite_period;
+document.getElementById('complex_rcp45-1').onclick = () => {
+    window.plot_complex_precomputed('FESOM_RCP45', '2081-2100');
 }
-document.getElementById('complex_rcp4.5-1').onclick = () => {
-    window.plot_complex_precomputed('FESOM_RCP45', '2060-2100');
-    period_switch.innerText = window.opposite_period;
+document.getElementById('complex_rcp45-2').onclick = () => {
+    window.plot_complex_precomputed('FESOM_RCP45', '2181-2200');
 }
-document.getElementById('complex_rcp4.5-2').onclick = () => {
-    window.plot_complex_precomputed('FESOM_RCP45', '2160-2200');
-    period_switch.innerText = window.opposite_period;
+document.getElementById('complex_rcp85-1').onclick = () => {
+    window.plot_complex_precomputed('FESOM_RCP85', '2081-2100');
 }
-document.getElementById('complex_rcp8.5-1').onclick = () => {
-    window.plot_complex_precomputed('FESOM_RCP85', '2060-2100');
-    period_switch.innerText = window.opposite_period;
-}
-document.getElementById('complex_rcp8.5-2').onclick = () => {
-    window.plot_complex_precomputed('FESOM_RCP85', '2160-2200');
-    period_switch.innerText = window.opposite_period;
+document.getElementById('complex_rcp85-2').onclick = () => {
+    window.plot_complex_precomputed('FESOM_RCP85', '2181-2200');
 }
 
 const

@@ -190,10 +190,8 @@ window.plot_simple = (temperature = 3.0) => {
 
 const
     n_generations_celtic_sea = 10,
-    n_generations_barents_sea = 14,
-    y0 = '1980',
-    y2 = '2080',
-    y3 = '2180';
+    n_generations_barents_sea = 14;
+
 /**
  * * Following is the plotting of precomputed stuff
  */
@@ -211,31 +209,31 @@ window.regions = [{
     index: 0, // specifies the index in computed and loaded arrays
     precomputed: {
         FESOM_RCP45: {
-            '2080-2100': {
+            '2081-2100': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             },
-            '2180-2200': {
+            '2181-2200': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             }
         },
         FESOM_RCP85: {
-            '2080-2100': {
+            '2081-2100': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             },
-            '2180-2200': {
+            '2181-2200': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             }
         },
         SODA: {
-            '1980-2000': {
+            '1981-2000': {
                 quant25: null,
                 quant50: null,
                 quant75: null,
@@ -248,31 +246,31 @@ window.regions = [{
     index: 1,
     precomputed: {
         FESOM_RCP45: {
-            '2080-2100': {
+            '2081-2100': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             },
-            '2180-2200': {
+            '2181-2200': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             }
         },
         FESOM_RCP85: {
-            '2080-2100': {
+            '2081-2100': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             },
-            '2180-2200': {
+            '2181-2200': {
                 quant25: null,
                 quant50: null,
                 quant75: null
             }
         },
         SODA: {
-            '1980-2000': {
+            '1981-2000': {
                 quant25: null,
                 quant50: null,
                 quant75: null
@@ -283,10 +281,11 @@ window.regions = [{
 
 window.complex_charts = [
     null, null, // upper left, upper right,
-    null, null // lower left, lower right
 ];
 
 window.plot_complex_precomputed = (scenario, period) => {
+
+    window.active_scenario = scenario;
     const
         get_weight_by_age = (data, n_generations) => {
             let weight_by_age_vector = [...new Array(n_generations)].map(() => new Array());
@@ -327,70 +326,71 @@ window.plot_complex_precomputed = (scenario, period) => {
             return datasets;
         };
 
-
     let general_config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
     general_config.data.datasets = [];
     general_config.options.scales.x.title.text = 'Age, years';
-    general_config.options.scales.y.min = null;
-    general_config.options.scales.y.max = null;
+    general_config.options.scales.x.min = 1;
+    general_config.options.scales.x.max = Math.max(n_generations_celtic_sea, n_generations_barents_sea);
 
     if (scenario == 'SODA') {
         for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
 
-            let region = window.regions[regionidx]
-            let config = JSON.parse(JSON.stringify(general_config));
-            config.data.labels = range(1, (region.name == 'Celtic_Sea') ? n_generations_celtic_sea : n_generations_barents_sea);
-            config.data.datasets.push(get_soda_boxplot(window.boxplot_data[region.name].data));
+            let config = null;
 
-            const bp_tooltip = {
-                displayColors: true,
-                callbacks: {
-                    label: (context) => {
-                        let label = ' ';
-                        if (context.dataset.label !== null && context.dataset.label === 'Observation') {
-                            if (context.parsed.min !== null) label += `min: ${Number(context.parsed.min).toFixed(2)}kg; `;
-                            if (context.parsed.q1 !== null) label += `25% Quantile: ${Number(context.parsed.q1).toFixed(2)}kg; `;
-                            if (context.parsed.median !== null) label += `median: ${Number(context.parsed.median).toFixed(2)}kg; `;
-                            if (context.parsed.mean !== null) label += `mean: ${Number(context.parsed.mean).toFixed(2)}kg; `;
-                            if (context.parsed.q3 !== null) label += `75% Quantile: ${Number(context.parsed.q3).toFixed(2)}kg; `;
-                            if (context.parsed.max !== null) label += `max: ${Number(context.parsed.max).toFixed(2)}kg`;
-                        } else return (context.dataset.label !== null && context.parsed.y !== null) ? ` ${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
-                        return label;
+            if (window.complex_charts[regionidx]) {
+                config = window.complex_charts[regionidx];
+                config.data.datasets.splice(1);
+            } else {
+                let region = window.regions[regionidx]
+                config = JSON.parse(JSON.stringify(general_config));
+                config.data.labels = range(1, n_generations_barents_sea) //(region.name == 'Celtic_Sea') ? n_generations_celtic_sea : n_generations_barents_sea);
+                config.data.datasets.push(get_soda_boxplot(window.boxplot_data[region.name].data));
+
+                const bp_tooltip = {
+                    displayColors: true,
+                    callbacks: {
+                        label: (context) => {
+                            let label = ' ';
+                            if (context.dataset.label !== null && context.dataset.label === 'Observation') {
+                                if (context.parsed.min !== null) label += `min: ${Number(context.parsed.min).toFixed(2)}kg; `;
+                                if (context.parsed.q1 !== null) label += `25% Quantile: ${Number(context.parsed.q1).toFixed(2)}kg; `;
+                                if (context.parsed.median !== null) label += `median: ${Number(context.parsed.median).toFixed(2)}kg; `;
+                                if (context.parsed.mean !== null) label += `mean: ${Number(context.parsed.mean).toFixed(2)}kg; `;
+                                if (context.parsed.q3 !== null) label += `75% Quantile: ${Number(context.parsed.q3).toFixed(2)}kg; `;
+                                if (context.parsed.max !== null) label += `max: ${Number(context.parsed.max).toFixed(2)}kg`;
+                            } else return (context.dataset.label !== null && context.parsed.y !== null) ? ` ${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
+                            return label;
+                        },
+                        title: (context) => {
+                            return `Age, year: ${parseInt(Number(context[0].parsed.x+1).toFixed(1))}`;
+                        },
                     },
-                    title: (context) => {
-                        return `Age, year: ${parseInt(Number(context[0].parsed.x+1).toFixed(1))}`;
-                    },
-                },
+                }
+                config.options.plugins.tooltip = bp_tooltip;
             }
-            config.options.plugins.tooltip = bp_tooltip;
 
             // * LINEPLOT for upper plots
-            get_line_datasets(region, scenario, period).forEach((dataset) => config.data.datasets.push(dataset));
+            get_line_datasets(window.regions[regionidx], scenario, period).forEach((dataset) => config.data.datasets.push(dataset));
 
             // ? ----- PLOTTING ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-            config.options.plugins.title.text = `${region.name.replace('_',' ')} ${scenario} (${Object.keys(region.precomputed[scenario])[0]})`;
-            window.complex_charts[regionidx] = new Chart($(`#complex_plot_canvas${regionidx}`), config);
+            config.options.plugins.title.text = `${window.regions[regionidx].name.replace('_',' ')} ${scenario} (${Object.keys(window.regions[regionidx].precomputed[scenario])[0]})`;
+            if (!window.complex_charts[regionidx]) window.complex_charts[regionidx] = new Chart($(`#complex_plot_canvas${regionidx}`), config);
+            else config.update();
         }
     } else {
         window.active_scenario = scenario;
-        window.opposite_period = (period === '1960-2000') ? '1860-1900' :
-            (period === '2060-2100') ? '2160-2200' :
-            (period === '2160-2200') ? '2060-2100' : null;
 
-        // * Lower two plots
         for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
             let
-                config = window.complex_charts[regionidx + 2],
+                config = window.complex_charts[regionidx],
                 region = window.regions[regionidx];
 
-            // if (period === '1960-2000') config.data.datasets = [get_soda_boxplot(region)];
-            // else config.data.datasets = [];
             config.data.datasets.splice(1);
             // * LINEPLOT 
             get_line_datasets(region, scenario, period).forEach((dataset) => config.data.datasets.push(dataset));
-            let scenario_name = scenario.replace('_', ' ').toLowerCase().replace('fesom', 'FESOM');
-            scenario_name = (scenario_name.includes('historical')) ? scenario_name : `${scenario_name.toUpperCase().slice(0,-2)}${scenario_name.slice(-2,-1)}.${scenario_name.slice(-1)}`
-            config.options.plugins.title.text = `${region.name} ${scenario_name} (${period})`;
+            let scenario_name = scenario.replace('_', '').toLowerCase().replace('fesom', '');
+            scenario_name = `${scenario_name.toUpperCase().slice(0,-2)}${scenario_name.slice(-2,-1)}.${scenario_name.slice(-1)}`
+            config.options.plugins.title.text = `${region.name.replace('_', ' ')} ${scenario_name} (${period})`;
             config.update();
         }
     }
@@ -770,8 +770,8 @@ window.processData = (allText, kind) => {
             let data = new Array(0);
             for (let i = 0; i < lines.length; i++) lines[i].split(',').forEach((e, i) => {
                 if (i !== 0) {
-                    if (region_name == 'Celtic_Sea' && i > 10) data.push(parseFloat(0.0)) // Celtic_Sea only has 10 generations
-                    else data.push(parseFloat(e)); // n_generations = 15
+                    if (region_name == 'Celtic_Sea' && i > 10) data.push(parseFloat(.0)) // Celtic_Sea only has 10 generations
+                    else data.push(parseFloat(e));
                 }
             });
 
@@ -793,9 +793,9 @@ window.processData = (allText, kind) => {
         }
 
         const gather_period = (full_descr, region_name, scenario, lines) => {
-            if (full_descr.includes('1980_2000')) gather_quant(full_descr, region_name, scenario, '1980_2000', lines)
-            else if (full_descr.includes('2080_2100')) gather_quant(full_descr, region_name, scenario, '2080_2100', lines)
-            else if (full_descr.includes('2180_2200')) gather_quant(full_descr, region_name, scenario, '2180_2200', lines)
+            if (full_descr.includes('1981_2000')) gather_quant(full_descr, region_name, scenario, '1981_2000', lines)
+            else if (full_descr.includes('2081_2100')) gather_quant(full_descr, region_name, scenario, '2081_2100', lines)
+            else if (full_descr.includes('2181_2200')) gather_quant(full_descr, region_name, scenario, '2181_2200', lines)
         }
 
         const gather_scenario = (full_descr, region_name, lines) => {
@@ -807,11 +807,11 @@ window.processData = (allText, kind) => {
         for (let line = 0; line < allTextLines.length - 1; line++) {
             const description = allTextLines[line];
             if (description.includes('Celtic_Sea')) {
-                gather_scenario(description, 'Celtic_Sea', allTextLines.slice(line + 1, line + 22)); //42
-                line += 21;
+                gather_scenario(description, 'Celtic_Sea', allTextLines.slice(line + 1, line + 21));
+                line += 20;
             } else if (description.includes('Barents_Sea')) {
-                gather_scenario(description, 'Barents_Sea', allTextLines.slice(line + 1, line + 22)); //42
-                line += 21;
+                gather_scenario(description, 'Barents_Sea', allTextLines.slice(line + 1, line + 21));
+                line += 20;
             }
         }
     } else if (kind == 'complex-precomputed-boxplot') {
@@ -832,6 +832,7 @@ window.processData = (allText, kind) => {
                 if (!description.includes('Barents_Sea')) gather_scenario('Barents_Sea', allTextLines[line])
             }
         }
+
         // ? remove nans from boxplot data
         ['Celtic_Sea', 'Barents_Sea'].forEach(region_name => {
             window.boxplot_data[region_name].data.forEach((e, i) => {
@@ -840,7 +841,6 @@ window.processData = (allText, kind) => {
                 )
             })
         });
-        console.log(window.boxplot_data)
     } else if (kind === 'complex-one-region') {
         let x_data = new Array(0);
         for (let line = 0; line < allTextLines.length - 1; line++) {
@@ -856,21 +856,21 @@ window.processData = (allText, kind) => {
 
 $(document).ready(() => {
     // * Simple
-    // $.ajax({
-    //     type: 'GET',
-    //     url: 'data/growth_function_parameters_simple.csv',
-    //     dataType: 'text',
-    //     success: (data) => {
-    //         window.process_data_simple = processData(data, 'Simple');
-    //         window.computeSimple();
-    //         window.plot_simple();
-    //     }
-    // });
+    $.ajax({
+        type: 'GET',
+        url: 'data/growth_function_parameters_simple.csv',
+        dataType: 'text',
+        success: (data) => {
+            window.process_data_simple = processData(data, 'Simple');
+            window.computeSimple();
+            window.plot_simple();
+        }
+    });
 
     //? load boxplot ajax
     $.ajax({
         type: 'GET',
-        url: `data/new/boxdata.csv`,
+        url: `data/boxdata.csv`,
         dataType: 'text',
         success: (data) => {
             processData(data, 'complex-precomputed-boxplot');
@@ -878,25 +878,47 @@ $(document).ready(() => {
             // * load Complex precomputed
             $.ajax({
                 type: 'GET',
-                url: `data/new/modeled_weights.csv`,
+                url: `data/modeled_weights.csv`,
                 dataType: 'text',
                 success: (data) => {
                     processData(data, 'complex-precomputed');
-                    plot_complex_precomputed('SODA', '1980-2000');
+                    plot_complex_precomputed('SODA', '1981-2000');
                 }
             });
         }
     });
 
     // * Complex - one location for computation with adjustable parameters
-    // $.ajax({
-    //     type: 'GET',
-    //     url: 'data/northsea_lat55_lon0_1960-2000.csv',
-    //     dataType: 'text',
-    //     success: (data) => {
-    //         window.processed_data_complex_adjustable = processData(data, 'complex-one-region');
-    //         window.computeComplexAdjustable();
-    //         window.plot_complex_adjustable();
-    //     }
-    // });
+
+    /**
+     * 
+     * ? Python code to get the .csv file in the correct form: 
+        input_files = xr.open_dataset('data/SODA_North_Atlantic_1958_2007_sliced.nc')
+        new_time = pd.date_range('1958-01-01', '2008-01-01', freq='M')
+        input_files = input_files.assign_coords({'time': new_time})
+        depth_levels = slice(30, 600)   # 0-600 meters according to Atlantic cod distribution
+        initial_year = 1960 
+        years = range(initial_year, 2000)
+
+        lat,lon=55,0
+        input_files = input_files.sel(
+            latitude=lat, longitude=lon, method='nearest'
+        ).sel(time=slice(str(years.start),str(years.stop-1)), depth_coord=depth_levels)
+
+        np.savetxt(
+            'data/northsea_lat55_lon0_1960-2000.csv', 
+            np.array(pd.DataFrame(np.array(input_files.thetao)).fillna(-999)), 
+            delimiter=','
+        )
+     */
+    $.ajax({
+        type: 'GET',
+        url: 'data/northsea_lat55_lon0_1960-2000.csv',
+        dataType: 'text',
+        success: (data) => {
+            window.processed_data_complex_adjustable = processData(data, 'complex-one-region');
+            window.computeComplexAdjustable();
+            window.plot_complex_adjustable();
+        }
+    });
 });
