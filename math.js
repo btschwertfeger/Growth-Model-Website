@@ -1,7 +1,7 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (August 2022)
+ * @author Benjamin Thomas Schwertfeger (2022)
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
@@ -53,7 +53,6 @@ const
     sum = arr => arr.reduce((a, b) => a + b, 0),
     mean = arr => sum(arr) / arr.length;
 
-// sample standard deviation
 export function std(arr) {
     const mu = mean(arr);
     const diffArr = arr.map(a => (a - mu) ** 2);

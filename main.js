@@ -3,10 +3,10 @@
  * provided by Nadezhda Valerievna Sokolova and AnjaRohner
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (August 2022)
- * @email benjamin.schwertfeger@awi.de
  * @link https://awi.de
  * 
+ * @author Benjamin Thomas Schwertfeger (2022)
+ * @email benjamin.schwertfeger@awi.de
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
@@ -90,11 +90,14 @@ window.default_chart_config_simple = {
         },
     },
 };
-
-// #######################################################################
-// * ##### Aquarium Experiment ###########################################
-// #######################################################################
-
+/*
+    _                          _                 
+   / \   __ _ _   _  __ _ _ __(_)_   _ _ __ ___  
+  / _ \ / _` | | | |/ _` | '__| | | | | '_ ` _ \ 
+ / ___ \ (_| | |_| | (_| | |  | | |_| | | | | | |
+/_/   \_\__, |\__,_|\__,_|_|  |_|\__,_|_| |_| |_|
+        |_| Experiment
+*/
 window.default_input_simple = {
     max_age: 15 * 365, // maximum age in days
     initial_weight: 1, // initial weight in kg
@@ -184,10 +187,13 @@ window.plot_simple = (temperature = 3.0) => {
     }
 };
 
-// #######################################################################
-// * ##### Real World Experiment #############################################
-// #######################################################################
-
+/*
+ ____ Experiment _  __        __         _     _ 
+|  _ \ ___  __ _| | \ \      / /__  _ __| | __| | 
+| |_) / _ \/ _` | |  \ \ /\ / / _ \| '__| |/ _` |
+|  _ <  __/ (_| | |   \ V  V / (_) | |  | | (_| |
+|_| \_\___|\__,_|_|    \_/\_/ \___/|_|  |_|\__,_| 
+*/
 const
     n_generations_celtic_sea = 10,
     n_generations_barents_sea = 14;
@@ -284,7 +290,6 @@ window.complex_charts = [
 ];
 
 window.plot_complex_precomputed = (scenario, period) => {
-
     window.active_scenario = scenario;
     const
         get_weight_by_age = (data, n_generations) => {
@@ -527,10 +532,14 @@ window.plot_complex_precomputed = (scenario, period) => {
 //     }
 // };
 
-/**
- * * Following for adjustable complex computation/plot
- */
-
+/*
+     _       _  _           _        _     _      
+    / \   __| |(_)_   _ ___| |_ __ _| |__ | | ___ 
+   / _ \ / _` || | | | / __| __/ _` | '_ \| |/ _ \
+  / ___ \ (_| || | |_| \__ \ || (_| | |_) | |  __/
+ /_/   \_\__,_|/ |\__,_|___/\__\__,_|_.__/|_|\___|
+                |__/ Experiment
+*/
 window.default_constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
     A_R: 8.66,
     B_R: 0.3055,
@@ -874,8 +883,7 @@ $(document).ready(() => {
         dataType: 'text',
         success: (data) => {
             processData(data, 'complex-precomputed-boxplot');
-            // console.log(window.boxplot_data)
-            // * load Complex precomputed
+            // * load real world precomputed
             $.ajax({
                 type: 'GET',
                 url: `data/modeled_weights.csv`,
@@ -900,16 +908,18 @@ $(document).ready(() => {
         initial_year = 1960 
         years = range(initial_year, 2000)
 
-        lat,lon=55,0
+        lat, lon = 55, 0
         input_files = input_files.sel(
             latitude=lat, longitude=lon, method='nearest'
         ).sel(time=slice(str(years.start),str(years.stop-1)), depth_coord=depth_levels)
-
+        
+        # dimensions: time x depth
         np.savetxt(
             'data/northsea_lat55_lon0_1960-2000.csv', 
             np.array(pd.DataFrame(np.array(input_files.thetao)).fillna(-999)), 
             delimiter=','
         )
+        # this can be foudn in /data/validate_adjustable_1loc.ipynb
      */
     $.ajax({
         type: 'GET',

@@ -1,7 +1,7 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (August 2022)
+ * @author Benjamin Thomas Schwertfeger (2022)
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
