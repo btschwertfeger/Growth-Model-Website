@@ -12,3 +12,5 @@ __pycache__
 deploy.sh
 dist/
 old
+.ipynb_checkpoints/
+.DS_Store
