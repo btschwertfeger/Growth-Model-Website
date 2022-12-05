@@ -51,42 +51,104 @@
   <!-- HEADLINE -->
   <div class="pt-5 pb-2 text-center">
     <h1 class="mb-3">Atlantic Cod Growth Model</h1>
-    <h4 class="mb-3">Modelling temperature effects on growth function of Atlantic cod (Gadus morhua)</h4>
+    <h4 class="mb-3">Modelling temperature effects on growth function of Atlantic cod (<i>Gadus morhua</i>)</h4>
   </div>
 
   <!-- INFORMATION-->
   <div class="card ml-5 mr-5 mb-5 nb">
     <hr />
-    <!-- <div class="card-header">Featured</div> -->
-    <!-- <div class="card-header">General</div> -->
     <div class="card-body">
-      <!-- <h5 class="card-title">General</h5> -->
       <p class="card-text">
         Growth is one of the fundamental life properties that is powered by metabolism and influenced by a diversity of
-        internal, environmental and ecological factors (Campbell et al., 2008). At an organism level “growth” is defined
-        as a measurable increase in size over a period of time, where size is represented as length, volume or weight
-        (von Bertalanffy, 1938; Weatherley and Gill, 1987; Lorenzen, 2016; Clarke, 2017). The term “growth model” can be
-        defined as a quantitative description of growth, from theoretically informed mathematical models to purely
-        empirical transformations (Lorenzen, 2016). Here we imply a single-species bio-physical growth model for
-        Atlantic cod (Gadus morhua) which was derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson
-        et al., 2007) by Butzin and Pörtner (2016) and extended by Sokolova et al. (2021). The growth model simulates
-        temperature- and size-dependent daily growth of cod observed in laboratory experiments (see Aquarium
-        Experiment), as well as monthly growth under idealized open sea conditions (see Real World Experiment).
+        internal, environmental and ecological factors (Campbell et al., 2008). Investigation of growth involves such
+        research fields as ocean physics, climate science, fisheries biology, marine ecosystem studies and
+        ecophysiology, and includes theoretical background obtained from empirical growth data (laboratory experiments
+        and aquatic studies), on the one hand, and growth observations of wild populations (fisheries/scientific
+        surveys, tagging studies etc.), on the other hand (Weatherley, 1966; Audzijonyte et al., 2020).
       </p>
+      <p class="card-text">
+        At an organism level “growth” is defined as a measurable increase in size over a period of
+        time, where size is represented as length, volume or weight (von Bertalanffy, 1938; Weatherley and Gill, 1987;
+        Lorenzen, 2016; Clarke, 2017). Graphically growth performance can be described by a sigmoid growth curve
+        approaching an upper asymptote with increasing time step (Beverton and Holt, 1957). Growth curves are used to
+        identify individual growth strategies under various internal and external factors (Sokolova, 2022).
+      </p>
+
+      <h4>Temperature and size effects on growth</h4>
+      <p>Environmental temperature is suggested as a key factor driving metabolic rates and thus influencing the rates
+        at which an individual grows: organisms grow faster in a warmer environment while colder temperatures cause
+        slower growth (Clarke, 2017). Despite the wide range of temperature environments that fish experience across
+        latitudes, experimental studies reveal species-specific temperatures that are optimal for growth. Besides
+        environmental temperatures most organisms’ physiological rates are affected by body size which can be expressed
+        by a power function: Y = axb where, Y is a measure of performance, x is a measure of size and a, b are
+        species-specific coefficients (Brown et al., 2004; Clarke, 2017). This is called a principle of scaling:
+        organism performance changes at a different rate during early life (smaller sizes) than later (larger sizes)
+        (Chamber and Trippel, 1997). For Atlantic cod it has been observed that smallest-sized individuals grow faster,
+        have the highest optimal temperatures whilst the growth of larger fish is greater at lower temperatures (Jobling
+        1988; Pörtner et al., 2001; Björnsson and Steinarsson, 2002; Drinkwater, 2005). Both laboratory studies and
+        statistical analyses show that optimal temperatures for growth decline with body size: 14°C for a 5-g individual
+        in contrast to 9°C for a 5-kg one (Fig. 1).
+      </p>
+
+      <div class="div-center">
+        <div class="row mt-2 mb-2  div-center">
+          <div class="col-md-6 col-sm-12  div-center">
+            <img src="images/fig1a.jpg" alt="fig 1a" width="300" />
+          </div>
+          <div class="col-md-6 col-sm-12 div-center">
+            <img src="images/fig1b.jpg" alt="fig 1b" width="300" />
+          </div>
+        </div>
+      </div>
+
+      <div class="div-center">
+        <p style="width: 600px; font-size: 13;">
+          <b>Fig. 1.</b> Temperature effects on growth rates of Atlantic cod fed to satiation. Numbers above the curves
+          represent the weight of individuals in gramm (g). Source: Björnsson et al., 2007.
+        </p>
+      </div>
+
+      <h4>Mathematical representation of growth </h4>
+      <p>
+        Mathematically growth process is described as “a growth model“ which can be based on theoretical findings,
+        empirical or observational data (Lorenzen, 2016). Here we first represent a growth model for Atlantic cod which
+        was derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson et al., 2007) by Butzin and
+        Pörtner (2016). The model assumes that growth rates are mainly temperature- and size-dependent.
+      </p>
+      <p>
+        A bio-physical mechanistic background of the model roots in controlled laboratory experiments for Icelandic cod
+        where fish growth was measured in fish tanks with various constant temperature settings (T = [2, 4, 7, 8, 10,
+        12, 13, 16] °C) for any given individual weight from 0.001 to 8.7 kg (Fig. 2a). Laboratory experiments are
+        characterised by the regimes of constant temperatures, salinity and oxygen. The time frame spans hours to
+        months. Experimental output includes growth rates in relation to temperature and body weight (Fig. 2b). Based on
+        these data a mathematical equation was derived that includes a temperature dependent nonlinear reaction model
+        with growth inhibition at 12°C (coefficient a) and temperature dependent allometric scaling exponent b (Fig.
+        2c). As the model equations were derived from experimental data, the base model setup mimics the results of
+        controlled laboratory experiments by simulating temperature-dependent growth for any given individual weight
+        class (Fig. 2d).
+      </p>
+      <div class="div-center mt-2 mb-2">
+        <img src="images/fig2.jpg" alt="fig 2" style="max-width: 55rem; width: 80%;" />
+      </div>
+      <div class="div-center">
+        <p style="max-width: 55rem; width: 80%; font-size: 13;">
+          <b>Fig. 2.</b> Conceptual framework behind the base model experiments (Sokolova et al. JORS, submitted Jun.
+          28, 2022)
+        </p>
+      </div>
+
     </div>
+
     <hr />
   </div>
 
   <!-- AQUARIUM HEADLINE -->
   <div class="pt-2 pb-2 text-center">
-    <!---bg-light-->
     <h2 class="mb-3">Aquarium Experiment</h2>
   </div>
 
   <div class="card ml-5 mr-5 nb">
-    <!-- <div class="card-header">About</div> -->
     <div class="card-body">
-      <!-- <h5 class="card-title">General</h5> -->
       <p class="card-text">
         Environmental temperature is suggested as a key factor driving metabolic rates and thus influencing the rates at
         which an individual grows: organisms grow faster in a warmer environment while colder temperatures cause slower
@@ -127,19 +189,19 @@
         Core model assumptions:
       <ul>
         <li>
-          the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth (White
-          and Kearney, 2014);
+          the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth;
         </li>
         <li>
-          an organism responds to temperature changes immediately;
-        </li>
-        <li>
-          larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not
-          considered;
+          an organism responds to temdperature changes immediately;
+
         </li>
         <li>
           individuals grow under unlimited food supply and in a homogeneous thermal environment (based on data from
           Björnsson and Steinarsson, 2002; Björnsson et al., 2007).
+        </li>
+        <li>
+          larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not
+          considered;
         </li>
       </ul>
       </p>
@@ -154,11 +216,12 @@
   <div class="card ml-5 mr-5 nb">
     <div class="card-body">
       <p class="card-text">
-        By including multi-dimensional time-series data we extended the growth
-        model functionality. The extended version of the growth model can
-        calculate growth of Atlantic cod over its life-cycle (Sokolova et al.,
-        2021). The life-cycle of the southern cod populations spans in average
-        10 years, in the northern - 14 years.
+        By including multi-dimensional time-series data we extended the growth model functionality. The extended version
+        of the growth model can calculate growth of Atlantic cod over its life-cycle (Sokolova et al., 2021). The
+        life-cycle of the southern cod populations spans in average 10 years, in the northern - 14 years. Using
+        transient growth model setup in combination with observational or simulated temperature time series allows us to
+        mimic growth in natural environment and compare our simulation results to the observed data (see next page).
+
       </p>
       <p>
         Using transient growth model setup in combination with observational
@@ -243,6 +306,19 @@
           RCP8.5 (2181-2200)
         </button>
       </div>
+
+      <p class="mt-4">
+        Despite the differences in oceanic conditions and life-history characteristics of the Celtic Sea and the Barents
+        Sea populations, their growth patterns are shaped by the decadal mean temperature regimes
+
+        However the modeling approach, doesn’t explain interannual variability in body size of different age groups
+        which
+        is rather the task for complex multivariate statistical analyses requiring high quality long-term observations
+        such as primary and secondary productivity levels, prey availability etc
+
+      </p>
+
+      <!-- ADJUSTABLE REAL WORLD EXPERIMENT -->
       <hr style="margin-top: 3rem" />
 
       <div class="pt-5 pb-2 text-center nb">
@@ -350,6 +426,7 @@
         </div>
       </div>
     </div>
+
 
   </div>
   </div>
