@@ -1,17 +1,19 @@
 /**
- * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
+ * @link https://awi.de
+ * 
  * @author Benjamin Thomas Schwertfeger (2022)
+ * @email benjamin.schwertfeger@awi.de
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
  **/
 
-import {
-    range
-} from './math.js';
 
-// returns array containing values for a specific year
+/**
+ * returns 4-dimensional array containing weight values for a specific year (`req_year`)
+ * 
+ */
 export function get_year(dataset, start_year, req_year) {
     // dimensions: [time][depth][lat][lon]
     const
@@ -36,11 +38,19 @@ export function get_year(dataset, start_year, req_year) {
     return res;
 }
 
+/**
+ * returns the weight by given `temperature_index` of `weights`
+ */
 export function get_weight_by_temperature(weights, temperature_index) {
     let result = [...new Array(weights.length)];
     return result.map((e, i) => weights[i][temperature_index]);
 }
 
+/**
+ * Returns the index of a specific `temperature` betwenn the range -2°C to 30°C with a 0.5°C step
+ * @param temperature of interest 
+ * @returns 
+ */
 export function get_temperature_index(temperature) {
     temperature = parseFloat(temperature);
     for (let i = 0, t = -2; t < 30.5; t += .5, i++)

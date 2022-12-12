@@ -194,6 +194,7 @@ window.plot_simple = (temperature = 3.0) => {
 |  _ <  __/ (_| | |   \ V  V / (_) | |  | | (_| |
 |_| \_\___|\__,_|_|    \_/\_/ \___/|_|  |_|\__,_| 
 */
+
 const
     n_generations_celtic_sea = 10,
     n_generations_barents_sea = 14;
@@ -367,18 +368,18 @@ window.plot_complex_precomputed = (scenario, period) => {
                             return label;
                         },
                         title: (context) => {
-                            return `Age, year: ${parseInt(Number(context[0].parsed.x+1).toFixed(1))}`;
+                            return `Age, year: ${parseInt(Number(context[0].parsed.x + 1).toFixed(1))}`;
                         },
                     },
                 }
                 config.options.plugins.tooltip = bp_tooltip;
             }
 
-            // * LINEPLOT for upper plots
+            // Lineplot for upper plots
             get_line_datasets(window.regions[regionidx], scenario, period).forEach((dataset) => config.data.datasets.push(dataset));
 
-            // ? ----- PLOTTING ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-            config.options.plugins.title.text = `${window.regions[regionidx].name.replace('_',' ')} ${scenario} (${Object.keys(window.regions[regionidx].precomputed[scenario])[0]})`;
+            // ? Plotting ...
+            config.options.plugins.title.text = `${window.regions[regionidx].name.replace('_', ' ')} ${scenario} (${Object.keys(window.regions[regionidx].precomputed[scenario])[0]})`;
             if (!window.complex_charts[regionidx]) window.complex_charts[regionidx] = new Chart($(`#complex_plot_canvas${regionidx}`), config);
             else config.update();
         }
@@ -394,143 +395,12 @@ window.plot_complex_precomputed = (scenario, period) => {
             // * LINEPLOT 
             get_line_datasets(region, scenario, period).forEach((dataset) => config.data.datasets.push(dataset));
             let scenario_name = scenario.replace('_', '').toLowerCase().replace('fesom', '');
-            scenario_name = `${scenario_name.toUpperCase().slice(0,-2)}${scenario_name.slice(-2,-1)}.${scenario_name.slice(-1)}`
+            scenario_name = `${scenario_name.toUpperCase().slice(0, -2)}${scenario_name.slice(-2, -1)}.${scenario_name.slice(-1)}`
             config.options.plugins.title.text = `${region.name.replace('_', ' ')} ${scenario_name} (${period})`;
             config.update();
         }
     }
 };
-
-// window.plot_complex_precomputed_old = (scenario, period) => {
-//     const n_generations = 10;
-
-//     let general_config = JSON.parse(JSON.stringify(window.default_chart_config_simple));
-//     general_config.data.labels = range(1, n_generations);
-//     general_config.data.datasets = [];
-//     general_config.options.scales.x.title.text = 'Age, years';
-
-//     const
-//         get_weight_by_age = (data, n_generations) => {
-//             let weight_by_age_vector = [...new Array(n_generations)].map(() => new Array());
-//             for (var entry = 0, age = 0; entry < data.length; entry++) {
-//                 if (!isNaN(data[entry])) weight_by_age_vector[age].push(data[entry]);
-//                 age = (age + 1 !== n_generations) ? age + 1 : 0;
-//             }
-//             return weight_by_age_vector;
-//         },
-//         get_soda_boxplot = (region) => {
-//             // * SODA BOXPLOT 
-//             return {
-//                 type: 'boxplot',
-//                 label: 'Observation',
-//                 borderColor: 'blue',
-//                 borderWidth: 1,
-//                 outlierColor: '#999999',
-//                 padding: 10,
-//                 itemRadius: 0,
-//                 data: get_weight_by_age(region.precomputed['SODA']['1960-2000']['quant25'].concat(
-//                     region.precomputed['SODA']['1960-2000']['quant50']
-//                 ).concat(
-//                     region.precomputed['SODA']['1960-2000']['quant75']
-//                 ), n_generations)
-//             }
-//         };
-//     const
-//         get_line_datasets = (region, scenario, period, n_generations) => {
-//             let datasets = [];
-//             Object.keys(region.precomputed[scenario][period]).forEach((quant, qindex) => {
-//                 const weight_by_age_vector = get_weight_by_age(region.precomputed[scenario][period][quant], n_generations);
-//                 datasets.push({
-//                     type: 'line',
-//                     label: `${quant.slice(-2)}% Quantile`,
-//                     data: [...new Array(n_generations)].map((e, i) => avg(weight_by_age_vector[i])),
-//                     borderColor: (quant.includes('50')) ? 'black' : (quant.includes('25')) ? 'orange' : 'red',
-//                     borderDash: (quant.includes('50')) ? [0] : [10, 5],
-//                 });
-//             });
-//             return datasets;
-//         };
-
-//     if (scenario == 'SODA') {
-//         // * Upper 2 plots for historical SODA && BOXPLOT for lower 2 plots
-//         for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
-//             let config = JSON.parse(JSON.stringify(general_config));
-
-//             let region = window.regions[regionidx]
-//             const
-//                 ctx1 = $(`#complex_plot_canvas${regionidx}`),
-//                 ctx2 = $(`#complex_plot_canvas${regionidx+2}`);
-
-//             // * BOXPLOT for upper two plots
-//             const boxplot_dataset = get_soda_boxplot(region);
-//             config.data.datasets.push(boxplot_dataset);
-
-//             const bp_tooltip = {
-//                 displayColors: true,
-//                 callbacks: {
-//                     label: (context) => {
-//                         let label = ' ';
-//                         if (context.dataset.label !== null && context.dataset.label === 'Observation') {
-//                             if (context.parsed.min !== null) label += `min: ${Number(context.parsed.min).toFixed(2)}kg; `;
-//                             if (context.parsed.q1 !== null) label += `25% Quantile: ${Number(context.parsed.q1).toFixed(2)}kg; `;
-//                             if (context.parsed.median !== null) label += `median: ${Number(context.parsed.median).toFixed(2)}kg; `;
-//                             if (context.parsed.mean !== null) label += `mean: ${Number(context.parsed.mean).toFixed(2)}kg; `;
-//                             if (context.parsed.q3 !== null) label += `75% Quantile: ${Number(context.parsed.q3).toFixed(2)}kg; `;
-//                             if (context.parsed.max !== null) label += `max: ${Number(context.parsed.max).toFixed(2)}kg`;
-//                         } else return (context.dataset.label !== null && context.parsed.y !== null) ? ` ${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
-//                         return label;
-//                     },
-//                     title: (context) => {
-//                         return `Age, year: ${parseInt(Number(context[0].parsed.x+1).toFixed(1))}`;
-//                     },
-//                 },
-//             }
-//             config.options.scales.x.min = 1;
-//             config.options.scales.x.max = 10;
-//             config.options.scales.y.min = 0;
-//             config.options.scales.y.max = 20;
-
-//             config.options.plugins.tooltip = bp_tooltip;
-//             // * LINEPLOT for upper plots
-//             get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
-
-//             // ** BOXPLOT for lower plots
-//             let config2 = JSON.parse(JSON.stringify(config));
-//             config2.options.plugins.tooltip = bp_tooltip;
-
-//             // ? ----- PLOTTING ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-//             config.options.plugins.title.text = `${region.name} ${scenario} (${Object.keys(region.precomputed[scenario])[0]})`;
-//             window.complex_charts[regionidx] = new Chart(ctx1, config);
-
-//             config2.data.datasets = [boxplot_dataset];
-//             config2.options.plugins.title.text = '';
-//             window.complex_charts[regionidx + 2] = new Chart(ctx2, config2);
-//         }
-//     } else {
-//         window.active_scenario = scenario;
-//         window.opposite_period = (period === '1860-1900') ? '1960-2000' :
-//             (period === '1960-2000') ? '1860-1900' :
-//             (period === '2060-2100') ? '2160-2200' :
-//             (period === '2160-2200') ? '2060-2100' : null;
-
-//         // * Lower two plots
-//         for (let regionidx = 0; regionidx < window.regions.length; regionidx++) {
-//             let
-//                 config = window.complex_charts[regionidx + 2],
-//                 region = window.regions[regionidx];
-
-//             // if (period === '1960-2000') config.data.datasets = [get_soda_boxplot(region)];
-//             // else config.data.datasets = [];
-//             config.data.datasets.splice(1);
-//             // * LINEPLOT 
-//             get_line_datasets(region, scenario, period, n_generations).forEach((dataset) => config.data.datasets.push(dataset));
-//             let scenario_name = scenario.replace('_', ' ').toLowerCase().replace('fesom', 'FESOM');
-//             scenario_name = (scenario_name.includes('historical')) ? scenario_name : `${scenario_name.toUpperCase().slice(0,-2)}${scenario_name.slice(-2,-1)}.${scenario_name.slice(-1)}`
-//             config.options.plugins.title.text = `${region.name} ${scenario_name} (${period})`;
-//             config.update();
-//         }
-//     }
-// };
 
 /*
      _       _  _           _        _     _      
@@ -540,7 +410,7 @@ window.plot_complex_precomputed = (scenario, period) => {
  /_/   \_\__,_|/ |\__,_|___/\__\__,_|_.__/|_|\___|
                 |__/ Experiment
 */
-window.default_constants = { // # Values from Eg.2 Butzin and Poertner, 2016)
+window.default_constants = { // # Values from Eg. 2 Butzin and Poertner, 2016)
     A_R: 8.66,
     B_R: 0.3055,
     THETA_A: 18145,
@@ -698,9 +568,8 @@ window.plot_complex_adjustable = (data = null) => {
         }
     }
 
-    /** 
-     * ? Start plotting 
-     */
+    // Start plotting 
+
     const years = Object.keys(weight_by_age_quantile).length;
     let plottable_datasets = [{
         type: 'line',
@@ -741,7 +610,7 @@ window.plot_complex_adjustable = (data = null) => {
                 return (context.dataset.label !== null && context.parsed.y !== null) ? `${context.dataset.label}: ${parseFloat(Number(context.parsed.y.toFixed(2)))}kg` : '';
             },
             title: (context) => {
-                return `Age, year: ${Number(context[0].parsed.x+1).toFixed(1)}`;
+                return `Age, year: ${Number(context[0].parsed.x + 1).toFixed(1)}`;
             }
         }
     };
@@ -756,9 +625,14 @@ window.plot_complex_adjustable = (data = null) => {
     }
 };
 
-// #######################################################################
-// * ##### ON - READY #############################################
-// #######################################################################
+/*
+  ___        ____                _       
+ / _ \ _ __ |  _ \ ___  __ _  __| |_   _ 
+| | | | '_ \| |_) / _ \/ _` |/ _` | | | |
+| |_| | | | |  _ <  __/ (_| | (_| | |_| |
+ \___/|_| |_|_| \_\___|\__,_|\__,_|\__, |
+                                    |___/ 
+*/
 
 /**
  * Load data from csv files

@@ -1,11 +1,25 @@
 /**
+ * File that connects the inputs with actions
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
- * @author Benjamin Thomas Schwertfeger (August 2022)
+ * @link https://awi.de
+ * 
+ * @author Benjamin Thomas Schwertfeger (2022)
+ * @email benjamin.schwertfeger@awi.de
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
+ * 
  **/
+
+/*
+    _                          _                 
+   / \   __ _ _   _  __ _ _ __(_)_   _ _ __ ___  
+  / _ \ / _` | | | |/ _` | '__| | | | | '_ ` _ \ 
+ / ___ \ (_| | |_| | (_| | |  | | |_| | | | | | |
+/_/   \_\__, |\__,_|\__,_|_|  |_|\__,_|_| |_| |_|
+        |_| Experiment
+*/
 
 const
     initial_weight_input = document.getElementById('weight_input_simple'),
@@ -33,9 +47,13 @@ initial_weight_input.onchange = () => {
     window.plot_simple(parseFloat(temp_slider_simple.value));
 }
 
-/**
- * * Complex section
- */
+/*
+ ____ Experiment _  __        __         _     _ 
+|  _ \ ___  __ _| | \ \      / /__  _ __| | __| | 
+| |_) / _ \/ _` | |  \ \ /\ / / _ \| '__| |/ _` |
+|  _ <  __/ (_| | |   \ V  V / (_) | |  | | (_| |
+|_| \_\___|\__,_|_|    \_/\_/ \___/|_|  |_|\__,_| 
+*/
 
 document.getElementById('complex_soda_btn').onclick = () => {
     window.plot_complex_precomputed('SODA', '1981-2000');
@@ -72,9 +90,14 @@ document.getElementById('complex_next_image').onclick = () => {
 
 };
 
-/**
- * * Adjustabel real world experiment
- */
+/*
+     _       _  _           _        _     _      
+    / \   __| |(_)_   _ ___| |_ __ _| |__ | | ___ 
+   / _ \ / _` || | | | / __| __/ _` | '_ \| |/ _ \
+  / ___ \ (_| || | |_| \__ \ || (_| | |_) | |  __/
+ /_/   \_\__,_|/ |\__,_|___/\__\__,_|_.__/|_|\___|
+                |__/ Experiment
+*/
 
 const
     A_R_input = document.getElementById('A_R_adj_slide'),

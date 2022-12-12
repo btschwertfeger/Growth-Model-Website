@@ -1,14 +1,23 @@
 /**
  * 
  * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
+ * @link https://awi.de
+ * 
  * @author Benjamin Thomas Schwertfeger (2022)
+ * @email benjamin.schwertfeger@awi.de
  * @email development@b-schwertfeger.de
  * @link https://b-schwertfeger.de
  * 
  **/
 
-// returns an array from start to end (including end) 
-// e.g.: range(1,5,1) == [1,2,3,4,5]
+/**
+ * returns an array from start to end (including end) 
+ * e.g.: range(1,5,1) == [1,2,3,4,5]
+ * @param {*} start begin
+ * @param {*} end stop
+ * @param {*} step step size
+ * @returns array from to by step
+ */
 export function range(start, end, step = 1) {
     var
         range = [],
@@ -38,6 +47,13 @@ export function range(start, end, step = 1) {
     } else throw TypeError('Only string and number types are supported');
     return range;
 }
+
+/**
+ * Returns the average of `grades`
+ * @param {*} grades array of values
+ * @param {*} nan can be customized to have for example -999 as nan
+ * @returns average of grades
+ */
 export function avg(grades, nan = null) {
     if (nan === null) return grades.reduce((acc, c) => acc + c, 0) / grades.length;
     else {
@@ -48,17 +64,31 @@ export function avg(grades, nan = null) {
     }
 }
 
+/**
+ * misc
+ */
 const
     asc = arr => arr.sort((a, b) => a - b),
     sum = arr => arr.reduce((a, b) => a + b, 0),
     mean = arr => sum(arr) / arr.length;
 
+/**
+ * Standard deviatin
+ * @param {*} arr 
+ * @returns standard deviation of `arr`
+ */
 export function std(arr) {
     const mu = mean(arr);
     const diffArr = arr.map(a => (a - mu) ** 2);
     return Math.sqrt(sum(diffArr) / (arr.length - 1));
 };
 
+/**
+ * Returns quantile values of `arr` by given quantile `q`
+ * @param {*} arr array to get the values from
+ * @param {*} q quantile of interest 
+ * @returns values of `arr` in quantile `q`
+ */
 export function quantile(arr, q) {
     const sorted = asc(arr);
     const pos = (sorted.length - 1) * q;
@@ -68,6 +98,13 @@ export function quantile(arr, q) {
     else return sorted[base];
 };
 
+/**
+ * Returns random values
+ * @param {*} count numer of values
+ * @param {*} min mimimum random value
+ * @param {*} max maximum random value 
+ * @returns ...
+ */
 export function randomValues(count, min, max) {
     const delta = max - min;
     return Array.from({
