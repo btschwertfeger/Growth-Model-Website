@@ -1,16 +1,43 @@
-# Growth-Model-Website
+# The atlantic cod growth model (website)
 
-<p>What is this website about?</p>
+## Preivew and Project
 
-### Preview:
+| Project             | URL                                                                     |
+| ------------------- | ----------------------------------------------------------------------- |
+| Interactive Website | https://btschwertfeger.github.io/Growth-Model-Website/                  |
+| Gitlab Project      | https://codebase.helmholtz.cloud/awi_paleodyn/growth-model-atlantic-cod |
+
+---
+
+## What is this website about?
+
+Growth, development and progress are the fundamental processes of life. To support the [project of Nadezhda Sokolova](https://codebase.helmholtz.cloud/awi_paleodyn/growth-model-atlantic-cod) this website was developed, which thematizes a growth model for the altantic cod. It provides general information about the model as well as dynamic and customizable diagrams to experiment with the input parameters of a simplified growth model.
+
+### Content
+
+In the first section, a "real world" experiment is in the foreground, in which the working method of this growth model is shown. Here, the data were calculated in advance within the framework of the work, since this would go beyond the scope of a static website.
 
 ![ Website Plot 1](images/page-view-1.png)
+
+Nevertheless, different climate scenarios have been chosen for the celtic sea and barents sea.
+which can be used to read off the growth rates of the altantic code.
+
 ![ Website Plot 2](images/page-view-2.png)
+
+The last section offers the possibility to run the growth model with different parameters. The results of the parameter changes can be followed live and offer interested parties the possibility to investigate the effects of different conditions.
+
 ![ Website Plot 3](images/page-view-3.png)
+
+This website was developed as part of [Benjamin T. Schwertfeger](https://b-schwertfeger.de)'s work at the [Alfred Wegener Institute](https://www.awi.de) and serves as supporting material for knowledge transfer and research.
+
+---
 
 ## Availability
 
-This can be found here: https://www.awi.de/fileadmin/user_upload/AWI/Forschung/Klimawissenschaft/Dynamik_des_Palaeoklimas/Growth_Model.
+- https://btschwertfeger.github.io/Growth-Model-Website/
+- https://www.awi.de/fileadmin/user_upload/AWI/Forschung/Klimawissenschaft/Dynamik_des_Palaeoklimas/Growth_Model
+
+---
 
 ## References
 
@@ -26,6 +53,9 @@ This can be found here: https://www.awi.de/fileadmin/user_upload/AWI/Forschung/K
 - Lorenzen, K., 2016. Toward a new paradigm for growth modeling in fisheries stock assessments: Embracing plasticity and its consequences. Fisheries Research, Growth: theory, estimation, and application in fishery stock assessment models 180, 4–22. https://doi.org/10.1016/j.fishres.2016.01.006
 - Pörtner, H.O., Berdal, B., Blust, R., Brix, O., Colosimo, A., De Wachter, B., Giuliani, A., Johansen, T., Fischer, T., Knust, R., Lannig, G., Naevdal, G., Nedenes, A., Nyhammer, G., Sartoris, F.J., Serendero, I., Sirabella, P., Thorkildsen, S., Zakhartsev, M., 2001. Climate induced temperature effects on growth performance, fecundity and recruitment in marine fish: developing a hypothesis for cause and effect relationships in Atlantic cod (Gadus morhua) and common eelpout (Zoarces viviparus). Continental Shelf Research, European Land-Ocean Interaction 21, 1975–1997. https://doi.org/10.1016/S0278-4343(01)00038-3
 - Sokolova, 2022. PhD Thesis
+- Sokolova, N., Butzin, M., Dahlke, F., Werner, K.-M., Balting, D., Lohmann, G., Pörtner, H.-O. 2021. Exploring the role of temperature in observed inter-population differences of Atlantic cod (Gadus morhua) growth with a 4-dimensional modelling approach, ICES Journal of Marine Science, Volume 78, Issue 4, August 2021, Pages 1519–1529, https://doi.org/10.1093/icesjms/fsab043
 - von Bertalanffy, L., 1938. A quantitative theory of organic growth (inquiries on growth laws. II). Human Biology 10, 181–213.
 - Weatherley, A.H., 1966. Ecology of fish growth. Nature 212, 1321–1324. https://doi.org/10.1038/2121321a0
 - Weatherley, A.H., Gill, H.S., 1987. The biology of fish growth. Academic Press, London.
+
+---
