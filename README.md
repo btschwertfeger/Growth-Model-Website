@@ -37,7 +37,7 @@ This website was developed as part of [Benjamin T. Schwertfeger](https://b-schwe
 
 ## 📍 Availability
 
-This website is available at the website of the Alfred-Wegener-Insitute (see [Growth_Model.html](https://www.awi.de/fileadmin/user_upload/AWI/Forschung/Klimawissenschaft/Dynamik_des_Palaeoklimas/Growth_Model)). The latest version is available the github pages feature of thie repositoriy (see [github.io/Growth-Model-Website/](https://btschwertfeger.github.io/Growth-Model-Website)).
+This website is available at [the website of the Alfred-Wegener-Insitute](https://www.awi.de/fileadmin/user_upload/AWI/Forschung/Klimawissenschaft/Dynamik_des_Palaeoklimas/Growth_Model). The latest version is available [the GitHub pages feature of the repository](https://btschwertfeger.github.io/Growth-Model-Website).
 
 ---
 
