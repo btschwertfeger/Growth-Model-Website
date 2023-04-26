@@ -43,10 +43,15 @@ This website is available at [the website of the Alfred-Wegener-Insitute](https:
 
 ## 🏛️ Licenses
 
-| Purpose             | License   | Includes                                                    |
-| ------------------- | --------- | ----------------------------------------------------------- |
-| Code license        | GNU GPLv3 | All code parts of this project.                             |
-| Referencing license | CC-BY-4.0 | Text and images of the rendered website and this README.md. |
+Copyright © 2021 Alfred Wegener Institute Helmholtz Centre for Polar and Marine Research (AWI)
+
+This work is licensed under multiple licenses:
+
+- The source code and the accompanying material are licensed under [GNU GPL-3.0](LICENSES/GPL-3.0-only.txt).
+- All text, documentations, and images are licensed under [CC-BY-4.0](LICENSES/CC-BY-4.0.txt).
+- Insignificant files are licensed under [CC0-1.0](LICENSES/CC0-1.0.txt).
+
+Please see the individual files for more accurate information.
 
 ---
 
