@@ -1,17 +1,20 @@
-# The atlantic cod growth model (website)
+# The Atlantic Cod Growth Model (website)
 
-## Preivew and Project
+[![Code License: GPL v3](https://img.shields.io/badge/Code%20License-GNU_GPLv3-important)](https://img.shields.io/badge/Code%20License-GNU_GPLv3-important)
+[![Referencing License: CC-BY-4.0](https://img.shields.io/badge/Referencing%20License-CC--BY--4.0-important)](https://img.shields.io/badge/Referencing%20License-CC--BY--4.0-important)
 
 | Project             | URL                                                                     |
 | ------------------- | ----------------------------------------------------------------------- |
 | Interactive Website | https://btschwertfeger.github.io/Growth-Model-Website/                  |
-| Gitlab Project      | https://codebase.helmholtz.cloud/awi_paleodyn/growth-model-atlantic-cod |
+| GitLab Project      | https://codebase.helmholtz.cloud/awi_paleodyn/growth-model-atlantic-cod |
 
 ---
 
-## What is this website about?
+## 📍 About the Project
 
-Growth, development and progress are the fundamental processes of life. To support the [project of Nadezhda Sokolova](https://codebase.helmholtz.cloud/awi_paleodyn/growth-model-atlantic-cod) this website was developed, which thematizes a growth model for the altantic cod. It provides general information about the model as well as dynamic and customizable diagrams to experiment with the input parameters of a simplified growth model.
+Growth, development and progress are the fundamental processes of life.
+
+This website was developed to support the [project](https://codebase.helmholtz.cloud/awi_paleodyn/growth-model-atlantic-cod) of Nadezhda Sokolova, which thematizes a growth model for the altantic cod. It provides general information about the model as well as dynamic and customizable diagrams to experiment with the input parameters of a simplified growth model and serves as supporting material for knowledge transfer and research.
 
 ### Content
 
@@ -32,14 +35,27 @@ This website was developed as part of [Benjamin T. Schwertfeger](https://b-schwe
 
 ---
 
-## Availability
+## 📍 Availability
 
-- https://btschwertfeger.github.io/Growth-Model-Website/
-- https://www.awi.de/fileadmin/user_upload/AWI/Forschung/Klimawissenschaft/Dynamik_des_Palaeoklimas/Growth_Model
+This website is available at [the website of the Alfred-Wegener-Insitute](https://www.awi.de/fileadmin/user_upload/AWI/Forschung/Klimawissenschaft/Dynamik_des_Palaeoklimas/Growth_Model). The latest version is available [the GitHub pages feature of the repository](https://btschwertfeger.github.io/Growth-Model-Website).
 
 ---
 
-## References
+## 🏛️ Licenses
+
+Copyright © 2021 Alfred Wegener Institute Helmholtz Centre for Polar and Marine Research (AWI)
+
+This work is licensed under multiple licenses:
+
+- The source code and the accompanying material are licensed under [GNU GPL-3.0](LICENSES/GPL-3.0-only.txt).
+- All text, documentations, and images are licensed under [CC-BY-4.0](LICENSES/CC-BY-4.0.txt).
+- Insignificant files are licensed under [CC0-1.0](LICENSES/CC0-1.0.txt).
+
+Please see the individual files for more accurate information.
+
+---
+
+## 🔬 References
 
 - Audzijonyte A., Richards S.A., Stuart-Smith R.D., Pecl G., Edgar G.J., Barrett N.S., Payne N., Blanchard J.L., 2020. Fish body sizes change with temperature, but not all species shrink with warming. Nature Ecology and Evolution 4 (6), 809-814 https://doi.org/10.1038/s41559-020-1171-0
 - Björnsson, B., Steinarsson, A., 2002. The food-unlimited growth rate of Atlantic cod (Gadus morhua). Can. J. Fish. Aquat. Sci. 59, 494–502. https://doi.org/10.1139/f02-028
