@@ -1,12 +1,12 @@
 /**
 * © Alfred-Wegener-Institute Bremerhaven, Germany (2022)
 * @link https://awi.de
-* 
+*
 * @author Benjamin Thomas Schwertfeger (2022)
 * @email benjamin.schwertfeger@awi.de
 * @email development@b-schwertfeger.de
 * @link https://b-schwertfeger.de
-*  
+*
 */
 
 :root {
@@ -90,7 +90,7 @@ a:hover {
   display: inline-block;
 }
 
-.canvas_complex{
+.canvas_complex {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -103,17 +103,19 @@ a:hover {
 .slide {
   float: right;
   -webkit-appearance: none;
-  min-width: 12rem;/* 105px;225px; */
+  min-width: 12rem; /* 105px;225px; */
   height: 14px;
 
   outline: none;
   opacity: 0.7;
   padding: 0px;
-  margin: .4rem 0 .4rem 0;    /* 2px 0px 2px 0px; */
+  margin: 0.4rem 0 0.4rem 0; /* 2px 0px 2px 0px; */
 
   border-radius: 14px;
   background: #ffffff;
-  box-shadow: inset 26px 26px 52px #b3b3b3, inset -26px -26px 52px #ffffff;
+  box-shadow:
+    inset 26px 26px 52px #b3b3b3,
+    inset -26px -26px 52px #ffffff;
   transition: opacity 0.3s ease-in-out;
 }
 .slide:hover {
@@ -127,19 +129,23 @@ a:hover {
   cursor: pointer;
   border-radius: 15px;
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow: 6px 6px 12px #969696, -0px -0px 0px #ffffff;
+  box-shadow:
+    6px 6px 12px #969696,
+    -0px -0px 0px #ffffff;
 }
 .slider::-moz-range-thumb {
   width: 35px;
   height: 20px;
   cursor: pointer;
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow: 6px 6px 12px #969696, -0px -0px 0px #ffffff;
+  box-shadow:
+    6px 6px 12px #969696,
+    -0px -0px 0px #ffffff;
 }
 .slide-value {
   width: 4rem;
   /* 65px; */
-  height: 1.5rem; 
+  height: 1.5rem;
   /* 20px; */
   position: relative;
   display: inline-block;
@@ -147,47 +153,55 @@ a:hover {
   /* padding: 0px 0px; */
   /* margin-top:  2px; */
   /* margin-left: 0px; */
-  margin-right: 1rem;    /* 10px; */
+  margin-right: 1rem; /* 10px; */
 
   background-color: #ffffff;
-  border-radius: .6rem;
-  box-shadow: 6px 6px 12px #969696, -6px -6px 12px #ffffff;
+  border-radius: 0.6rem;
+  box-shadow:
+    6px 6px 12px #969696,
+    -6px -6px 12px #ffffff;
 }
 
 /** workaround*/
-.slide-adj-complex{
+.slide-adj-complex {
   margin-left: 1rem;
   margin-right: 1rem;
   float: left;
 }
 
-
-button:focus {outline:0;} /*to remove blue outline on click*/ 
+button:focus {
+  outline: 0;
+} /*to remove blue outline on click*/
 .someBtn {
   background-color: #ffffff;
   border: none;
   color: black;
-  margin: 1.8rem 0 0 0 ;
+  margin: 1.8rem 0 0 0;
   /* 10px 10px 10px 10px; */
-  padding: .5rem 1rem; 
+  padding: 0.5rem 1rem;
   /* 10px 22px; */
   text-align: center;
   text-decoration: none;
   display: inline-block;
   border-radius: 15px;
-  box-shadow: 8px 8px 16px #969696, -8px -8px 16px #ffffff;
+  box-shadow:
+    8px 8px 16px #969696,
+    -8px -8px 16px #ffffff;
   transition: box-shadow 0.3s ease-in-out;
 }
 .someBtn:hover {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow: 4px 4px 8px #969696, -4px -4px 8px #ffffff;
+  box-shadow:
+    4px 4px 8px #969696,
+    -4px -4px 8px #ffffff;
   cursor: pointer;
 }
 .someBtn:active {
   background-color: #ffffff;
-  box-shadow: inset 4px 4px 8px #969696, inset -4px -4px 8px #ffffff;
+  box-shadow:
+    inset 4px 4px 8px #969696,
+    inset -4px -4px 8px #ffffff;
 }
-
 
 /** switch slider*/
 
@@ -220,10 +234,12 @@ button:focus {outline:0;} /*to remove blue outline on click*/
   -ms-transition: opacity 0.3 ease-in-out;
   -o-transition: opacity 0.3 ease-in-out;
 }
-.switch-slider:hover {opacity: 1;}
+.switch-slider:hover {
+  opacity: 1;
+}
 .switch-slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 18px;
   width: 18px;
   left: 2px;
@@ -236,35 +252,43 @@ button:focus {outline:0;} /*to remove blue outline on click*/
   -o-transition: opacity 0.4s;
 }
 
-input:checked + .switch-slider {background-color: rgb(55, 184, 76);}
-input:focus + .switch-slider {box-shadow: 0 0 1px rgb(55, 184, 76);}
+input:checked + .switch-slider {
+  background-color: rgb(55, 184, 76);
+}
+input:focus + .switch-slider {
+  box-shadow: 0 0 1px rgb(55, 184, 76);
+}
 input:checked + .switch-slider:before {
   transform: translateX(19px);
   -webkit-transform: translateX(19px);
   -ms-transform: translateX(19px);
 }
-.switch-slider {border-radius: 34px;}
-.switch-slider:before {border-radius: 50%;}
+.switch-slider {
+  border-radius: 34px;
+}
+.switch-slider:before {
+  border-radius: 50%;
+}
 /** end switch slider */
 
-
-
-
-
-.text_input-wrapper{
+.text_input-wrapper {
   display: inline-block;
   /* margin: 10px 0px 10px 10px; */
   margin-left: 4rem;
-  box-shadow: 8px 8px 16px #969696, -8px -8px 16px #ffffff;
+  box-shadow:
+    8px 8px 16px #969696,
+    -8px -8px 16px #ffffff;
   border-radius: 15px;
   position: relative;
-  padding: .4rem;
+  padding: 0.4rem;
   transition: box-shadow 0.3s ease-in-out;
 }
 .text_input-wrapper:hover {
-  box-shadow: 4px 4px 8px #969696, -4px -4px 8px #ffffff;
+  box-shadow:
+    4px 4px 8px #969696,
+    -4px -4px 8px #ffffff;
 }
-.text_input-wrapper input{
+.text_input-wrapper input {
   position: relative;
   max-width: 5rem;
   max-height: 1.6rem;
@@ -273,13 +297,15 @@ input:checked + .switch-slider:before {
 
   border: none;
   border-radius: 10px;
-  
+
   text-align: center;
   color: black;
   font-size: 16px;
   background-color: #ffffff;
-  box-shadow: inset 2px 2px 16px #969696, inset -2px -2px 16px #ffffff;
-  
+  box-shadow:
+    inset 2px 2px 16px #969696,
+    inset -2px -2px 16px #ffffff;
+
   outline: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -291,13 +317,15 @@ input:checked + .switch-slider:before {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
-  
+
   transition: box-shadow 0.3s ease-in-out;
   -webkit-transition: box-shadow 0.3s ease-in-out;
   -moz-transition: box-shadow 0.3s ease-in-out;
   -ms-transition: box-shadow 0.3s ease-in-out;
   -o-transition: box-shadow 0.3s ease-in-out;
 }
-.text_input-wrapper input:hover{
-box-shadow: inset 6px 6px 16px #969696, inset -6px -6px 16px #ffffff;
+.text_input-wrapper input:hover {
+  box-shadow:
+    inset 6px 6px 16px #969696,
+    inset -6px -6px 16px #ffffff;
 }

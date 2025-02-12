@@ -10,442 +10,629 @@
 
 <!DOCTYPE html lang="en">
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <!-- <link rel="icon" type="image/x-icon"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <link rel="icon" type="image/x-icon"
     href="https://www.awi.de/typo3conf/ext/sms_boilerplate/Resources/Public/Images/AWI/awi_logo.svg" /> -->
-  <title>Atlantic Cod Growth Model</title>
+    <title>Atlantic Cod Growth Model</title>
 
-  <!-- JQUERY-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <!-- CHART JS -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- BOXPLOTS -->
-  <script type="text/javascript"
-    src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+    <!-- BOXPLOTS -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"
+    ></script>
 
-  <!-- Equations look like in LaTeX-->
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Equations look like in LaTeX-->
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles.css" />
-</head>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<body>
-  <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/AWI_Logo_2017.svg"
+  <body>
+    <!-- <img
+    src="https://upload.wikimedia.org/wikipedia/commons/f/f7/AWI_Logo_2017.svg"
     style="position: absolute; right: 2rem; top: 1rem; width: 10rem" /> -->
 
-  <!-- HEADLINE -->
-  <div class="pt-5 pb-2 text-center">
-    <h1 class="mb-3">Atlantic Cod Growth Model</h1>
-    <h4 class="mb-3">Modelling temperature effects on growth function of Atlantic cod (<i>Gadus morhua</i>)</h4>
-  </div>
-
-  <!-- INFORMATION-->
-  <div class="card ml-5 mr-5 mb-5 nb">
-    <hr />
-    <div class="card-body">
-      <p class="card-text">
-        Growth is one of the fundamental life properties that is powered by metabolism and influenced by a diversity of
-        internal, environmental and ecological factors (Campbell et al., 2008). Investigation of growth involves such
-        research fields as ocean physics, climate science, fisheries biology, marine ecosystem studies and
-        ecophysiology, and includes theoretical background obtained from empirical growth data (laboratory experiments
-        and aquatic studies), on the one hand, and growth observations of wild populations (fisheries/scientific
-        surveys, tagging studies etc.), on the other hand (Weatherley, 1966; Audzijonyte et al., 2020).
-      </p>
-      <p class="card-text">
-        At an organism level “growth” is defined as a measurable increase in size over a period of
-        time, where size is represented as length, volume or weight (von Bertalanffy, 1938; Weatherley and Gill, 1987;
-        Lorenzen, 2016; Clarke, 2017). Graphically growth performance can be described by a sigmoid growth curve
-        approaching an upper asymptote with increasing time step (Beverton and Holt, 1957). Growth curves are used to
-        identify individual growth strategies under various internal and external factors (Sokolova, 2022).
-      </p>
-
-      <h4>Temperature and size effects on growth</h4>
-      <p>Environmental temperature is suggested as a key factor driving metabolic rates and thus influencing the rates
-        at which an individual grows: organisms grow faster in a warmer environment while colder temperatures cause
-        slower growth (Clarke, 2017). Despite the wide range of temperature environments that fish experience across
-        latitudes, experimental studies reveal species-specific temperatures that are optimal for growth. Besides
-        environmental temperatures most organisms’ physiological rates are affected by body size which can be expressed
-        by a power function: Y = axb where, Y is a measure of performance, x is a measure of size and a, b are
-        species-specific coefficients (Brown et al., 2004; Clarke, 2017). This is called a principle of scaling:
-        organism performance changes at a different rate during early life (smaller sizes) than later (larger sizes)
-        (Chamber and Trippel, 1997). For Atlantic cod it has been observed that smallest-sized individuals grow faster,
-        have the highest optimal temperatures whilst the growth of larger fish is greater at lower temperatures (Jobling
-        1988; Pörtner et al., 2001; Björnsson and Steinarsson, 2002; Drinkwater, 2005). Both laboratory studies and
-        statistical analyses show that optimal temperatures for growth decline with body size: 14°C for a 5-g individual
-        in contrast to 9°C for a 5-kg one (Fig. 1).
-      </p>
-
-      <div class="div-center">
-        <div class="row mt-2 mb-2  div-center">
-          <div class="col-md-6 col-sm-12  div-center">
-            <img src="images/fig1a.jpg" alt="fig 1a" width="300" />
-          </div>
-          <div class="col-md-6 col-sm-12 div-center">
-            <img src="images/fig1b.jpg" alt="fig 1b" width="300" />
-          </div>
-        </div>
-      </div>
-
-      <div class="div-center">
-        <p style="width: 600px; font-size: 13;">
-          <b>Fig. 1.</b> Temperature effects on growth rates of Atlantic cod fed to satiation. Numbers above the curves
-          represent the weight of individuals in gramm (g). Source: Björnsson et al., 2007.
-        </p>
-      </div>
-
-      <h4>Mathematical representation of growth </h4>
-      <p>
-        Mathematically growth process is described as “a growth model“ which can be based on theoretical findings,
-        empirical or observational data (Lorenzen, 2016). Here we first represent a growth model for Atlantic cod which
-        was derived from experimental data (Björnsson and Steinarsson, 2002; Björnsson et al., 2007) by Butzin and
-        Pörtner (2016). The model assumes that growth rates are mainly temperature- and size-dependent.
-      </p>
-      <p>
-        A bio-physical mechanistic background of the model roots in controlled laboratory experiments for Icelandic cod
-        where fish growth was measured in fish tanks with various constant temperature settings (T = [2, 4, 7, 8, 10,
-        12, 13, 16] °C) for any given individual weight from 0.001 to 8.7 kg (Fig. 2a). Laboratory experiments are
-        characterised by the regimes of constant temperatures, salinity and oxygen. The time frame spans hours to
-        months. Experimental output includes growth rates in relation to temperature and body weight (Fig. 2b). Based on
-        these data a mathematical equation was derived that includes a temperature dependent nonlinear reaction model
-        with growth inhibition at 12°C (coefficient a) and temperature dependent allometric scaling exponent b (Fig.
-        2c). As the model equations were derived from experimental data, the base model setup mimics the results of
-        controlled laboratory experiments by simulating temperature-dependent growth for any given individual weight
-        class (Fig. 2d).
-      </p>
-      <div class="div-center mt-2 mb-2">
-        <img src="images/fig2.jpg" alt="fig 2" style="max-width: 55rem; width: 80%;" />
-      </div>
-      <div class="div-center">
-        <p style="max-width: 55rem; width: 80%; font-size: 13;">
-          <b>Fig. 2.</b> Conceptual framework behind the base model experiments (Sokolova et al. JORS, submitted Jun.
-          28, 2022)
-        </p>
-      </div>
-
+    <!-- HEADLINE -->
+    <div class="pt-5 pb-2 text-center">
+      <h1 class="mb-3">Atlantic Cod Growth Model</h1>
+      <h4 class="mb-3">
+        Modelling temperature effects on growth function of Atlantic cod (<i
+          >Gadus morhua</i
+        >)
+      </h4>
     </div>
 
-    <hr />
-  </div>
+    <!-- INFORMATION-->
+    <div class="card ml-5 mr-5 mb-5 nb">
+      <hr />
+      <div class="card-body">
+        <p class="card-text">
+          Growth is one of the fundamental life properties that is powered by
+          metabolism and influenced by a diversity of internal, environmental
+          and ecological factors (Campbell et al., 2008). Investigation of
+          growth involves such research fields as ocean physics, climate
+          science, fisheries biology, marine ecosystem studies and
+          ecophysiology, and includes theoretical background obtained from
+          empirical growth data (laboratory experiments and aquatic studies), on
+          the one hand, and growth observations of wild populations
+          (fisheries/scientific surveys, tagging studies etc.), on the other
+          hand (Weatherley, 1966; Audzijonyte et al., 2020).
+        </p>
+        <p class="card-text">
+          At an organism level “growth” is defined as a measurable increase in
+          size over a period of time, where size is represented as length,
+          volume or weight (von Bertalanffy, 1938; Weatherley and Gill, 1987;
+          Lorenzen, 2016; Clarke, 2017). Graphically growth performance can be
+          described by a sigmoid growth curve approaching an upper asymptote
+          with increasing time step (Beverton and Holt, 1957). Growth curves are
+          used to identify individual growth strategies under various internal
+          and external factors (Sokolova, 2022).
+        </p>
 
-  <!-- AQUARIUM HEADLINE -->
-  <div class="pt-2 pb-2 text-center">
-    <h2 class="mb-3">Aquarium Experiment</h2>
-  </div>
+        <h4>Temperature and size effects on growth</h4>
+        <p>
+          Environmental temperature is suggested as a key factor driving
+          metabolic rates and thus influencing the rates at which an individual
+          grows: organisms grow faster in a warmer environment while colder
+          temperatures cause slower growth (Clarke, 2017). Despite the wide
+          range of temperature environments that fish experience across
+          latitudes, experimental studies reveal species-specific temperatures
+          that are optimal for growth. Besides environmental temperatures most
+          organisms’ physiological rates are affected by body size which can be
+          expressed by a power function: Y = axb where, Y is a measure of
+          performance, x is a measure of size and a, b are species-specific
+          coefficients (Brown et al., 2004; Clarke, 2017). This is called a
+          principle of scaling: organism performance changes at a different rate
+          during early life (smaller sizes) than later (larger sizes) (Chamber
+          and Trippel, 1997). For Atlantic cod it has been observed that
+          smallest-sized individuals grow faster, have the highest optimal
+          temperatures whilst the growth of larger fish is greater at lower
+          temperatures (Jobling 1988; Pörtner et al., 2001; Björnsson and
+          Steinarsson, 2002; Drinkwater, 2005). Both laboratory studies and
+          statistical analyses show that optimal temperatures for growth decline
+          with body size: 14°C for a 5-g individual in contrast to 9°C for a
+          5-kg one (Fig. 1).
+        </p>
 
-  <div class="card ml-5 mr-5 nb">
-    <div class="card-body">
-      <p class="card-text">
-        Environmental temperature is suggested as a key factor driving metabolic rates and thus influencing the rates at
-        which an individual grows: organisms grow faster in a warmer environment while colder temperatures cause slower
-        growth (Clarke, 2017). Despite the wide range of temperature environments that fish experience across latitudes,
-        experimental studies reveal species-specific temperatures that are optimal for growth. Atlantic cod growth rates
-        increase with temperature, reaching a maximum between 8 and 10°C (Righton et al., 2010; Pörtner et al., 2001).
-      </p>
-
-      <div class="div-center">
-        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem">
-          <canvas id="simple_plot_canvas"></canvas>
-        </div>
-      </div>
-      <div class="div-center">
-        <div class="input-wrapper">
-          <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
-          <div class="text_input-wrapper">
-            <input id="weight_input_simple" type="text" value="1" />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <div class="mb-2 ml-5">Temperature</div>
-          <div id="t_slide_amount_simple" name="t_slide_amount_simple" class="slide-value">
-            3°C
-          </div>
-          <input id="temp_slider_simple" type="range" class="slide" name="temp_slider_simple" min="-2" max="20"
-            step=".5" value="3" />
-        </div>
-
-        <button type="button" id="reset_btn_simple" class="someBtn">
-          Reset
-        </button>
-      </div>
-      <p class="card-text mt-3">
-        The model results cover the temperature range from 2 to 16 °C (T 2, 4, 7, 8, 10, 12, 13, and 16 °C),
-        and the body weight range 0.001–8 kg (Björnsson and Steinarsson, 2002; Björnsson et al., 2007). <br>
-        Core model assumptions:
-      <ul>
-        <li>
-          the rate at which an organism grows depends on the value of its own body mass, i.e. allometric growth;
-        </li>
-        <li>
-          an organism responds to temdperature changes immediately;
-
-        </li>
-        <li>
-          individuals grow under unlimited food supply and in a homogeneous thermal environment (based on data from
-          Björnsson and Steinarsson, 2002; Björnsson et al., 2007).
-        </li>
-        <li>
-          larval growth variations, vertical, or horizontal movements and ontogenetic habitat shifts are not
-          considered;
-        </li>
-      </ul>
-      </p>
-    </div>
-    <hr />
-  </div>
-
-  <!-- REAL WORLD HEADLINE -->
-  <div class="pt-5 pb-2 text-center nb">
-    <h2 class="mb-3">Real world Experiment</h2>
-  </div>
-  <div class="card ml-5 mr-5 nb">
-    <div class="card-body">
-      <p class="card-text">
-        By including multi-dimensional time-series data we extended the growth model functionality. The extended version
-        of the growth model can calculate growth of Atlantic cod over its life-cycle (Sokolova et al., 2021). The
-        life-cycle of the southern cod populations spans in average 10 years, in the northern - 14 years. Using
-        transient growth model setup in combination with observational or simulated temperature time series allows us to
-        mimic growth in natural environment and compare our simulation results to the observed data (see next page).
-
-      </p>
-      <p>
-        Using transient growth model setup in combination with observational
-        or simulated temperature time series allows us to mimic growth in
-        natural environment and compare our simulation results to the observed
-        data
-      </p>
-
-      <div class="row mt-4 mb-4">
-
-        <div class="col-xl-6 col-lg-12">
-          <div id="float-chart-div">
-            <img id="complex_image" alt="regions map" src="images/test1.png" style="width: 100%;" />
-          </div>
-
-          <div class="container" style="max-width: 15em;">
-            <div class="row">
-              <div class="col">
-                <button type="button" id="complex_back_image" class="someBtn m-2">
-                  Back
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" id="complex_next_image" class="someBtn m-2">
-                  Next
-                </button>
-              </div>
+        <div class="div-center">
+          <div class="row mt-2 mb-2 div-center">
+            <div class="col-md-6 col-sm-12 div-center">
+              <img src="images/fig1a.jpg" alt="fig 1a" width="300" />
+            </div>
+            <div class="col-md-6 col-sm-12 div-center">
+              <img src="images/fig1b.jpg" alt="fig 1b" width="300" />
             </div>
           </div>
-          <!-- <div id="float-chart-div">
-            <img alt="regions map" src="images/absolute_temperatures_6figures.png" style="width: 100%;" />
-          </div> -->
         </div>
 
+        <div class="div-center">
+          <p style="width: 600px; font-size: 13">
+            <b>Fig. 1.</b> Temperature effects on growth rates of Atlantic cod
+            fed to satiation. Numbers above the curves represent the weight of
+            individuals in gram (g). Source: Björnsson et al., 2007.
+          </p>
+        </div>
 
-
-        <div class="col-xl-6 col-lg-12">
-          <div id="float-chart-div">
-            <img alt="flow diagram" src="images/complex_flow.png" style="min-width: 20rem; max-width: 50rem" />
-          </div>
-          <p>
-            Atlantic cod is a widely distributed commercially important species found throughout the shelf
-            ecosystems of the North Atlantic (Hutchings, 2004; Rose, 2004). Among the main population and
-            individual characteristics of Atlantic cod are wide environmental tolerance, behavioral
-            flexibility and local adaptation (Righton et al., 2010). Species are adapted to live under
-            a wide range of environmental conditions (temperatures, salinity, oxygen, depth etc) which
-            vary between and within populations (Brander, 2019 in Atlantic cod: a bio-ecology). <br>
-            Below are some examples of historical and projected growth curves of the Celtic Sea and North Sea cod
-            populations
-            in comparison to the data reported by the International Council of the Exploration of the Sea (ICES).
-            The history of the source code is available through a publicly available version history on GitLab:
-            <a href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/"
-              target="_blank">https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a>.
-
+        <h4>Mathematical representation of growth</h4>
+        <p>
+          Mathematically growth process is described as “a growth model“ which
+          can be based on theoretical findings, empirical or observational data
+          (Lorenzen, 2016). Here we first represent a growth model for Atlantic
+          cod which was derived from experimental data (Björnsson and
+          Steinarsson, 2002; Björnsson et al., 2007) by Butzin and Pörtner
+          (2016). The model assumes that growth rates are mainly temperature-
+          and size-dependent.
+        </p>
+        <p>
+          A bio-physical mechanistic background of the model roots in controlled
+          laboratory experiments for Icelandic cod where fish growth was
+          measured in fish tanks with various constant temperature settings (T =
+          [2, 4, 7, 8, 10, 12, 13, 16] °C) for any given individual weight from
+          0.001 to 8.7 kg (Fig. 2a). Laboratory experiments are characterized by
+          the regimes of constant temperatures, salinity and oxygen. The time
+          frame spans hours to months. Experimental output includes growth rates
+          in relation to temperature and body weight (Fig. 2b). Based on these
+          data a mathematical equation was derived that includes a temperature
+          dependent nonlinear reaction model with growth inhibition at 12°C
+          (coefficient a) and temperature dependent allometric scaling exponent
+          b (Fig. 2c). As the model equations were derived from experimental
+          data, the base model setup mimics the results of controlled laboratory
+          experiments by simulating temperature-dependent growth for any given
+          individual weight class (Fig. 2d).
+        </p>
+        <div class="div-center mt-2 mb-2">
+          <img
+            src="images/fig2.jpg"
+            alt="fig 2"
+            style="max-width: 55rem; width: 80%"
+          />
+        </div>
+        <div class="div-center">
+          <p style="max-width: 55rem; width: 80%; font-size: 13">
+            <b>Fig. 2.</b> Conceptual framework behind the base model
+            experiments (Sokolova et al. JORS, submitted Jun. 28, 2022)
           </p>
         </div>
       </div>
 
-      <div class="div-center">
-        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
-          <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
+      <hr />
+    </div>
+
+    <!-- AQUARIUM HEADLINE -->
+    <div class="pt-2 pb-2 text-center">
+      <h2 class="mb-3">Aquarium Experiment</h2>
+    </div>
+
+    <div class="card ml-5 mr-5 nb">
+      <div class="card-body">
+        <p class="card-text">
+          Environmental temperature is suggested as a key factor driving
+          metabolic rates and thus influencing the rates at which an individual
+          grows: organisms grow faster in a warmer environment while colder
+          temperatures cause slower growth (Clarke, 2017). Despite the wide
+          range of temperature environments that fish experience across
+          latitudes, experimental studies reveal species-specific temperatures
+          that are optimal for growth. Atlantic cod growth rates increase with
+          temperature, reaching a maximum between 8 and 10°C (Righton et al.,
+          2010; Pörtner et al., 2001).
+        </p>
+
+        <div class="div-center">
+          <div
+            class="p-3 plot-wrapper"
+            style="min-width: 20rem; max-width: 50rem"
+          >
+            <canvas id="simple_plot_canvas"></canvas>
+          </div>
         </div>
-        <div class="p-3 plot-wrapper" style="min-width: 20rem; max-width: 50rem; min-height:30rem;">
-          <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
-        </div>
-      </div>
-
-      <div class="container div-center" style="max-width: 70em;">
-        <button type="button" id="complex_soda_btn" class="someBtn m-2">
-          SODA (1981-2000)
-        </button>
-        <button type="button" id="complex_rcp45-1" class="someBtn m-2">
-          RCP4.5 (2081-2100)
-        </button>
-        <button type="button" id="complex_rcp45-2" class="someBtn m-2">
-          RCP4.5 (2181-2200)
-        </button>
-        <button type="button" id="complex_rcp85-1" class="someBtn m-2">
-          RCP8.5 (2081-2100)
-        </button>
-        <button type="button" id="complex_rcp85-2" class="someBtn m-2">
-          RCP8.5 (2181-2200)
-        </button>
-      </div>
-
-      <p class="mt-4">
-        Despite the differences in oceanic conditions and life-history characteristics of the Celtic Sea and the Barents
-        Sea populations, their growth patterns are shaped by the decadal mean temperature regimes
-
-        However the modeling approach, doesn’t explain interannual variability in body size of different age groups
-        which
-        is rather the task for complex multivariate statistical analyses requiring high quality long-term observations
-        such as primary and secondary productivity levels, prey availability etc
-
-      </p>
-
-      <!-- ADJUSTABLE REAL WORLD EXPERIMENT -->
-      <hr style="margin-top: 3rem" />
-
-      <div class="pt-5 pb-2 text-center nb">
-        <h2 class="mb-3">Adjustable real world experiment</h2>
-      </div>
-      <div class="div-center" style="padding-top: 3rem">
-        <div class="row" style="width: 100%">
-          <div class="col-md-8">
-            <div class="p-3 plot-wrapper" style="height: 30rem; width: 100%;">
-              <canvas id="complex_plot_canvas_adjustable"></canvas>
+        <div class="div-center">
+          <div class="input-wrapper">
+            <div class="mb-2 ml-5">Initial weight in \(kg\)</div>
+            <div class="text_input-wrapper">
+              <input id="weight_input_simple" type="text" value="1" />
             </div>
           </div>
 
-          <div class="col-md-4 mt-auto">
-            <div>
-              <table>
-                <tr>
-                  <td>\(a r\)</td>
-                  <td>
-                    <input id="A_R_adj_slide" type="range" class="slide slide-adj-complex" name="A_R_adj_slide" min="0"
-                      max="15" step="0.01" value="8.66" />
-                    <div id="A_R_adj_slide_amount" name="A_R_adj_slide_amount" class="slide-value">
-                      8.66
-                    </div>
-                  </td>
-                </tr>
+          <div class="input-wrapper">
+            <div class="mb-2 ml-5">Temperature</div>
+            <div
+              id="t_slide_amount_simple"
+              name="t_slide_amount_simple"
+              class="slide-value"
+            >
+              3°C
+            </div>
+            <input
+              id="temp_slider_simple"
+              type="range"
+              class="slide"
+              name="temp_slider_simple"
+              min="-2"
+              max="20"
+              step=".5"
+              value="3"
+            />
+          </div>
 
-                <tr>
-                  <td>\(b r\)</td>
-                  <td>
-                    <input id="B_R_adj_slide" type="range" class="slide slide-adj-complex" name="B_R_adj_slide" min="0"
-                      max="1" step="0.0001" value="0.3055" />
-                    <div id="B_R_adj_slide_amount" name="B_R_adj_slide_amount" class="slide-value">
-                      0.3055
-                    </div>
-                  </td>
-                </tr>
+          <button type="button" id="reset_btn_simple" class="someBtn">
+            Reset
+          </button>
+        </div>
+        <p class="card-text mt-3">
+          The model results cover the temperature range from 2 to 16 °C (T 2, 4,
+          7, 8, 10, 12, 13, and 16 °C), and the body weight range 0.001-8 kg
+          (Björnsson and Steinarsson, 2002; Björnsson et al., 2007). <br />
+          Core model assumptions:
+        </p>
+        <ul>
+          <li>
+            the rate at which an organism grows depends on the value of its own
+            body mass, i.e. allometric growth;
+          </li>
+          <li>an organism responds to temdperature changes immediately;</li>
+          <li>
+            individuals grow under unlimited food supply and in a homogeneous
+            thermal environment (based on data from Björnsson and Steinarsson,
+            2002; Björnsson et al., 2007).
+          </li>
+          <li>
+            larval growth variations, vertical, or horizontal movements and
+            ontogenetic habitat shifts are not considered;
+          </li>
+        </ul>
+      </div>
+      <hr />
+    </div>
 
-                <tr>
-                  <td>\(\Theta a\)</td>
-                  <td>
-                    <input id="THETA_A_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_A_adj_slide"
-                      min="0" max="30000" step="1" value="18145" />
-                    <div id="THETA_A_adj_slide_amount" name="THETA_A_adj_slide_amount" class="slide-value">
-                      18145
-                    </div>
-                  </td>
-                </tr>
+    <!-- REAL WORLD HEADLINE -->
+    <div class="pt-5 pb-2 text-center nb">
+      <h2 class="mb-3">Real world Experiment</h2>
+    </div>
+    <div class="card ml-5 mr-5 nb">
+      <div class="card-body">
+        <p class="card-text">
+          By including multi-dimensional time-series data we extended the growth
+          model functionality. The extended version of the growth model can
+          calculate growth of Atlantic cod over its life-cycle (Sokolova et al.,
+          2021). The life-cycle of the southern cod populations spans in average
+          10 years, in the northern - 14 years. Using transient growth model
+          setup in combination with observational or simulated temperature time
+          series allows us to mimic growth in natural environment and compare
+          our simulation results to the observed data (see next page).
+        </p>
+        <p>
+          Using transient growth model setup in combination with observational
+          or simulated temperature time series allows us to mimic growth in
+          natural environment and compare our simulation results to the observed
+          data
+        </p>
 
-                <tr>
-                  <td>\(\Theta b\)</td>
-                  <td>
-                    <input id="THETA_B_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_B_adj_slide"
-                      min="0" max="10000" step="1" value="4258" />
-                    <div id="THETA_B_adj_slide_amount" name="THETA_B_adj_slide_amount" class="slide-value">
-                      4258
-                    </div>
-                  </td>
-                </tr>
+        <div class="row mt-4 mb-4">
+          <div class="col-xl-6 col-lg-12">
+            <div id="float-chart-div">
+              <img
+                id="complex_image"
+                alt="regions map"
+                src="images/test1.png"
+                style="width: 100%"
+              />
+            </div>
 
-                <tr>
-                  <td>\(\Theta h\)</td>
-                  <td>
-                    <input id="THETA_H_adj_slide" type="range" class="slide slide-adj-complex" name="THETA_H_adj_slide"
-                      min="0" max="30000" step="1" value="25234" />
-                    <div id="THETA_H_adj_slide_amount" name="THETA_H_adj_slide_amount" class="slide-value">
-                      25234
-                    </div>
-                  </td>
-                </tr>
+            <div class="container" style="max-width: 15em">
+              <div class="row">
+                <div class="col">
+                  <button
+                    type="button"
+                    id="complex_back_image"
+                    class="someBtn m-2"
+                  >
+                    Back
+                  </button>
+                </div>
+                <div class="col">
+                  <button
+                    type="button"
+                    id="complex_next_image"
+                    class="someBtn m-2"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- <div id="float-chart-div">
+            <img alt="regions map" src="images/absolute_temperatures_6figures.png" style="width: 100%;" />
+          </div> -->
+          </div>
 
-                <tr>
-                  <td>\(T r\)</td>
-                  <td>
-                    <input id="T_R_adj_slide" type="range" class="slide slide-adj-complex" name="T_R_adj_slide" min="0"
-                      max="350" step="1" value="283" />
-                    <div id="T_R_adj_slide_amount" name="T_R_adj_slide_amount" class="slide-value">
-                      283
-                    </div>
-                  </td>
-                </tr>
+          <div class="col-xl-6 col-lg-12">
+            <div id="float-chart-div">
+              <img
+                alt="flow diagram"
+                src="images/complex_flow.png"
+                style="min-width: 20rem; max-width: 50rem"
+              />
+            </div>
+            <p>
+              Atlantic cod is a widely distributed commercially important
+              species found throughout the shelf ecosystems of the North
+              Atlantic (Hutchings, 2004; Rose, 2004). Among the main population
+              and individual characteristics of Atlantic cod are wide
+              environmental tolerance, behavioral flexibility and local
+              adaptation (Righton et al., 2010). Species are adapted to live
+              under a wide range of environmental conditions (temperatures,
+              salinity, oxygen, depth etc) which vary between and within
+              populations (Brander, 2019 in Atlantic cod: a bio-ecology). <br />
+              Below are some examples of historical and projected growth curves
+              of the Celtic Sea and North Sea cod populations in comparison to
+              the data reported by the International Council of the Exploration
+              of the Sea (ICES). The history of the source code is available
+              through a publicly available version history on GitLab:
+              <a
+                href="https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/"
+                target="_blank"
+                >https://gitlab.hzdr.de/awi_paleodyn/growth-model-atlantic-cod/</a
+              >.
+            </p>
+          </div>
+        </div>
 
-                <tr>
-                  <td>\(T h\)</td>
-                  <td>
-                    <input id="T_H_adj_slide" type="range" class="slide slide-adj-complex" name="T_H_adj_slide" min="0"
-                      max="350" step="1" value="286" />
-                    <div id="T_H_adj_slide_amount" name="T_H_adj_slide_amount" class="slide-value">
-                      286
-                    </div>
-                  </td>
-                </tr>
+        <div class="div-center">
+          <div
+            class="p-3 plot-wrapper"
+            style="min-width: 20rem; max-width: 50rem; min-height: 30rem"
+          >
+            <canvas id="complex_plot_canvas0" class="canvas_complex"></canvas>
+          </div>
+          <div
+            class="p-3 plot-wrapper"
+            style="min-width: 20rem; max-width: 50rem; min-height: 30rem"
+          >
+            <canvas id="complex_plot_canvas1" class="canvas_complex"></canvas>
+          </div>
+        </div>
 
-                <tr>
-                  <td></td>
-                  <td>
-                    <button type="button" id="reset_btn_complex_adjustable" class="someBtn">
-                      Reset
-                    </button>
-                  </td>
-                </tr>
-              </table>
+        <div class="container div-center" style="max-width: 70em">
+          <button type="button" id="complex_soda_btn" class="someBtn m-2">
+            SODA (1981-2000)
+          </button>
+          <button type="button" id="complex_rcp45-1" class="someBtn m-2">
+            RCP4.5 (2081-2100)
+          </button>
+          <button type="button" id="complex_rcp45-2" class="someBtn m-2">
+            RCP4.5 (2181-2200)
+          </button>
+          <button type="button" id="complex_rcp85-1" class="someBtn m-2">
+            RCP8.5 (2081-2100)
+          </button>
+          <button type="button" id="complex_rcp85-2" class="someBtn m-2">
+            RCP8.5 (2181-2200)
+          </button>
+        </div>
+
+        <p class="mt-4">
+          Despite the differences in oceanic conditions and life-history
+          characteristics of the Celtic Sea and the Barents Sea populations,
+          their growth patterns are shaped by the decadal mean temperature
+          regimes. However the modeling approach, doesn't explain inter-annual
+          variability in body size of different age groups which is rather the
+          task for complex multivariate statistical analyses requiring high
+          quality long-term observations such as primary and secondary
+          productivity levels, prey availability etc..
+        </p>
+
+        <!-- ADJUSTABLE REAL WORLD EXPERIMENT -->
+        <hr style="margin-top: 3rem" />
+
+        <div class="pt-5 pb-2 text-center nb">
+          <h2 class="mb-3">Adjustable real world experiment</h2>
+        </div>
+        <div class="div-center" style="padding-top: 3rem">
+          <div class="row" style="width: 100%">
+            <div class="col-md-8">
+              <div class="p-3 plot-wrapper" style="height: 30rem; width: 100%">
+                <canvas id="complex_plot_canvas_adjustable"></canvas>
+              </div>
+            </div>
+
+            <div class="col-md-4 mt-auto">
+              <div>
+                <table>
+                  <tr>
+                    <td>\(a r\)</td>
+                    <td>
+                      <input
+                        id="A_R_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="A_R_adj_slide"
+                        min="0"
+                        max="15"
+                        step="0.01"
+                        value="8.66"
+                      />
+                      <div
+                        id="A_R_adj_slide_amount"
+                        name="A_R_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        8.66
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>\(b r\)</td>
+                    <td>
+                      <input
+                        id="B_R_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="B_R_adj_slide"
+                        min="0"
+                        max="1"
+                        step="0.0001"
+                        value="0.3055"
+                      />
+                      <div
+                        id="B_R_adj_slide_amount"
+                        name="B_R_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        0.3055
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>\(\Theta a\)</td>
+                    <td>
+                      <input
+                        id="THETA_A_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="THETA_A_adj_slide"
+                        min="0"
+                        max="30000"
+                        step="1"
+                        value="18145"
+                      />
+                      <div
+                        id="THETA_A_adj_slide_amount"
+                        name="THETA_A_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        18145
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>\(\Theta b\)</td>
+                    <td>
+                      <input
+                        id="THETA_B_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="THETA_B_adj_slide"
+                        min="0"
+                        max="10000"
+                        step="1"
+                        value="4258"
+                      />
+                      <div
+                        id="THETA_B_adj_slide_amount"
+                        name="THETA_B_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        4258
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>\(\Theta h\)</td>
+                    <td>
+                      <input
+                        id="THETA_H_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="THETA_H_adj_slide"
+                        min="0"
+                        max="30000"
+                        step="1"
+                        value="25234"
+                      />
+                      <div
+                        id="THETA_H_adj_slide_amount"
+                        name="THETA_H_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        25234
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>\(T r\)</td>
+                    <td>
+                      <input
+                        id="T_R_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="T_R_adj_slide"
+                        min="0"
+                        max="350"
+                        step="1"
+                        value="283"
+                      />
+                      <div
+                        id="T_R_adj_slide_amount"
+                        name="T_R_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        283
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>\(T h\)</td>
+                    <td>
+                      <input
+                        id="T_H_adj_slide"
+                        type="range"
+                        class="slide slide-adj-complex"
+                        name="T_H_adj_slide"
+                        min="0"
+                        max="350"
+                        step="1"
+                        value="286"
+                      />
+                      <div
+                        id="T_H_adj_slide_amount"
+                        name="T_H_adj_slide_amount"
+                        class="slide-value"
+                      >
+                        286
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button
+                        type="button"
+                        id="reset_btn_complex_adjustable"
+                        class="someBtn"
+                      >
+                        Reset
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- FOOTER -->
+    <div id="footer" class="pb-5">
+      <hr />
+      Model and mathematical basics described by
+      <a
+        href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375"
+        target="_blank"
+        >Butzin and Pörtner</a
+      >
+      (2016) <br /><br />
+      Python implementation by Nadezhda Valerievna Sokolova and Anja Rohner
+      (2022)<br />
+      Site and JavaScript implementation developed by
+      <a href="https://www.b-schwertfeger.de" target="_blank"
+        >Benjamin T. Schwertfeger</a
+      >
+      (2022) <br />
+      <a href="https://www.awi.de" target="_blank"
+        >Alfred Wegener Institute, Helmholtz Centre for Polar and Marine
+        Research, Bremerhaven, Germany</a
+      >
+    </div>
 
-  </div>
-  </div>
-
-  <!-- FOOTER -->
-  <div id="footer" class="pb-5">
-    <hr />
-    Model and mathematical basics described by
-    <a href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.13375" target="_blank">Butzin and Pörtner</a>
-    (2016) <br><br>
-    Python implementation by Nadezhda Valerievna Sokolova and Anja Rohner (2022)<br>
-    Site and JavaScript implementation developed by
-    <a href="https://www.b-schwertfeger.de" target="_blank">Benjamin T. Schwertfeger</a> (2022) <br>
-    <a href="https://www.awi.de" target="_blank">Alfred Wegener Institute, Helmholtz Centre for Polar and Marine
-      Research, Bremerhaven, Germany</a>
-  </div>
-
-  <script async type="module" src="main.js"></script>
-  <script async src="layout.js"></script>
-</body>
-
+    <script async type="module" src="js/main.js"></script>
+    <script async src="js/layout.js"></script>
+  </body>
 </html>
