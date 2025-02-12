@@ -6,53 +6,53 @@
 #
 
 repos:
-  # - repo: https://github.com/gitleaks/gitleaks
-  #   rev: v8.23.1
-  #   hooks:
-  #     - id: gitleaks
-  # - repo: https://github.com/codespell-project/codespell
-  #   rev: v2.3.0
-  #   hooks:
-  #     - id: codespell
-  #       additional_dependencies: [tomli]
-  # - repo: https://github.com/pre-commit/pre-commit-hooks
-  #   rev: v5.0.0
-  #   hooks:
-  #     - id: check-yaml
-  #     - id: check-ast
-  #     - id: check-json
-  #     - id: check-toml
-  #     - id: check-docstring-first
-  #     - id: check-case-conflict
-  #     - id: check-merge-conflict
-  #     - id: check-added-large-files
-  #       args: [--maxkb=500]
-  #     - id: check-executables-have-shebangs
-  #     - id: trailing-whitespace
-  #     - id: fix-byte-order-marker
-  #     - id: mixed-line-ending
-  #     - id: requirements-txt-fixer
-  #     - id: end-of-file-fixer
-  #     - id: detect-private-key
-  # - repo: https://github.com/pre-commit/pygrep-hooks
-  #   rev: v1.10.0
-  #   hooks:
-  #     - id: python-use-type-annotations
-  #     - id: python-check-blanket-noqa
-  #     - id: python-check-blanket-type-ignore
-  #     - id: python-check-mock-methods
-  #     - id: python-no-eval
-  #     - id: python-no-log-warn
-  #     - id: rst-backticks
-  #     - id: rst-directive-colons
-  #     - id: rst-inline-touching-normal
-  #     - id: text-unicode-replacement-char
-  # - repo: https://github.com/PyCQA/isort
-  #   rev: 5.13.2
-  #   hooks:
-  #     - id: isort
-  #       args:
-  #         - --profile=black
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.23.1
+    hooks:
+      - id: gitleaks
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        additional_dependencies: [tomli]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-ast
+      - id: check-json
+      - id: check-toml
+      - id: check-docstring-first
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-executables-have-shebangs
+      - id: trailing-whitespace
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: requirements-txt-fixer
+      - id: end-of-file-fixer
+      - id: detect-private-key
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-use-type-annotations
+      - id: python-check-blanket-noqa
+      - id: python-check-blanket-type-ignore
+      - id: python-check-mock-methods
+      - id: python-no-eval
+      - id: python-no-log-warn
+      - id: rst-backticks
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
+      - id: text-unicode-replacement-char
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args:
+          - --profile=black
   - repo: https://github.com/rbubley/mirrors-prettier
     rev: v3.4.2
     hooks:
