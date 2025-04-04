@@ -92,7 +92,7 @@ window.default_chart_config_simple = {
 */
 window.default_input_simple = {
   max_age: 15 * 365, // maximum age in days
-  initial_weight: 1, // initial weight in kg
+  initial_weight: 0.001, // initial weight in kg
 };
 
 window.computeSimple = (
